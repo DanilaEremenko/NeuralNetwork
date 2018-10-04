@@ -1,20 +1,24 @@
-import matplotlib.pyplot as plot
+import matplotlib.pyplot as plt
+import numpy as np
 
-xList = []
-yList = []
+xList = np.random.randint(10, 90, size=100)
+yList = np.random.randint(10, 90, size=100)
 
-i = 0
-while i < 100:
-    xList.append(i)
-    yList.append(i)
-    i += 1
+xList.sort()
+yList.sort()
+
+plt.plot(xList, yList, '--r')
+
+xList = np.random.randint(10, 90, size=100)
+yList = np.random.randint(10, 90, size=100)
+
+xList.sort()
+yList.sort()
+
+plt.plot(xList, yList, '--b')
 
 
-plot.bar(xList, yList)
-plot.xlim(0, 200)
-plot.ylim(0, 100)
-plot.title("arrays")
-plot.show()
-
-
-
+plt.xlim(0, 100)
+plt.ylim(0, 100)
+plt.title("arrays")
+plt.show()
