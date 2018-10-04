@@ -51,19 +51,22 @@ def matrixIsAcceptable(elements, maxX, maxY):
 
     return not isDivised
 
+
 if __name__ == '__main__':
 
     elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
     while not matrixIsAcceptable(elements, xSize, ySize):
         elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
         print('----------------------------------')
+    # elements = np.array([[1,1,0,0],[1,1,0,0],[1,1,0,0],[1,1,0,0]])
+    plt.xlim(0, xSize)
+    plt.ylim(0, ySize)
 
-
-    plt.xlim(0,4)
-    plt.ylim(0,4)
-
-    rect = patch.Rectangle((0, 0),1, 1, color='r', fill=True)
-
-    plt.gca().add_patch(rect)
+    for x in range(0, xSize):
+        for y in range(0, ySize):
+            if elements[y][x] == 1:
+                plt.gca().add_patch(patch.Rectangle((x, ySize - y - 1), 1, 1, color='#000000', fill=True))
+            else:
+                plt.gca().add_patch(patch.Rectangle((x, ySize - y - 1), 1, 1, color='#FFFFFF', fill=True))
 
     plt.show()
