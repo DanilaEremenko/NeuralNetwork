@@ -57,7 +57,6 @@ def isAcceptableCoordinatesP(x, y, xBottom=100, xTop=150, yBottom=80, yTop=80):
 
 if __name__ == '__main__':
     pointNumber = 2000
-
     xCoor = []
     yCoor = []
 
@@ -77,4 +76,13 @@ if __name__ == '__main__':
 
     plt.plot(xCoor, yCoor, '.')
 
-    plt.show()
+
+
+    SHOW = input('SHOW? [Y/n]')
+    SAVE = input('SAVE? [Y/n]')
+
+
+    if SAVE == 'Y':
+        plt.savefig("../Pictures/3_DivIntoTwoClasses.png", dpi=200)
+    if SHOW == 'Y':
+        plt.show()

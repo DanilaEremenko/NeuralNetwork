@@ -3,12 +3,6 @@ import matplotlib.patches as patch
 
 import numpy as np
 
-minEl = 0
-maxEl = 1
-
-xSize = 4
-ySize = 4
-
 
 def matrixIsAcceptable(elements, maxX, maxY):
     print(elements)
@@ -53,6 +47,11 @@ def matrixIsAcceptable(elements, maxX, maxY):
 
 
 if __name__ == '__main__':
+    minEl = 0
+    maxEl = 1
+
+    xSize = 4
+    ySize = 4
 
     elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
     while not matrixIsAcceptable(elements, xSize, ySize):
@@ -69,4 +68,12 @@ if __name__ == '__main__':
             else:
                 plt.gca().add_patch(patch.Rectangle((x, ySize - y - 1), 1, 1, color='#FFFFFF', fill=True))
 
-    plt.show()
+    SHOW = input('SHOW? [Y/n]')
+    SAVE = input('SAVE? [Y/n]')
+
+    if SAVE == 'Y':
+
+        plt.savefig("../Pictures/1_CrossZero.png", dpi=200)
+    if SHOW == 'Y':
+        plt.show()
+    plt.close()
