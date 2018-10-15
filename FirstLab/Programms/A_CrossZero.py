@@ -58,15 +58,15 @@ if __name__ == '__main__':
         elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
         print('----------------------------------')
     # elements = np.array([[1,1,0,0],[1,1,0,0],[1,1,0,0],[1,1,0,0]])
-    plt.xlim(0, xSize)
-    plt.ylim(0, ySize)
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
 
     for x in range(0, xSize):
         for y in range(0, ySize):
             if elements[y][x] == 1:
-                plt.gca().add_patch(patch.Rectangle((x, ySize - y - 1), 1, 1, color='#000000', fill=True))
+                plt.gca().add_patch(patch.Rectangle((x/4, (ySize - y - 1)/4), 0.25, 0.25, color='#000000', fill=True))
             else:
-                plt.gca().add_patch(patch.Rectangle((x, ySize - y - 1), 1, 1, color='#FFFFFF', fill=True))
+                plt.gca().add_patch(patch.Rectangle((x/4, (ySize - y - 1)/4), 0.25, 0.25, color='#FFFFFF', fill=True))
 
     SHOW = input('SHOW? [Y/n]')
     SAVE = input('SAVE? [Y/n]')

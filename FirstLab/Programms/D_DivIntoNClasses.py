@@ -50,6 +50,9 @@ if __name__ == '__main__':
         xCoor.append(x)
         yCoor.append(y)
 
+    # normalize
+    xCoor = list(map(lambda x: x / 200, xCoor))
+    yCoor = list(map(lambda y: y / 200, yCoor))
     plt.plot(xCoor, yCoor, '.r')
 
     xCoor.clear()
@@ -67,6 +70,9 @@ if __name__ == '__main__':
         xCoor.append(x)
         yCoor.append(y)
 
+    # normalize
+    xCoor = list(map(lambda x: x / 200, xCoor))
+    yCoor = list(map(lambda y: y / 200, yCoor))
     plt.plot(xCoor, yCoor, '.b')
 
     xCoor.clear()
@@ -84,6 +90,9 @@ if __name__ == '__main__':
         xCoor.append(x)
         yCoor.append(y)
 
+    # normalize
+    xCoor = list(map(lambda x: x / 200, xCoor))
+    yCoor = list(map(lambda y: y / 200, yCoor))
     plt.plot(xCoor, yCoor, '.g')
 
     xCoor.clear()
@@ -103,10 +112,13 @@ if __name__ == '__main__':
         xCoor.append(x)
         yCoor.append(y)
 
+    # normalize
+    xCoor = list(map(lambda x: x / 200, xCoor))
+    yCoor = list(map(lambda y: y / 200, yCoor))
     plt.plot(xCoor, yCoor, '.m', )
 
-    plt.xlim(0, 200)
-    plt.ylim(0, 200)
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
 
     SHOW = input('SHOW? [Y/n]')
     SAVE = input('SAVE? [Y/n]')

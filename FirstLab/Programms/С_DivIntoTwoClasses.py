@@ -71,16 +71,15 @@ if __name__ == '__main__':
         xCoor.append(x)
         yCoor.append(y)
 
-    plt.xlim(0, 200)
-    plt.ylim(0, 200)
+    xCoor = list(map(lambda x: x / 200, xCoor))
+    yCoor = list(map(lambda y: y / 200, yCoor))
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
 
     plt.plot(xCoor, yCoor, '.')
 
-
-
     SHOW = input('SHOW? [Y/n]')
     SAVE = input('SAVE? [Y/n]')
-
 
     if SAVE == 'Y':
         plt.savefig("../Pictures/3_DivIntoTwoClasses.png", dpi=200)
