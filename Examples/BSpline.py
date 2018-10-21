@@ -26,8 +26,8 @@ if __name__ == '__main__':
     F_SIZE = 12
 
     # points
-    px = np.array([0, 2, 4, 5])
-    py = np.array([0, 2, 1, 3])
+    px = np.array([0, 3, 7, 3])
+    py = np.array([0, 3, 0, -4])
 
     print("Default poligon\nx\ty")
     for x, y in zip(px, py):
@@ -44,17 +44,17 @@ if __name__ == '__main__':
     for t in np.arange(2, 3.1, 0.25, dtype=float):
         ptx.append(getPt(px[0], px[1], px[2], geta(t, a=2), getb(t, b=1), getc(t, c=0)))
         pty.append(getPt(py[0], py[1], py[2], geta(t, a=2), getb(t, b=1), getc(t, c=0)))
-        plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_" + str(t), fontsize=F_SIZE)
-        print("Px(%.2f) = %f" % (t, ptx[ptx.__len__() - 1]))
-        print("Py(%.2f) = %f\n" % (t, pty[pty.__len__() - 1]))
+        plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_%.3f" % t, fontsize=F_SIZE)
+        print("Px(%.3f) = %f" % (t, ptx[ptx.__len__() - 1]))
+        print("Py(%.3f) = %f\n" % (t, pty[pty.__len__() - 1]))
 
     print("[3 , 4]-------------------------------------------")
     for t in np.arange(3.25, 4.1, 0.25, dtype=float):
         ptx.append(getPt(px[1], px[2], px[3], geta(t, a=3), getb(t, b=2), getc(t, c=1)))
         pty.append(getPt(py[1], py[2], py[3], geta(t, a=3), getb(t, b=2), getc(t, c=1)))
-        plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt2_" + str(t), fontsize=F_SIZE)
-        print("Px(%.2f) = %f" % (t, ptx[ptx.__len__() - 1]))
-        print("Py(%.2f) = %f\n" % (t, pty[pty.__len__() - 1]))
+        plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_%.3f" % t, fontsize=F_SIZE)
+        print("Px(%.3f) = %.3f" % (t, ptx[ptx.__len__() - 1]))
+        print("Py(%.3f) = %.3f\n" % (t, pty[pty.__len__() - 1]))
 
     # plot-----------------------------------------------------------------------
     plt.plot(ptx, pty, '--o')

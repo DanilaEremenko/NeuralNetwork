@@ -5,7 +5,7 @@ import numpy as np
 
 def getN(t, k, T: np.ndarray, q):
     if q == 1:
-        return 1 if T[k] <= t and t <= T[k + 1] else 0
+        return 1 if T[k] <= t and t < T[k + 1] else 0
     else:
         return (t - T[k]) / (T[k + q - 1] - T[k]) * getN(t=t, T=T, k=k, q=q - 1) + \
                (T[k + q] - t) / (T[k + q] - T[k + 1]) * getN(t=t, T=T, k=k + 1, q=q - 1)
@@ -30,8 +30,8 @@ if __name__ == '__main__':
     F_SIZE = 12
 
     # points
-    px = np.array([0, 2, 4, 5])
-    py = np.array([0, 2, 1, 3])
+    px = np.array([0, 3, 7, 3])
+    py = np.array([0, 3, 0, -4])
     w = np.array([0.5, 0.5, 0.5, 0.5])
 
     print("Default poligon\nx\ty")
@@ -46,17 +46,17 @@ if __name__ == '__main__':
     pty = []
     print("\n[2 , 4]-------------------------------------------")
     T = np.arange(2, 4.1, 0.25, dtype=float)
-    for t in T:
+    for t in np.arange(2.25, 3.5, 0.125, dtype=float):
         ptx.append(getPt(t, px[0], px[1], px[2], px[3], w[0], w[1], w[2], w[3], T, 4))
         pty.append(getPt(t, py[0], py[1], py[2], py[3], w[0], w[1], w[2], w[3], T, 4))
-        plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_" + str(t), fontsize=F_SIZE)
-        print("Px(%.2f) = %f" % (t, ptx[ptx.__len__() - 1]))
-        print("Py(%.2f) = %f\n" % (t, pty[pty.__len__() - 1]))
+        plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt_%.3f" % t, fontsize=F_SIZE)
+        print("Px(%.3f) = %.3f" % (t, ptx[ptx.__len__() - 1]))
+        print("Py(%.3f) = %.3f\n" % (t, pty[pty.__len__() - 1]))
 
-        # plot-----------------------------------------------------------------------
-        # plt.plot(ptx, pty, '--o')
+    # plot-----------------------------------------------------------------------
+    plt.plot(ptx, pty, '--o')
 
-        # plt.show()
+    plt.show()
 
 # ---------------------OLD getN-----------------------
 # if m == 0:
