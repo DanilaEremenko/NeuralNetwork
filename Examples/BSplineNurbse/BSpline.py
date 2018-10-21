@@ -59,4 +59,8 @@ if __name__ == '__main__':
     # plot-----------------------------------------------------------------------
     plt.plot(ptx, pty, '--o')
 
-    plt.show()
+    if (input("SAVE[Y/n]") == "Y"):
+        name = input("Name = ")
+        plt.savefig("BSplineNurbse/Pictures/"+name, dpi=200)
+    if (input("SHOW[Y/n]") == "Y"):
+        plt.show()

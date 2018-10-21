@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from math import pow
 import numpy as np
 
 
@@ -7,11 +6,15 @@ def getN(t, k, T: np.ndarray, q):
     if q == 1:
         return 1 if T[k] <= t and t < T[k + 1] else 0
     else:
-        return (t - T[k]) / (T[k + q - 1] - T[k]) * getN(t=t, T=T, k=k, q=q - 1) + \
-               (T[k + q] - t) / (T[k + q] - T[k + 1]) * getN(t=t, T=T, k=k + 1, q=q - 1)
+        return (t - T[k]) * getN(t=t, T=T, k=k, q=q - 1) / (T[k + q - 1]) + \
+               (T[k + q] - t) * getN(t=t, T=T, k=k + 1, q=q - 1) / (T[k + q] - T[k + 1])
 
 
 def getPt(t, p0, p1, p2, p3, w0, w1, w2, w3, T: np.ndarray, pNumber):
+    # print("getN(t=t, k=0, T=T, q=pNumber - 1) = ",getN(t=t, k=0, T=T, q=pNumber - 1))
+    # print("getN(t=t, k=1, T=T, q=pNumber - 1) = ",getN(t=t, k=1, T=T, q=pNumber - 1))
+    # print("getN(t=t, k=2, T=T, q=pNumber - 1) = ",getN(t=t, k=2, T=T, q=pNumber - 1))
+    # print("getN(t=t, k=3, T=T, q=pNumber - 1) = ",getN(t=t, k=3, T=T, q=pNumber - 1))
     return (w0 * p0 * getN(t=t, k=0, T=T, q=pNumber - 1) +
             w1 * p1 * getN(t=t, k=1, T=T, q=pNumber - 1) +
             w2 * p2 * getN(t=t, k=2, T=T, q=pNumber - 1) +
@@ -44,9 +47,9 @@ if __name__ == '__main__':
 
     ptx = []
     pty = []
-    print("\n[2 , 4]-------------------------------------------")
+    print("\np(t) calculating-------------------------------------------")
     T = np.arange(2, 4.1, 0.25, dtype=float)
-    for t in np.arange(2.25, 3.5, 0.125, dtype=float):
+    for t in np.arange(2.25, 3.5, 0.25, dtype=float):
         ptx.append(getPt(t, px[0], px[1], px[2], px[3], w[0], w[1], w[2], w[3], T, 4))
         pty.append(getPt(t, py[0], py[1], py[2], py[3], w[0], w[1], w[2], w[3], T, 4))
         plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt_%.3f" % t, fontsize=F_SIZE)
@@ -56,7 +59,11 @@ if __name__ == '__main__':
     # plot-----------------------------------------------------------------------
     plt.plot(ptx, pty, '--o')
 
-    plt.show()
+    if (input("SAVE[Y/n]") == "Y"):
+        name = input("Name = ")
+        plt.savefig("BSplineNurbse/Pictures"+name, dpi=200)
+    if (input("SHOW[Y/n]") == "Y"):
+        plt.show()
 
 # ---------------------OLD getN-----------------------
 # if m == 0:
