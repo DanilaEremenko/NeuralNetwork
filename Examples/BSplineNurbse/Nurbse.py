@@ -15,11 +15,8 @@ def getN(t, k, T: np.ndarray, q):
             sum += ((T[k + q] - t) / (T[k + q] - T[k + 1])) * recurs2
         return sum
 
+
 def getPt(t, p0, p1, p2, p3, w0, w1, w2, w3, T: np.ndarray, pNumber):
-    # print("getN(t=t, k=0, T=T, q=pNumber - 1) = ",getN(t=t, k=0, T=T, q=pNumber - 1))
-    # print("getN(t=t, k=1, T=T, q=pNumber - 1) = ",getN(t=t, k=1, T=T, q=pNumber - 1))
-    # print("getN(t=t, k=2, T=T, q=pNumber - 1) = ",getN(t=t, k=2, T=T, q=pNumber - 1))
-    # print("getN(t=t, k=3, T=T, q=pNumber - 1) = ",getN(t=t, k=3, T=T, q=pNumber - 1))
     return (w0 * p0 * getN(t=t, k=0, T=T, q=pNumber - 1) +
             w1 * p1 * getN(t=t, k=1, T=T, q=pNumber - 1) +
             w2 * p2 * getN(t=t, k=2, T=T, q=pNumber - 1) +
@@ -40,7 +37,7 @@ if __name__ == '__main__':
     # points
     px = np.array([0, 3, 7, 3])
     py = np.array([0, 3, 0, -4])
-    w = np.array([0.5, 0.5, 0.5, 0.5])
+    w = np.array([1.0, 0.25, 2.0, 1.0])
 
     print("Default poligon\nx\ty")
     for x, y in zip(px, py):
@@ -66,7 +63,7 @@ if __name__ == '__main__':
 
     if (input("SAVE[Y/n]") == "Y"):
         name = input("Name = ")
-        plt.savefig("BSplineNurbse/Pictures"+name, dpi=200)
+        plt.savefig("Pictures/"+name, dpi=200)
     if (input("SHOW[Y/n]") == "Y"):
         plt.show()
 
