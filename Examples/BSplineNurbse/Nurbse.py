@@ -6,9 +6,14 @@ def getN(t, k, T: np.ndarray, q):
     if q == 1:
         return 1 if T[k] <= t and t < T[k + 1] else 0
     else:
-        return (t - T[k]) * getN(t=t, T=T, k=k, q=q - 1) / (T[k + q - 1]) + \
-               (T[k + q] - t) * getN(t=t, T=T, k=k + 1, q=q - 1) / (T[k + q] - T[k + 1])
-
+        sum = 0
+        recurs1 = getN(t=t, T=T, k=k, q=q - 1)
+        recurs2 = getN(t=t, T=T, k=k + 1, q=q - 1)
+        if T[k + q - 1] - T[k] != 0:
+            sum += ((t - T[k]) / (T[k + q - 1] - T[k])) * recurs1
+        if T[k + q] - T[k + 1] != 0:
+            sum += ((T[k + q] - t) / (T[k + q] - T[k + 1])) * recurs2
+        return sum
 
 def getPt(t, p0, p1, p2, p3, w0, w1, w2, w3, T: np.ndarray, pNumber):
     # print("getN(t=t, k=0, T=T, q=pNumber - 1) = ",getN(t=t, k=0, T=T, q=pNumber - 1))
