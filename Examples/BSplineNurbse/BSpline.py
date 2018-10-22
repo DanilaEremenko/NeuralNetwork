@@ -20,14 +20,20 @@ def getPt(p0, p1, p2, a, b, c):
 
 
 if __name__ == '__main__':
-    # labels
+    # labels on graphic
     X_SHIFT = 0.9
     Y_SHIFT = 1.1
     F_SIZE = 12
 
-    # points
-    px = np.array([0, 3, 7, 3])
-    py = np.array([0, 3, 0, -4])
+    # Input data
+    px = np.array([0, 5, 5, 9])
+    py = np.array([4, 8, -2, 2])
+    h = 0.5
+
+    # Incorrect input data checking
+    if px.__len__() != py.__len__():
+        print("ERROR\nUnequal size of input arrays")
+        exit(0)
 
     print("Default poligon\nx\ty")
     for x, y in zip(px, py):
@@ -41,7 +47,7 @@ if __name__ == '__main__':
     pty = []
 
     print("\n[2 , 3]-------------------------------------------")
-    for t in np.arange(2, 3.1, 0.25, dtype=float):
+    for t in np.arange(2, 3.1, h, dtype=float):
         ptx.append(getPt(px[0], px[1], px[2], geta(t, a=2), getb(t, b=1), getc(t, c=0)))
         pty.append(getPt(py[0], py[1], py[2], geta(t, a=2), getb(t, b=1), getc(t, c=0)))
         plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_%.3f" % t, fontsize=F_SIZE)
@@ -49,7 +55,7 @@ if __name__ == '__main__':
         print("Py(%.3f) = %f\n" % (t, pty[pty.__len__() - 1]))
 
     print("[3 , 4]-------------------------------------------")
-    for t in np.arange(3.25, 4.1, 0.25, dtype=float):
+    for t in np.arange(3.0, 4.1, h, dtype=float):
         ptx.append(getPt(px[1], px[2], px[3], geta(t, a=3), getb(t, b=2), getc(t, c=1)))
         pty.append(getPt(py[1], py[2], py[3], geta(t, a=3), getb(t, b=2), getc(t, c=1)))
         plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_%.3f" % t, fontsize=F_SIZE)
@@ -61,6 +67,6 @@ if __name__ == '__main__':
 
     if (input("SAVE[Y/n]") == "Y"):
         name = input("Name = ")
-        plt.savefig("BSplineNurbse/Pictures/"+name, dpi=200)
+        plt.savefig("BSplineNurbse/Pictures/" + name, dpi=200)
     if (input("SHOW[Y/n]") == "Y"):
         plt.show()
