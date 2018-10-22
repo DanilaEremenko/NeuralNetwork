@@ -39,6 +39,8 @@ if __name__ == '__main__':
     F_SIZE = 12
 
     # Input data
+    tBottom = 2
+    tTop = 4
     px = np.array([0, 5, 5, 9])
     py = np.array([4, 8, -2, 2])
     h = 0.25
@@ -66,16 +68,19 @@ if __name__ == '__main__':
     # TODO README
     # IF h<=0.25 -> MODE = N
     # IF h>0.25 - > MODE = WN
-    mode = 'N'
+    mode = 'WN'
     if mode == 'N':
-        T = np.arange(2, 4.1, h, dtype=float)
-        for t in np.arange(2.25, 3.5, h, dtype=float):
-            ptx.append(getPt(t, px[0], px[1], px[2], px[3], w[0], w[1], w[2], w[3], T, POINTS_NUMBER))
-            pty.append(getPt(t, py[0], py[1], py[2], py[3], w[0], w[1], w[2], w[3], T, POINTS_NUMBER))
-            plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt(%.3f)" % t,
-                     fontsize=F_SIZE)
-            print("Px(%.3f) = %.3f" % (t, ptx[ptx.__len__() - 1]))
-            print("Py(%.3f) = %.3f\n" % (t, pty[pty.__len__() - 1]))
+        T = np.arange(tBottom, tTop + 0.01, h, dtype=float)
+        for t in np.arange(tBottom, tTop + 0.01, h, dtype=float):
+            xPt = getPt(t, px[0], px[1], px[2], px[3], w[0], w[1], w[2], w[3], T, POINTS_NUMBER)
+            yPt = getPt(t, py[0], py[1], py[2], py[3], w[0], w[1], w[2], w[3], T, POINTS_NUMBER)
+            if (not np.isnan(xPt) and not np.isnan(yPt)):
+                ptx.append(xPt)
+                pty.append(yPt)
+                plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt(%.3f)" % t,
+                         fontsize=F_SIZE)
+                print("Px(%.3f) = %.3f" % (t, ptx[ptx.__len__() - 1]))
+                print("Py(%.3f) = %.3f\n" % (t, pty[pty.__len__() - 1]))
     elif mode == 'WN':
         cycleNum = POINTS_NUMBER - 2
         i = 0

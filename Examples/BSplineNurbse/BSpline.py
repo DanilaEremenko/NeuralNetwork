@@ -47,7 +47,7 @@ if __name__ == '__main__':
     pty = []
 
     print("\n[2 , 3]-------------------------------------------")
-    for t in np.arange(2, 3.1, h, dtype=float):
+    for t in np.arange(2, 3.01, h, dtype=float):
         ptx.append(getPt(px[0], px[1], px[2], geta(t, a=2), getb(t, b=1), getc(t, c=0)))
         pty.append(getPt(py[0], py[1], py[2], geta(t, a=2), getb(t, b=1), getc(t, c=0)))
         plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_%.3f" % t, fontsize=F_SIZE)
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         print("Py(%.3f) = %f\n" % (t, pty[pty.__len__() - 1]))
 
     print("[3 , 4]-------------------------------------------")
-    for t in np.arange(3.0, 4.1, h, dtype=float):
+    for t in np.arange(3.0, 4.01, h, dtype=float):
         ptx.append(getPt(px[1], px[2], px[3], geta(t, a=3), getb(t, b=2), getc(t, c=1)))
         pty.append(getPt(py[1], py[2], py[3], geta(t, a=3), getb(t, b=2), getc(t, c=1)))
         plt.text(ptx[ptx.__len__() - 1] * X_SHIFT, pty[pty.__len__() - 1] * Y_SHIFT, "pt1_%.3f" % t, fontsize=F_SIZE)
