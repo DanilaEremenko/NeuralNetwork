@@ -70,7 +70,7 @@ if __name__ == '__main__':
     # IF h>0.25 - > MODE = WN
     mode = 'WN'
     if mode == 'N':
-        T = np.arange(tBottom, tTop + 0.01, h, dtype=float)
+        T = np.arange(tBottom, tTop + 0.01, 0.25, dtype=float)
         for t in np.arange(tBottom, tTop + 0.01, h, dtype=float):
             xPt = getPt(t, px[0], px[1], px[2], px[3], w[0], w[1], w[2], w[3], T, POINTS_NUMBER)
             yPt = getPt(t, py[0], py[1], py[2], py[3], w[0], w[1], w[2], w[3], T, POINTS_NUMBER)
