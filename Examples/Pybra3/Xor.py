@@ -10,6 +10,7 @@ ds.addSample((0, 1), 1)
 ds.addSample((1, 0), 1)
 ds.addSample((1, 1), 0)
 
+
 ER_THRESHOLD = 1
 
 networkNumber = 0
