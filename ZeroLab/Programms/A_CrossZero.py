@@ -72,7 +72,6 @@ if __name__ == '__main__':
     SAVE = input('SAVE? [Y/n]')
 
     if SAVE == 'Y':
-
         plt.savefig("../Pictures/1_CrossZero.png", dpi=200)
     if SHOW == 'Y':
         plt.show()
