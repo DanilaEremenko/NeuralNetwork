@@ -1,23 +1,11 @@
 import tensorflow as tf
 from tensorflow import keras
+
 import numpy as np
 
-import matplotlib.pyplot as plt
-
 from ZeroLab.Programms.E_Function import function as f
-
-
-def plot_history(history):
-    plt.figure()
-    plt.xlabel('Epoch')
-    plt.ylabel('Mean Abs Error [1000$]')
-    plt.plot(history.epoch, np.array(history.history['loss']),
-             label='Train Loss')
-    plt.plot(history.epoch, np.array(history.history['acc']),
-             label='Val loss')
-    plt.legend()
-    plt.show()
-
+from TfWithKeras.GUI import plot_history
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     mnist = keras.datasets.mnist
@@ -36,8 +24,10 @@ if __name__ == '__main__':
                   loss=keras.losses.sparse_categorical_crossentropy,
                   metrics=['accuracy'])
 
-    history = model.fit(x_train, y_train, epochs=1)
+    history = model.fit(x_train, y_train, epochs=5)
+    # plot_history(history)
 
-    plot_history(history)
-
+    plt.plot(x_train, model.predict_proba(x_train))
+    plt.plot(x_train, y_train,color='mediumvioletred')
+    plt.show()
 # model.evaluate(x_test, y_test)
