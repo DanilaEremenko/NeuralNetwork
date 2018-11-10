@@ -11,17 +11,14 @@ def function(x):
 
 if __name__ == '__main__':
     xArray = np.arange(0.0, 1.0, 0.001, dtype=float)
-    yArray = []
+    yArray = np.array([function(y) for y in xArray])
 
-    for x in xArray:
-        yArray.append(function(x))
     plt.plot(xArray, yArray)
     plt.plot(xArray, yArray, color='mediumvioletred')
     plt.ylim(0, 1)
 
-    SHOW = input('SHOW? [Y/n]')
-    SAVE = input('SAVE?[Y/n]')
-    if SAVE == 'Y':
+
+    if input('SAVE?[Y/n]') == 'Y':
         plt.savefig('../Pictures/5_Function.png', dpi=200)
-    if SHOW == 'Y':
+    if input('SHOW? [Y/n]') == 'Y':
         plt.show()

@@ -120,10 +120,7 @@ if __name__ == '__main__':
     plt.xlim(0, 1)
     plt.ylim(0, 1)
 
-    SHOW = input('SHOW? [Y/n]')
-    SAVE = input('SAVE? [Y/n]')
-
-    if SAVE == 'Y':
+    if input('SAVE? [Y/n]') == 'Y':
         plt.savefig("../Pictures/4_DivIntoNClasses.png", dpi=200)
-    if SHOW == 'Y':
+    if input('SHOW? [Y/n]') == 'Y':
         plt.show()

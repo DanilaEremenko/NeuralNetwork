@@ -78,10 +78,7 @@ if __name__ == '__main__':
 
     plt.plot(xCoor, yCoor, '.')
 
-    SHOW = input('SHOW? [Y/n]')
-    SAVE = input('SAVE? [Y/n]')
-
-    if SAVE == 'Y':
+    if input('SAVE? [Y/n]') == 'Y':
         plt.savefig("../Pictures/3_DivIntoTwoClasses.png", dpi=200)
-    if SHOW == 'Y':
+    if input('SHOW? [Y/n]') == 'Y':
         plt.show()
