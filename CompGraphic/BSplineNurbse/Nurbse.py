@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def getN(t, k, T: np.ndarray, q):
+def getN(t, k, T, q):
     if q == 1:
         return 1 if T[k] <= t and t < T[k + 1] else 0
     else:
@@ -20,7 +20,7 @@ def getPtWithoutN(w0, w1, w2, p0, p1, p2):
     return (w0 * p0 + w1 * p1 + w2 * p2) / (w0 + w1 + w2)
 
 
-def getPt(t, p0, p1, p2, p3, w0, w1, w2, w3, T: np.ndarray, pNumber):
+def getPt(t, p0, p1, p2, p3, w0, w1, w2, w3, T, pNumber):
     return (w0 * p0 * getN(t=t, k=0, T=T, q=pNumber - 1) +
             w1 * p1 * getN(t=t, k=1, T=T, q=pNumber - 1) +
             w2 * p2 * getN(t=t, k=2, T=T, q=pNumber - 1) +
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # TODO README
     # IF h<=0.25 -> MODE = N
     # IF h>0.25 - > MODE = WN
-    mode = 'WN'
+    mode = 'N'
     if mode == 'N':
         T = np.arange(tBottom, tTop + 0.01, 0.25, dtype=float)
         for t in np.arange(tBottom, tTop + 0.01, h, dtype=float):

@@ -4,15 +4,15 @@ import numpy as np
 
 
 def geta(t, a=0):
-    return 1 / 2 * pow(t - a, 2)
+    return 1.0 / 2.0 * pow(t - a, 2)
 
 
 def getb(t, b=0):
-    return 3 / 4 - pow(t - b - 1.5, 2)
+    return 3.0 / 4.0 - pow(t - b - 1.5, 2)
 
 
 def getc(t, c=0):
-    return 1 / 2 * pow(t - c - 3, 2)
+    return 1.0 / 2.0 * pow(t - c - 3, 2)
 
 
 def getPt(p0, p1, p2, a, b, c):
