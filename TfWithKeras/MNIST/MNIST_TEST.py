@@ -4,7 +4,7 @@ import keras
 from keras.preprocessing import image
 
 # Download Image
-local_path = 'MY_IMAGES/'
+local_path = 'MY_IMAGES_GIMP/'
 for nTest in np.arange(1, 10, 1):
     img = image.load_img(local_path + str(nTest) + '.png', target_size=(28, 28), grayscale=True)
 
