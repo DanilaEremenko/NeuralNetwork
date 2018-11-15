@@ -1,16 +1,18 @@
 from PIL import Image
 
 
-def resize_image(input_image_path,
-                 output_image_path,
-                 size):
-    original_image = Image.open(input_image_path)
+def resize_image(input_path, output_path, size):
+    original_image = Image.open(input_path)
 
     resized_image = original_image.resize(size)
-    width, height = resized_image.size
 
-    resized_image.save(output_image_path)
+    resized_image.save(output_path)
 
 
-# Example
-#resize_image(input_image_path='9.png', output_image_path='9.png', size=(28, 28))
+def cut_image(input_path, output_path, area):
+    original_image = Image.open(input_path)
+
+    original_image = original_image.crop(area)
+
+    original_image.save(output_path)
+
