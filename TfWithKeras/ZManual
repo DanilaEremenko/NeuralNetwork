@@ -138,3 +138,31 @@ serialize(...)
 sparse_categorical_crossentropy(...)
 
 squared_hinge(...)
+
+--------------------------activations--------------------------
+
+deserialize(...)
+
+elu(...): Exponential linear unit.
+
+get(...)
+
+hard_sigmoid(...): Hard sigmoid activation function.
+
+linear(...)
+
+relu(...): Rectified Linear Unit.
+
+selu(...): Scaled Exponential Linear Unit (SELU).
+
+serialize(...)
+
+sigmoid(...)
+
+softmax(...): Softmax activation function.
+
+softplus(...): Softplus activation function.
+
+softsign(...): Softsign activation function.
+
+tanh(...)

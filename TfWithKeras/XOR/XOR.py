@@ -14,14 +14,14 @@ if __name__ == '__main__':
     model.add(Dense(units=8, input_dim=2))
     model.add(Activation('tanh'))
     model.add(Dense(1))
-    model.add(Activation('sigmoid'))
+    model.add(Activation('hard_sigmoid'))
 
     model.compile(loss='binary_crossentropy', optimizer=SGD(lr=0.1), metrics=['accuracy'])
 
-    history = model.fit(inputs, outputs, batch_size=1, nb_epoch=1000)
+    history = model.fit(inputs, outputs, batch_size=1, nb_epoch=300)
 
-    plot_history(history=history,save_path='history.png')
+    plot_history(history=history,save_path='history.png',save=True,show=False)
 
     print model.predict(inputs)
 
-    # model.save('XOR/XOR_MODEL.h5')
+    model.save('XOR_MODEL.h5')
