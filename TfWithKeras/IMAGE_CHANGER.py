@@ -12,7 +12,5 @@ def resize_image(input_image_path,
     resized_image.save(output_image_path)
 
 
-if __name__ == '__main__':
-    resize_image(input_image_path='9.png',
-                 output_image_path='9.png',
-                 size=(28, 28))
+# Example
+#resize_image(input_image_path='9.png', output_image_path='9.png', size=(28, 28))

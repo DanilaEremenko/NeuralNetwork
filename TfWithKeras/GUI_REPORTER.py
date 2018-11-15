@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+
 def plot_history(history, save_path, save=False, show=True):
     plt.figure()
     plt.xlabel('Epoch')
