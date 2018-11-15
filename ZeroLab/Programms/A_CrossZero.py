@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patch
 
 import numpy as np
+import TfWithKeras.IMAGE_CHANGER as ich
+from keras.preprocessing import image
 
 
 def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
@@ -88,33 +90,47 @@ def plot_field(elements, path, save=False, show=True):
     return
 
 
-
-def load_data(ex_num, path_for_images, save_images=False):
+def load_data(ex_num, path_for_images, images_size=(64, 64)):
     minEl = 0
     maxEl = 1
     xSize = 4
     ySize = 4
 
+    x_train = np.empty(ex_num, dtype=np.ndarray)
     y_train = np.empty(ex_num, dtype=np.ndarray)
-    #x_train =
+
     for i in range(0, ex_num):
         elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
         while not matrixIsAcceptable(elements, xSize, ySize):
             elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
 
-        if save_images:
-            plot_field(elements, str(path_for_images) + str("/cz_") + str(i), save=save_images, show=False)
-        elements.shape = (16)
-        y_train[i] = elements
-    #    x_train
+        path = str(path_for_images) + "/cz_" + str(i) + ".png"
 
-    return y_train
+        # cut main part of image and change resolution
+        plot_field(elements, path, save=True, show=False)
+        ich.cut_image(path, path, area=(158, 112, 1154, 857))
+        ich.resize_image(path, path, size=images_size)
+
+        # convert to numpy array
+        img = image.load_img(path, grayscale=True)
+        pxs = image.img_to_array(img)
+
+        # normalization
+        pxs = 255 - pxs
+        pxs /= 255.0
+        pxs = np.expand_dims(pxs, axis=0)
+        pxs.shape = (1, images_size[0] * images_size[1])
+
+        elements.shape = (16)
+
+        y_train[i] = elements
+        x_train[i] = pxs
+
+
+    return (x_train, y_train)
     # return (x_train, y_train), (x_test, y_test)
     # return elements
 
-#size = 48 x 32 = 3072
-#size = 32 x 24 = 768
-#3072
 
 if __name__ == '__main__':
-        load_data(1,)
+    (x_train, y_train) = load_data(10, "A_CZ", images_size=(64, 64))
