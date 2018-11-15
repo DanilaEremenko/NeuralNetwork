@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patch
+from math import pi
 
 import numpy as np
 
@@ -8,7 +9,7 @@ def matrixIsAcceptable(elements, maxX, maxY):
     print(elements)
     zeroAm = 0
     oneAm = 0
-    # Проверка по горизонтали
+    # Check horizontal
     for y in range(0, maxY):
         checkedEl = elements[y][0]
         isDivised = True
@@ -32,7 +33,7 @@ def matrixIsAcceptable(elements, maxX, maxY):
         print('is not equal')
         return False
 
-    # Проверка по вертикали
+    # check vertical
     for x in range(0, maxX):
         checkedEl = elements[0][x]
         isDivised = True
@@ -44,6 +45,19 @@ def matrixIsAcceptable(elements, maxX, maxY):
             return False
 
     return not isDivised
+
+
+def addCircle(x, y, color):
+    r=0.1
+    plt.gca().add_patch(patch.Circle((x + (0.25-r), y + (0.25-r)), radius=r, color=color))
+    plt.gca().add_patch(patch.Circle((x + (0.25-r), y + (0.25-r)), radius=r * 0.9, color='#FFFFFF'))
+
+
+def addCross(x, y, color):
+    # L
+    plt.gca().add_patch(patch.Rectangle((x + 0.25 * 0.7, y+0.25*0.1), color=color, width=0.03, height=0.175, angle=45))
+    # R
+    plt.gca().add_patch(patch.Rectangle((x + 0.25 * 0.3, y+0.25*0.1), color=color, width=0.175, height=0.03, angle=45))
 
 
 if __name__ == '__main__':
@@ -63,14 +77,14 @@ if __name__ == '__main__':
     for x in range(0, xSize):
         for y in range(0, ySize):
             if elements[y][x] == 1:
-                plt.gca().add_patch(
-                    patch.Rectangle((x / 4, (ySize - y - 1) / 4), 0.25, 0.25, color='#000000', fill=True))
+                addCross(x=x / 4.0, y=(ySize - y - 1) / 4.0, color="#000000")
             else:
-                plt.gca().add_patch(
-                    patch.Rectangle((x / 4, (ySize - y - 1) / 4), 0.25, 0.25, color='#FFFFFF', fill=True))
+                addCircle(x=x / 4.0, y=(ySize - y - 1) / 4.0, color="#000000")
 
-    if input('SAVE? [Y/n]') == 'Y':
-        plt.savefig("../Pictures/1_CrossZero.png", dpi=200)
-    if input('SHOW? [Y/n]') == 'Y':
-        plt.show()
+    plt.show()
     plt.close()
+
+    # if input('SAVE? [Y/n]') == 'Y':
+    #     plt.savefig("../Pictures/1_CrossZero.png", dpi=200)
+    # if input('SHOW? [Y/n]') == 'Y':
+    #     plt.show()
