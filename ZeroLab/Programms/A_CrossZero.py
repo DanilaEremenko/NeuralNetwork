@@ -87,10 +87,11 @@ def plot_field(elements, path, save=False, show=True):
     if show:
         plt.show()
     plt.close()
-    return
+
+    pass
 
 
-def load_data(ex_num, path_for_images, images_size=(64, 64)):
+def load_data_to_dir(ex_num, dir_address, images_size=(64, 64), x_path="x_train.txt", y_path="y_train.txt"):
     minEl = 0
     maxEl = 1
     xSize = 4
@@ -104,10 +105,11 @@ def load_data(ex_num, path_for_images, images_size=(64, 64)):
         while not matrixIsAcceptable(elements, xSize, ySize):
             elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
 
-        path = str(path_for_images) + "/cz_" + str(i) + ".png"
+        path = str(dir_address) + "/cz_" + str(i) + ".png"
 
         # cut main part of image and change resolution
         plot_field(elements, path, save=True, show=False)
+        # TODO
         ich.cut_image(path, path, area=(158, 112, 1154, 857))
         ich.resize_image(path, path, size=images_size)
 
@@ -125,12 +127,11 @@ def load_data(ex_num, path_for_images, images_size=(64, 64)):
 
         y_train = np.append(y_train, elements)
         x_train = np.append(x_train, pxs)
-    x_train.shape = (ex_num, 4096)
-    y_train.shape = (ex_num,16)
-    return (x_train, y_train)
-    # return (x_train, y_train), (x_test, y_test)
-    # return elements
+
+    np.savetxt(dir_address + "/" + x_path, x_train, fmt='%d')
+    np.savetxt(dir_address + "/" + y_path, y_train, fmt='%d')
+    pass
 
 
-# if __name__ == '__main__':
-#     (x_train, y_train) = load_data(10, "A_CZ", images_size=(64, 64))
+def load_data_from_dir(dir, x_path="x_train.txt", y_path="y_train.txt"):
+    return (np.loadtxt(dir + "/" + x_path, dtype=int), np.loadtxt(dir + "/" + y_path, dtype=int))
