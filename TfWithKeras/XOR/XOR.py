@@ -3,7 +3,7 @@ from keras.layers.core import Dense, Activation
 from keras.optimizers import SGD
 import numpy as np
 
-from TfWithKeras.GUI_REPORTER import plot_history
+from ADDITIONAL.GUI_REPORTER import plot_history
 
 if __name__ == '__main__':
 

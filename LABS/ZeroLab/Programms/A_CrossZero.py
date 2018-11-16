@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patch
 
 import numpy as np
-import TfWithKeras.IMAGE_CHANGER as ich
+import ADDITIONAL.IMAGE_CHANGER as ich
 from keras.preprocessing import image
 
 
