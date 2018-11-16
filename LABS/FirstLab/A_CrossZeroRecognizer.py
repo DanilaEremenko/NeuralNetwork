@@ -1,18 +1,15 @@
 import numpy as np
-import keras
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.utils import np_utils
 from keras.optimizers import SGD
 
-import TfWithKeras.GUI_REPORTER as gr
+import ADDITIONAL.GUI_REPORTER as gr
 
-from keras.preprocessing import image
-import ZeroLab.Programms.A_CrossZero as dataset
+from LABS import ZeroLab as dataset
 
 if __name__ == '__main__':
     np.random.seed(42)
-    image_size = (64, 64)
+    image_size = (32, 32)
     ex_num = 10
     neur_number = 800
     dir_address = "A_CZ"
