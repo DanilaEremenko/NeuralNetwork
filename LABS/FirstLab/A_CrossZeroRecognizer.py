@@ -5,7 +5,7 @@ from keras.optimizers import SGD
 
 import ADDITIONAL.GUI_REPORTER as gr
 
-from LABS import ZeroLab as dataset
+from LABS.ZeroLab.Programms import A_CrossZero as dataset
 
 if __name__ == '__main__':
     np.random.seed(42)
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     dir_address = "A_CZ"
 
     # CREATE FORMATTER DURECTORY
-    #dataset.load_data_to_dir(ex_num, dir_address, images_size=image_size)
+    # dataset.load_data_to_dir(ex_num, dir_address, images_size=image_size)
 
     # LOAD DATA FROM FORMATTED DIRECTORY
     (x_train, y_train) = dataset.load_data_from_dir(dir_address, "x_train.txt", "y_train.txt")
