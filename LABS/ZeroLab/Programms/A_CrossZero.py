@@ -3,7 +3,9 @@ import matplotlib.patches as patch
 
 import numpy as np
 import ADDITIONAL.IMAGE_CHANGER as ich
-from keras.preprocessing import image
+from ADDITIONAL.IMAGE_CHANGER import plot_examples_field
+from keras.preprocessing import image as kimage
+from PIL import Image
 
 
 def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
@@ -53,19 +55,18 @@ def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
     return not isDivised
 
 
-def addCircle(x, y, color):
-    r = 0.1
+def addCircle(x, y, color, r=0.1):
     plt.gca().add_patch(patch.Circle((x + (0.25 - r * 1.3), y + (0.25 - r * 1.3)), radius=r, color=color))
     plt.gca().add_patch(patch.Circle((x + (0.25 - r * 1.3), y + (0.25 - r * 1.3)), radius=r * 0.9, color='#FFFFFF'))
 
 
-def addCross(x, y, color):
+def addCross(x, y, color, k=1):
     # L
     plt.gca().add_patch(
-        patch.Rectangle((x + 0.25 * 0.7, y + 0.25 * 0.2), color=color, width=0.03, height=0.175, angle=45))
+        patch.Rectangle((x + 0.25 * 0.7, y + 0.25 * 0.2), color=color, width=0.03 * k, height=0.175 * k, angle=45))
     # R
     plt.gca().add_patch(
-        patch.Rectangle((x + 0.25 * 0.3, y + 0.25 * 0.2), color=color, width=0.175, height=0.03, angle=45))
+        patch.Rectangle((x + 0.25 * 0.3, y + 0.25 * 0.2), color=color, width=0.175 * k, height=0.03 * k, angle=45))
 
 
 def plot_field(elements, path, save=False, show=True):
@@ -91,7 +92,7 @@ def plot_field(elements, path, save=False, show=True):
     pass
 
 
-def load_data_to_dir(ex_num, dir_address, images_size=(64, 64), x_path="x_train.txt", y_path="y_train.txt"):
+def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_path="x_train.txt", y_path="y_train.txt"):
     minEl = 0
     maxEl = 1
     xSize = 4
@@ -107,28 +108,19 @@ def load_data_to_dir(ex_num, dir_address, images_size=(64, 64), x_path="x_train.
 
         path = str(dir_address) + "/cz_" + str(i) + ".png"
 
-        # cut main part of image and change resolution
-        plot_field(elements, path, save=True, show=False)
-        # TODO
-        ich.cut_image(path, path, area=(158, 112, 1154, 857))
-        ich.resize_image(path, path, size=images_size)
+        pxs_field = plot_examples_field(data=elements, data_size=elements.shape, x_pictures=x_pictures, y_types=y_types,
+                                        images_sizes=images_size, filed_path=path,
+                                        save=True, show=False)
 
-        # convert to numpy array
-        img = image.load_img(path, grayscale=True)
-        pxs = image.img_to_array(img)
-
-        # normalization
-        # pxs = 255 - pxs
-        # pxs /= 255.0
-        # pxs = np.expand_dims(pxs, axis=0)
-        pxs.shape = (1, images_size[0] * images_size[1])
+        pxs_field.shape = (1, pxs_field.shape[0] * pxs_field.shape[1])
 
         elements.shape = (16)
 
         y_train = np.append(y_train, elements)
-        x_train = np.append(x_train, pxs)
+        x_train = np.append(x_train, pxs_field)
 
-    np.savetxt(dir_address + "/" + x_path, x_train, fmt='%d')
+    np.savetxt(dir_address + "/" + x_path,
+               x_train.reshape(ex_num * xSize * ySize, images_size[0] * images_size[1]), fmt='%d')
     np.savetxt(dir_address + "/" + y_path, y_train, fmt='%d')
     pass
 
