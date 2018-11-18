@@ -1,7 +1,6 @@
 from PIL import Image
 from keras.preprocessing import image as kimage
 import numpy as np
-from math import sqrt
 
 
 def resize_image(input_path, output_path, size):
@@ -46,3 +45,7 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, file
         img_field.show()
 
     return pxs_fieled
+
+
+def get_pxs(path):
+    return kimage.img_to_array(kimage.load_img(path, color_mode="grayscale"))

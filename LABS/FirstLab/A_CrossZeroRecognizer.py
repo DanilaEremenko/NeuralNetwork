@@ -2,9 +2,8 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import SGD
-
 import ADDITIONAL.GUI_REPORTER as gr
-
+from ADDITIONAL.IMAGE_CHANGER import get_pxs
 from LABS.ZeroLab.Programms import A_CrossZero as dataset
 
 if __name__ == '__main__':
@@ -27,7 +26,7 @@ if __name__ == '__main__':
 
     model = Sequential()
 
-    # 800 neurons with 784 input,initialize - normal distribution
+    # <neur_number> neurons with 1024 inputs,initialize - normal distribution
     model.add(Dense(neur_number, input_dim=in_image_size[0] * in_image_size[1], init='normal', activation='relu'))
     model.add(Dense(1, init='normal', activation='hard_sigmoid'))
 
@@ -36,8 +35,11 @@ if __name__ == '__main__':
     # batch_size define speed of studying
     history = model.fit(x_train, y_train, batch_size=1, nb_epoch=5, verbose=1)
 
-    # score = model.evaluate(x_test, y_test, verbose=1)
-    # print "accuracy on testin data %.f%%" % (score[1] * 100)
+    x_test = np.array([get_pxs("Gimp_Circle.png"), get_pxs("Gimp_Cross.png")]).reshape(2, 1024)
+    y_test = np.array([0, 1])
+
+    score = model.evaluate(x_test, y_test, verbose=1)
+    print "accuracy on testing data %.f%%" % (score[1] * 100)
 
     gr.plot_history_separte(history, save_path_acc="ACC.png", save_path_loss="LOSS.png", save=True, show=False)
 

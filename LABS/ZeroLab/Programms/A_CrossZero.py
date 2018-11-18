@@ -2,10 +2,8 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patch
 
 import numpy as np
-import ADDITIONAL.IMAGE_CHANGER as ich
+
 from ADDITIONAL.IMAGE_CHANGER import plot_examples_field
-from keras.preprocessing import image as kimage
-from PIL import Image
 
 
 def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
