@@ -49,3 +49,11 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, file
 
 def get_pxs(path):
     return kimage.img_to_array(kimage.load_img(path, color_mode="grayscale"))
+
+def deform_image(path_in,path_out,k):
+    #TODO
+    pass
+
+if __name__ == '__main__':
+    deform_image("Circle.png","D_Circle.png",k=2)
+    deform_image("Cross.png", "D_Cross.png", k=2)
