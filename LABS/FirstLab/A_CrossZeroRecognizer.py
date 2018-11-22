@@ -39,8 +39,8 @@ if __name__ == '__main__':
     y_test = np.array([0, 1])
 
     score = model.evaluate(x_test, y_test, verbose=1)
-    print "accuracy on testing data %.f%%" % (score[1] * 100)
+    print ("accuracy on testing data %.f%%" % (score[1] * 100))
 
-    gr.plot_history_separte(history, save_path_acc="ACC.png", save_path_loss="LOSS.png", save=True, show=False)
+    gr.plot_history_separte(history, save_path_acc="ACC.png", save_path_loss="LOSS.png", save=True, show=True)
 
     # model.save('MNIST_MODEL_200.h5')

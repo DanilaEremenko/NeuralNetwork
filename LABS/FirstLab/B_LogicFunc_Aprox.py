@@ -20,6 +20,6 @@ if __name__ == '__main__':
     history = model.fit(x_train, y_train, batch_size=13, epochs=400, verbose=1)
 
     score = model.evaluate(x_test, y_test, verbose=1)
-    print "accuracy on testing data %.f%%" % (score[1] * 100)
+    print ("accuracy on testing data %.f%%" % (score[1] * 100))
 
     gr.plot_history_separte(history, save_path_acc="ACC.png", save_path_loss="LOSS.png", save=False, show=True)

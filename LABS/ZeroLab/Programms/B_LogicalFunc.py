@@ -21,7 +21,7 @@ def load_data():
             for x3 in range(0, 2):
                 for x4 in range(0, 2):
                     for x5 in range(0, 2):
-                        if i / test_size != 0:
+                        if i % test_size != 0:
                             x_train = np.append(x_train, np.array([x1, x2, x3, x4, x5]))
                             y_train = np.append(y_train, func(x1, x2, x3, x4, x5))
                         else:
