@@ -36,12 +36,12 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, file
             type_number = 0
             for y_type in y_types:
                 if data[x][y] == y_type:
-                    pxs_fieled = np.append(pxs_fieled,
-                                           deform_image(
-                                               x_pics[type_number][r.randint(0, y_types.size)].reshape(images_sizes),
-                                               shape=1024,
-                                               k=r.uniform(-0.3, 0.3), n=r.randint(0, 32),
-                                               m=r.randint(0, 32)))
+                    pxs_fieled = \
+                        np.append(pxs_fieled, deform_image(
+                            x_pics[type_number][r.randint(0, x_pictures.size / y_types.size)].reshape(images_sizes),
+                            shape=1024,
+                            k=r.uniform(-0.3, 0.3), n=r.randint(0, 32),
+                            m=r.randint(0, 32)))
                 type_number += 1
 
     pxs_fieled.shape = (images_sizes[0] * data_size[0] * data_size[1], images_sizes[0])
