@@ -50,8 +50,7 @@ def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
     return not isDivised
 
 
-def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_path="x_train.txt",
-                     y_path="y_train.txt"):
+def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types):
     minEl = 0
     maxEl = 1
     xSize = 4
@@ -60,28 +59,43 @@ def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_pa
     x_train = np.empty(0)
     y_train = np.empty(0)
 
+    x_test = np.empty(0)
+    y_test = np.empty(0)
+
     for i in range(0, ex_num):
         elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
         while not matrixIsAcceptable(elements, xSize, ySize):
             elements = np.random.randint(minEl, maxEl + 1, size=(ySize, xSize))
 
-        path = str(dir_address) + "/cz_" + str(i) + ".png"
+        path = str(dir_address) + "/cz_" + str(i)
 
-        pxs_field = plot_examples_field(data=elements, data_size=elements.shape, x_pictures=x_pictures, y_types=y_types,
-                                        images_sizes=images_size, filed_path=path,
-                                        save=True, show=False)
+        (x_train_cur, y_train_cur), (x_test_cur, y_test_cur) = plot_examples_field(data=elements,
+                                                                                   data_size=elements.shape,
+                                                                                   x_pictures=x_pictures,
+                                                                                   y_types=y_types,
+                                                                                   images_sizes=images_size,
+                                                                                   img_path=path,
+                                                                                   save=True, show=False)
 
-        pxs_field.shape = (1, pxs_field.shape[0] * pxs_field.shape[1])
+        x_train_cur.shape = (1, x_train_cur.shape[0] * x_train_cur.shape[1])
+        x_test_cur.shape = (1, x_test_cur.shape[0] * x_test_cur.shape[1])
 
-        elements.shape = 16
+        x_train = np.append(x_train, x_train_cur)
+        y_train = np.append(y_train, y_train_cur)
+        x_test = np.append(x_test, x_test_cur)
+        y_test = np.append(y_test, y_test_cur)
 
-        y_train = np.append(y_train, elements)
-        x_train = np.append(x_train, pxs_field)
+    np.savetxt(dir_address + "/x_train.txt",
+               x_train.reshape(y_train.size, images_size[0] * images_size[1]), fmt='%d')
+    np.savetxt(dir_address + "/y_train.txt", y_train, fmt='%d')
 
-    np.savetxt(dir_address + "/" + x_path,
-               x_train.reshape(ex_num * xSize * ySize, images_size[0] * images_size[1]), fmt='%d')
-    np.savetxt(dir_address + "/" + y_path, y_train, fmt='%d')
+    np.savetxt(dir_address + "/x_test.txt",
+               x_test.reshape(y_test.size, images_size[0] * images_size[1]), fmt='%d')
+    np.savetxt(dir_address + "/y_test.txt", y_test, fmt='%d')
+
     pass
 
-def load_data_from_dir(dir, x_path="x_train.txt", y_path="y_train.txt"):
-    return np.loadtxt(dir + "/" + x_path, dtype=int), np.loadtxt(dir + "/" + y_path, dtype=int)
+
+def load_data_from_dir(dir):
+    return (np.loadtxt(dir + "/x_train.txt", dtype=int), np.loadtxt(dir + "/y_train.txt", dtype=int)), \
+           (np.loadtxt(dir + "/x_test.txt", dtype=int), np.loadtxt(dir + "/y_test.txt", dtype=int))
