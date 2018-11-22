@@ -1,6 +1,7 @@
 from PIL import Image
 from keras.preprocessing import image as kimage
 import numpy as np
+import numpy.random as r
 
 
 def resize_image(input_path, output_path, size):
@@ -32,7 +33,9 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, file
             type_number = 0
             for y_type in y_types:
                 if data[x][y] == y_type:
-                    pxs_fieled = np.append(pxs_fieled, x_pxs[type_number])
+                    pxs_fieled = np.append(pxs_fieled, deform_image(x_pxs[type_number].reshape(images_sizes), shape=1024,
+                                                                    k=r.uniform(-0.3, 0.3), n=r.randint(0, 32),
+                                                                    m=r.randint(0, 32)))
                 type_number += 1
 
     pxs_fieled.shape = (images_sizes[0] * data_size[0] * data_size[1], images_sizes[0])
@@ -50,10 +53,26 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, file
 def get_pxs(path):
     return kimage.img_to_array(kimage.load_img(path, color_mode="grayscale"))
 
-def deform_image(path_in,path_out,k):
-    #TODO
-    pass
 
-if __name__ == '__main__':
-    deform_image("Circle.png","D_Circle.png",k=2)
-    deform_image("Cross.png", "D_Cross.png", k=2)
+def deform_image(arr, shape, k, n, m):
+    if n > m:
+        c = n
+        n = m
+        m = c
+    A = arr.shape[0] / 3.0
+    w = 2.0 / arr.shape[1]
+    shift = lambda x: A * np.sin(2.0 * np.pi * x * w)
+    for i in range(n, m):
+        arr[:, i] = np.roll(arr[:, i], int(shift(i) * k))
+    return arr.reshape(shape)
+
+# if __name__ == '__main__':
+# arr1 = deform_image(get_pxs("Circle.png"), shape=(32,32),k=0.25, n =0, m = 32)
+# arr2 = deform_image(get_pxs("Circle.png"), shape=(32,32),k=0.25, n =0, m = 16)
+# arr3 =deform_image(get_pxs("Cross.png"), shape=(32,32),k=0.25, n =10, m = 29)
+# img = Image.fromarray(arr1.transpose()).convert('L')
+# img.show()
+# img = Image.fromarray(arr2.transpose()).convert('L')
+# img.show()
+# img = Image.fromarray(arr3.transpose()).convert('L')
+# img.show()

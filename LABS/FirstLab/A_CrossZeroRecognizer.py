@@ -15,9 +15,9 @@ if __name__ == '__main__':
     dir_address = "A_CZ"
 
     # CREATE FORMATTED DIRECTORY
-    # x_pictures = np.array(["Circle.png", "Cross.png"])
-    # y_types = np.array([0, 1])
-    # dataset.load_data_to_dir(ex_num, dir_address, images_size=in_image_size, x_pictures=x_pictures, y_types=y_types)
+    x_pictures = np.array(["CircleV1.png", "CrossV1.png"])
+    y_types = np.array([0, 1])
+    dataset.load_data_to_dir(ex_num, dir_address, images_size=in_image_size, x_pictures=x_pictures, y_types=y_types)
 
     # LOAD DATA FROM FORMATTED DIRECTORY
     (x_train, y_train) = dataset.load_data_from_dir(dir_address, "x_train.txt", "y_train.txt")
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # batch_size define speed of studying
     history = model.fit(x_train, y_train, batch_size=1, nb_epoch=5, verbose=1)
 
-    x_test = np.array([get_pxs("Gimp_Circle.png"), get_pxs("Gimp_Cross.png")]).reshape(2, 1024)
+    x_test = np.array([get_pxs("CircleV2.png"), get_pxs("CrossV2.png")]).reshape(2, 1024)
     y_test = np.array([0, 1])
 
     score = model.evaluate(x_test, y_test, verbose=1)

@@ -53,43 +53,6 @@ def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
     return not isDivised
 
 
-def addCircle(x, y, color, r=0.1):
-    plt.gca().add_patch(patch.Circle((x + (0.25 - r * 1.3), y + (0.25 - r * 1.3)), radius=r, color=color))
-    plt.gca().add_patch(patch.Circle((x + (0.25 - r * 1.3), y + (0.25 - r * 1.3)), radius=r * 0.9, color='#FFFFFF'))
-
-
-def addCross(x, y, color, k=1):
-    # L
-    plt.gca().add_patch(
-        patch.Rectangle((x + 0.25 * 0.7, y + 0.25 * 0.2), color=color, width=0.03 * k, height=0.175 * k, angle=45))
-    # R
-    plt.gca().add_patch(
-        patch.Rectangle((x + 0.25 * 0.3, y + 0.25 * 0.2), color=color, width=0.175 * k, height=0.03 * k, angle=45))
-
-
-def plot_field(elements, path, save=False, show=True):
-    xSize = 4
-    ySize = 4
-    for x in range(0, xSize):
-        for y in range(0, ySize):
-            if elements[y][x] == 1:
-                addCross(x=x / 4.0, y=(ySize - y - 1) / 4.0, color="#000000")
-            else:
-                addCircle(x=x / 4.0, y=(ySize - y - 1) / 4.0, color="#000000")
-
-    for i in np.arange(0.25, 0.76, 0.25, dtype=float):
-        plt.gca().add_patch(patch.Rectangle((i, 0), color="#000000", width=0.0001, height=1))
-        plt.gca().add_patch(patch.Rectangle((0, i), color="#000000", width=1, height=0.0001))
-
-    if save:
-        plt.savefig(path, dpi=200)
-    if show:
-        plt.show()
-    plt.close()
-
-    pass
-
-
 def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_path="x_train.txt", y_path="y_train.txt"):
     minEl = 0
     maxEl = 1
@@ -112,7 +75,7 @@ def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_pa
 
         pxs_field.shape = (1, pxs_field.shape[0] * pxs_field.shape[1])
 
-        elements.shape = (16)
+        elements.shape = 16
 
         y_train = np.append(y_train, elements)
         x_train = np.append(x_train, pxs_field)
@@ -124,4 +87,4 @@ def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_pa
 
 
 def load_data_from_dir(dir, x_path="x_train.txt", y_path="y_train.txt"):
-    return (np.loadtxt(dir + "/" + x_path, dtype=int), np.loadtxt(dir + "/" + y_path, dtype=int))
+    return np.loadtxt(dir + "/" + x_path, dtype=int), np.loadtxt(dir + "/" + y_path, dtype=int)
