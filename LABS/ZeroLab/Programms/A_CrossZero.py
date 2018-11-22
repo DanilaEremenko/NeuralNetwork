@@ -1,6 +1,3 @@
-import matplotlib.pyplot as plt
-import matplotlib.patches as patch
-
 import numpy as np
 
 from ADDITIONAL.IMAGE_CHANGER import plot_examples_field
@@ -53,7 +50,8 @@ def matrixIsAcceptable(elements, maxX, maxY, verbose=False):
     return not isDivised
 
 
-def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_path="x_train.txt", y_path="y_train.txt"):
+def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_path="x_train.txt",
+                     y_path="y_train.txt"):
     minEl = 0
     maxEl = 1
     xSize = 4
@@ -84,7 +82,6 @@ def load_data_to_dir(ex_num, dir_address, images_size, x_pictures, y_types, x_pa
                x_train.reshape(ex_num * xSize * ySize, images_size[0] * images_size[1]), fmt='%d')
     np.savetxt(dir_address + "/" + y_path, y_train, fmt='%d')
     pass
-
 
 def load_data_from_dir(dir, x_path="x_train.txt", y_path="y_train.txt"):
     return np.loadtxt(dir + "/" + x_path, dtype=int), np.loadtxt(dir + "/" + y_path, dtype=int)

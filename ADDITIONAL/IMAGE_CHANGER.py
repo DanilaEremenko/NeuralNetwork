@@ -20,12 +20,15 @@ def cut_image(input_path, output_path, area):
     original_image.save(output_path)
 
 
-def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, filed_path, save=False, show=True, ):
-    x_pxs = np.empty(0)
+def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, filed_path, save=False,
+                        show=True, ):
+    x_pics = np.empty(0)
 
-    for x_path in x_pictures:
-        x_pxs = np.append(x_pxs, kimage.img_to_array(kimage.load_img(x_path, color_mode="grayscale")))
-    x_pxs.shape = (x_pictures.__len__(), images_sizes[0] * images_sizes[1])
+    for path in x_pictures.reshape(x_pictures.size, 1):
+        x_pics = np.append(x_pics, get_pxs(path[0]))
+
+    # TOOD
+    x_pics.shape = (x_pictures.shape[0], x_pictures.shape[1], images_sizes[0] * images_sizes[1])
 
     pxs_fieled = np.empty(0)
     for x in range(0, data_size[0]):
@@ -33,9 +36,12 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, file
             type_number = 0
             for y_type in y_types:
                 if data[x][y] == y_type:
-                    pxs_fieled = np.append(pxs_fieled, deform_image(x_pxs[type_number].reshape(images_sizes), shape=1024,
-                                                                    k=r.uniform(-0.3, 0.3), n=r.randint(0, 32),
-                                                                    m=r.randint(0, 32)))
+                    pxs_fieled = np.append(pxs_fieled,
+                                           deform_image(
+                                               x_pics[type_number][r.randint(0, y_types.size)].reshape(images_sizes),
+                                               shape=1024,
+                                               k=r.uniform(-0.3, 0.3), n=r.randint(0, 32),
+                                               m=r.randint(0, 32)))
                 type_number += 1
 
     pxs_fieled.shape = (images_sizes[0] * data_size[0] * data_size[1], images_sizes[0])
