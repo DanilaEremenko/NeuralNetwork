@@ -135,11 +135,11 @@ def load_data(train_size=2000, show=False):
     x_train.shape = (train_size, 2)
     x_test.shape = (test_size, 2)
 
-    x_train_for_plt.shape = (x_train_for_plt.size / 2, 2)
-    x_train_missed_for_plt.shape = (x_train_missed_for_plt.size / 2, 2)
+    x_train_for_plt.shape = (int(x_train_for_plt.size / 2), 2)
+    x_train_missed_for_plt.shape = (int(x_train_missed_for_plt.size / 2), 2)
 
-    x_test_for_plt.shape = (x_test_for_plt.size / 2, 2)
-    x_test_missed_for_plt.shape = (x_test_missed_for_plt.size / 2, 2)
+    x_test_for_plt.shape = (int(x_test_for_plt.size / 2), 2)
+    x_test_missed_for_plt.shape = (int(x_test_missed_for_plt.size / 2), 2)
 
     # Plotting train
     plt.xlim(0, 1)
