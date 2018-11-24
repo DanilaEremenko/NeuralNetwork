@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-import LABS.ZeroLab.Programms.B_LogicalFunc as dataset2
+from LABS.ZeroLab.Programms.B_LogicalFunc import load_data, func, func_by_arr
 from keras.layers import Dense
 from keras.models import Sequential
 from keras.optimizers import SGD
@@ -13,7 +13,7 @@ if __name__ == '__main__':
     batch_size = 1
     epochs = 50
     verbose = 1
-    (x_train, y_train), (x_test, y_test) = dataset2.load_data()
+    (x_train, y_train), (x_test, y_test) = load_data()
 
     model = Sequential()
 
@@ -28,8 +28,8 @@ if __name__ == '__main__':
 
     score = model.evaluate(x_test, y_test, verbose=1)
 
-    print("\naccuracy on train data\t %.f%%" % (history.history['acc'][epochs - 1] * 100))
+
+    print("\naccuracy on train data\t %.f%%"%(history.history['acc'][epochs-1]*100))
     print("\naccuracy on testing data %.f%%" % (score[1] * 100))
     # print("loss on train data %.f%%" % (history.history['loss'][history.history] * 100))
-    gr.plot_history_separte(history, save_path_acc="B_LF_Aprox/ACC.png", save_path_loss="B_LF_Aprox/LOSS.png",
-                            save=True, show=False)
+    gr.plot_history_separte(history, save_path_acc="B_LF_Aprox/ACC.png", save_path_loss="B_LF_Aprox/LOSS.png", save=True, show=False)

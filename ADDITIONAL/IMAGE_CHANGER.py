@@ -100,3 +100,14 @@ def deform_image(arr, shape, k, n, m):
     for i in range(n, m):
         arr[:, i] = np.roll(arr[:, i], int(shift(i) * k))
     return arr.reshape(shape)
+
+# if __name__ == '__main__':
+# arr1 = deform_image(get_pxs("CircleV0.png"), shape=(32,32),k=0.25, n =0, m = 32)
+# arr2 = deform_image(get_pxs("CircleV0.png"), shape=(32,32),k=0.25, n =0, m = 16)
+# arr3 =deform_image(get_pxs("CrossV0.png"), shape=(32,32),k=0.25, n =10, m = 29)
+# img = Image.fromarray(arr1.transpose()).convert('L')
+# img.show()
+# img = Image.fromarray(arr2.transpose()).convert('L')
+# img.show()
+# img = Image.fromarray(arr3.transpose()).convert('L')
+# img.show()
