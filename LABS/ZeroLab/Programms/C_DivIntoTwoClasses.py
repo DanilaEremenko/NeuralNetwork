@@ -165,6 +165,3 @@ def load_data(train_size=2000, show=False):
 
     return (x_train, y_train), (x_test, y_test)
 
-
-if __name__ == '__main__':
-    (x_train, y_train), (x_test, y_test) = load_data(train_size=4000, show=True)
