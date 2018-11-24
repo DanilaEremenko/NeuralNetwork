@@ -4,31 +4,30 @@ from keras.layers import Dense
 from keras.optimizers import SGD
 import ADDITIONAL.GUI_REPORTER as gr
 from LABS.ZeroLab.Programms import A_CrossZero as dataset
-
 if __name__ == '__main__':
     np.random.seed(42)
     in_image_size = (32, 32)
     ex_num = 10
     neur_number = 800
-    dir_address = "A_CZ"
+    example_dir = "A_CZ"
 
     # 0 - create data, 1 - load created data,2 - load created data and train
     MODE = 0
 
     if MODE == 0:
         # CREATE FORMATTED DIRECTORY
-        dir = "PICT_TEMPL/"
+        templ_dir = "PICT_TEMPL/"
         x_pictures = np.array(
-            [[dir + "CircleV0.png", dir + "CircleV1.png", dir + "CircleV2.png",
-              dir + "CircleV3.png", dir + "Circle_Gimp.png"],
-             [dir + "CrossV0.png", dir + "CrossV1.png", dir + "CrossV2.png",
-              dir + "CrossV3.png", dir + "Cross_Gimp.png"]])
+            [[templ_dir + "CircleV0.png", templ_dir + "CircleV1.png", templ_dir + "CircleV2.png",
+              templ_dir + "CircleV3.png", templ_dir + "Circle_Gimp.png"],
+             [templ_dir + "CrossV0.png", templ_dir + "CrossV1.png", templ_dir + "CrossV2.png",
+              templ_dir + "CrossV3.png", templ_dir + "Cross_Gimp.png"]])
         y_types = np.array([0, 1])
-        dataset.load_data_to_dir(ex_num, dir_address, images_size=in_image_size, x_pictures=x_pictures, y_types=y_types)
+        dataset.load_data_to_dir(ex_num, example_dir, images_size=in_image_size, x_pictures=x_pictures, y_types=y_types)
     elif MODE == 1 or MODE == 2:
 
         # LOAD DATA FROM FORMATTED DIRECTORY
-        (x_train, y_train), (x_test, y_test) = dataset.load_data_from_dir(dir_address)
+        (x_train, y_train), (x_test, y_test) = dataset.load_data_from_dir(example_dir)
 
         if MODE == 2:
             x_train = x_train / 255.0

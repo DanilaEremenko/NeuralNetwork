@@ -18,10 +18,8 @@ if __name__ == '__main__':
         x.shape = (1, 784)
 
         model = keras.models.load_model('MNIST_MODEL.h5')
-        model_200 = keras.models.load_model('MNIST_MODEL_200.h5')
 
         prediction = model.predict(x)
-        prediction_200 = model_200.predict(x)
 
-        print('REAL \t\tPREDICTED \t\tPREDICTED200')
-        print(str(nTest) + '\t\t\t' + str(np.argmax(prediction)) + '\t\t\t' + str(np.argmax(prediction_200)))
+        print('REAL \t\tPREDICTED')
+        print(str(nTest) + '\t\t\t' + str(np.argmax(prediction)))
