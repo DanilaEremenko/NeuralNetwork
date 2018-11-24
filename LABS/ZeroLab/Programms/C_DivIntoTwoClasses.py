@@ -59,18 +59,20 @@ def isAcceptableCoordinatesP(x, y, xBottom=50, xTop=75, yBottom=80, yTop=80):
 def isAcceptableCoordinatesC(x, y, xBottom=5, xTop=30, yBottom=10, yTop=80):
     high = yTop - yBottom
     wide = int((yTop - yBottom) / 8)
+
     # Rect
     if (not range(xBottom, xTop).__contains__(x) and range(yBottom, yTop).__contains__(y)):
         return False
 
     # Vert
-    if (range(xBottom, xBottom + wide * 2).__contains__(x) and range(yBottom, yBottom + high).__contains__(y)):
+    if (range(xBottom, xBottom + wide).__contains__(x) and range(yBottom, yBottom + high).__contains__(y)):
         return True
+
     # Bottom
-    elif (range(xBottom, xBottom + high).__contains__(x) and range(yBottom, yBottom + wide * 2).__contains__(y)):
+    elif (range(xBottom, xBottom + high).__contains__(x) and range(yBottom, yBottom + wide).__contains__(y)):
         return True
     # Top
-    elif (range(xBottom, xBottom + high).__contains__(x) and range(yTop - wide * 2, yTop).__contains__(y)):
+    elif (range(xBottom, xBottom + high).__contains__(x) and range(yTop - wide, yTop).__contains__(y)):
         return True
 
     return False
@@ -86,7 +88,10 @@ def load_data(train_size=2000, show=False):
     y_test = np.empty(0)
 
     x_train_for_plt = np.empty(0)
+    x_train_missed_for_plt = np.empty(0)
+
     x_test_for_plt = np.empty(0)
+    x_test_missed_for_plt = np.empty(0)
 
     for i in range(train_size + test_size):
 
@@ -98,7 +103,7 @@ def load_data(train_size=2000, show=False):
         else:
             x_test = np.append(x_test, (x, y))
 
-        if isAcceptableCoordinatesC(x, y, xBottom=20, xTop=80, yBottom=10, yTop=100):
+        if isAcceptableCoordinatesE(x, y, xBottom=20, xTop=80, yBottom=10, yTop=100):
             if i < train_size:
                 x_train_for_plt = np.append(x_train_for_plt, (x, y))
                 y_train = np.append(y_train, 1)
@@ -107,39 +112,53 @@ def load_data(train_size=2000, show=False):
                 y_test = np.append(y_test, 1)
         else:
             if i < train_size:
+                x_train_missed_for_plt = np.append(x_train_missed_for_plt, (x, y))
                 y_train = np.append(y_train, 0)
             else:
+                x_test_missed_for_plt = np.append(x_test_missed_for_plt, (x, y))
                 y_test = np.append(y_test, 0)
 
+    # Normalizing
     x_train /= float(x_train.max())
     y_train /= float(y_train.max())
 
     x_test /= float(x_test.max())
     y_test /= float(y_test.max())
 
-    x_train.shape = (train_size, 2)
-    x_test.shape = (test_size, 2)
-
     x_train_for_plt /= float(x_train_for_plt.max())
     x_test_for_plt /= float(x_test_for_plt.max())
 
-    x_train_for_plt.shape = (x_train_for_plt.size / 2, 2)
-    x_test_for_plt.shape = (x_test_for_plt.size / 2, 2)
+    x_train_missed_for_plt /= float(x_train_missed_for_plt.max())
+    x_test_missed_for_plt /= float(x_test_missed_for_plt.max())
 
+    # Reshaping
+    x_train.shape = (train_size, 2)
+    x_test.shape = (test_size, 2)
+
+    x_train_for_plt.shape = (x_train_for_plt.size / 2, 2)
+    x_train_missed_for_plt.shape = (x_train_missed_for_plt.size / 2, 2)
+
+    x_test_for_plt.shape = (x_test_for_plt.size / 2, 2)
+    x_test_missed_for_plt.shape = (x_test_missed_for_plt.size / 2, 2)
+
+    # Plotting train
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.title("train data")
     plt.plot(x_train_for_plt.transpose()[0], x_train_for_plt.transpose()[1], '.')
+    plt.plot(x_train_missed_for_plt.transpose()[0], x_train_missed_for_plt.transpose()[1], '.')
 
     if show:
         plt.show()
 
     plt.close()
 
+    # Plotting test
     plt.xlim(0, 1)
     plt.ylim(0, 1)
     plt.title("test data")
     plt.plot(x_test_for_plt.transpose()[0], x_test_for_plt.transpose()[1], '.')
+    plt.plot(x_test_missed_for_plt.transpose()[0], x_test_missed_for_plt.transpose()[1], '.')
 
     if show:
         plt.show()
@@ -147,3 +166,5 @@ def load_data(train_size=2000, show=False):
     return (x_train, y_train), (x_test, y_test)
 
 
+if __name__ == '__main__':
+    (x_train, y_train), (x_test, y_test) = load_data(train_size=4000, show=True)
