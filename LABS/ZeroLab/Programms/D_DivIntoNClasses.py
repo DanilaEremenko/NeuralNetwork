@@ -1,23 +1,21 @@
 import matplotlib.pyplot as plt
-import random as rand
 import math as m
-
 import numpy as np
 
 
-def isElipse(x, y, xCenter=30, yCenter=30, radVert=10, radHor=10):
+def isElipse(x, y, xCenter, yCenter, radVert, radHor):
     if not m.pow((x - xCenter) / radHor, 2) + m.pow((y - yCenter) / radVert, 2) <= 1:
         return False
     return True
 
 
-def isRect(x, y, xMin=0, yMin=0, xMax=0, yMax=0):
-    if not (range(xMin, xMax).__contains__(x) and range(yMin, yMax).__contains__(y)):
-        return False
-    return True
+def isRect(x, y, xMin, yMin, xMax, yMax):
+    if (xMin < x and x < xMax) and (yMin < y and y < yMax):
+        return True
+    return False
 
 
-def isTriangle(x, y, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0):
+def isTriangle(x, y, x1, y1, x2, y2, x3, y3):
     sign1 = (x1 - x) * (y2 - y1) - (x2 - x1) * (y1 - y)
     sign2 = (x2 - x) * (y3 - y2) - (x3 - x2) * (y2 - y)
     sign3 = (x3 - x) * (y1 - y3) - (x1 - x3) * (y3 - y)
@@ -57,14 +55,12 @@ def load_data(train_size=4000, show=False):
     test_plt_points3 = np.empty(0)
     test_plt_points4 = np.empty(0)
 
-    min = 0
-    max = 10000
     for i in range(0, train_size + test_size):
-        x = rand.randint(min, max)
-        y = rand.randint(min, max)
+        x = np.random.random()
+        y = np.random.random()
 
         # FirstFigure
-        if isRect(x, y, xMin=int(0.15 * max), yMin=int(0.67 * max), xMax=int(0.35 * max), yMax=int(0.82 * max)):
+        if isRect(x, y, xMin=0.15, yMin=0.67, xMax=0.35, yMax=0.82):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
@@ -76,8 +72,7 @@ def load_data(train_size=4000, show=False):
                 test_plt_points1 = np.append(test_plt_points1, (x, y))
 
         # SecondFigure
-        elif isElipse(x, y, xCenter=int(0.75 * max), yCenter=int(0.75 * max), radHor=int(0.15 * max),
-                      radVert=int(0.15 * max)):
+        elif isElipse(x, y, xCenter=0.75, yCenter=0.75, radHor=0.15, radVert=0.15):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
@@ -89,8 +84,7 @@ def load_data(train_size=4000, show=False):
                 test_plt_points2 = np.append(test_plt_points2, (x, y))
 
         # ThirdFigure
-        elif isTriangle(x, y, x1=int(0.15 * max), y1=int(0.15 * max), x2=int(0.30 * max), y2=int(0.30 * max),
-                        x3=int(0.50 * max), y3=int(0.15 * max)):
+        elif isTriangle(x, y, x1=0.15, y1=0.15, x2=0.30, y2=0.30, x3=0.50, y3=0.15):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
@@ -102,7 +96,7 @@ def load_data(train_size=4000, show=False):
                 test_plt_points3 = np.append(test_plt_points3, (x, y))
 
         # FourthFigure
-        elif isRect(x, y, xMin=int(0.62 * max), yMin=int(0.15 * max), xMax=int(0.85 * max), yMax=int(0.30 * max)):
+        elif isRect(x, y, xMin=0.62, yMin=0.15, xMax=0.85, yMax=0.30):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
@@ -123,21 +117,6 @@ def load_data(train_size=4000, show=False):
                 x_test = np.append(x_test, (x, y))
                 y_test = np.append(y_test, 0)
                 test_plt_points0 = np.append(test_plt_points0, (x, y))
-
-    # normalizing
-    x_train /= float(max)
-    train_plt_points0 /= float(max)
-    train_plt_points1 /= float(max)
-    train_plt_points2 /= float(max)
-    train_plt_points3 /= float(max)
-    train_plt_points4 /= float(max)
-
-    x_test /= float(max)
-    test_plt_points0 /= float(max)
-    test_plt_points1 /= float(max)
-    test_plt_points2 /= float(max)
-    test_plt_points3 /= float(max)
-    test_plt_points4 /= float(max)
 
     # reshaping
     x_train.shape = (int(x_train.size / 2), 2)

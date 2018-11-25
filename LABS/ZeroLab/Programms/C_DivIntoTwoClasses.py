@@ -1,78 +1,77 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import random as rand
 
 
-def isAcceptableCoordinatesE(x, y, xBottom=5, xTop=30, yBottom=10, yTop=80):
+def isAcceptableCoordinatesE(x, y, xBottom, xTop, yBottom, yTop):
     high = yTop - yBottom
-    wide = int((yTop - yBottom) / 8)
-    # Rect
-    if (not range(xBottom, xTop).__contains__(x) and range(yBottom, yTop).__contains__(y)):
+    wide = (yTop - yBottom) / 8.0
+
+    # Bigest rect
+    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
         return False
 
     # Vert
-    if (range(xBottom, xBottom + wide * 2).__contains__(x) and range(yBottom, yBottom + high).__contains__(y)):
+    if (x > xBottom and x < xBottom + wide * 2.0) and (y > yBottom and y < yBottom + high):
         return True
     # Bottom
-    elif (range(xBottom, xBottom + high).__contains__(x) and range(yBottom, yBottom + wide * 2).__contains__(y)):
+    elif (x > xBottom and x < xBottom + high) and (y > yBottom and y < yBottom + wide * 2):
         return True
+
     # Top
-    elif (range(xBottom, xBottom + high).__contains__(x) and range(yTop - wide * 2, yTop).__contains__(y)):
+    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide * 2 and y < yTop):
         return True
+
     # Middle
-    elif (range(xBottom, xBottom + wide * 4).__contains__(x) and range(yBottom + 3 * wide,
-                                                                       yBottom + 5 * wide).__contains__(y)):
+    elif (x > xBottom and x < xBottom + wide * 4) and (y > yBottom + 3 * wide and y < yBottom + 5 * wide):
         return True
 
     return False
 
 
-def isAcceptableCoordinatesP(x, y, xBottom=50, xTop=75, yBottom=80, yTop=80):
+def isAcceptableCoordinatesP(x, y, xBottom, xTop, yBottom, yTop):
     high = yTop - yBottom
-    wide = int((yTop - yBottom) / 8)
+    wide = (yTop - yBottom) / 8.0
 
     # Bigest rect
-    if (not range(xBottom, xTop).__contains__(x) and range(yBottom, yTop).__contains__(y)):
-        return False
-
-    # Vertic
-    if (range(xBottom, xBottom + wide).__contains__(x) and
-            range(yBottom, yBottom + high * 2).__contains__(y)):
-        return True
-
-    # Bottom
-    elif (range(xBottom, xBottom + high).__contains__(x) and
-          range(yBottom + wide * 3, yBottom + wide * 4).__contains__(y)):
-        return True
-
-    # Top
-    elif (range(xBottom, xBottom + high).__contains__(x) and
-          range(yTop - wide, yTop).__contains__(y)):
-        return True
-
-    # Right side
-    elif (range(xTop - wide, xTop).__contains__(x) and
-          range(yBottom + 3 * wide, yTop).__contains__(y)):
-        return True
-
-
-def isAcceptableCoordinatesC(x, y, xBottom=5, xTop=30, yBottom=10, yTop=80):
-    high = yTop - yBottom
-    wide = int((yTop - yBottom) / 8)
-
-    # Rect
-    if (not range(xBottom, xTop).__contains__(x) and range(yBottom, yTop).__contains__(y)):
+    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
         return False
 
     # Vert
-    if (range(xBottom, xBottom + wide).__contains__(x) and range(yBottom, yBottom + high).__contains__(y)):
+    if (x > xBottom and x < xBottom + wide) and (y > yBottom and y < yBottom + high):
         return True
 
     # Bottom
-    elif (range(xBottom, xBottom + high).__contains__(x) and range(yBottom, yBottom + wide).__contains__(y)):
+    elif (x > xBottom and x < xBottom + high) and (y > yBottom + wide * 3 and y < yBottom + wide * 4):
         return True
+
     # Top
-    elif (range(xBottom, xBottom + high).__contains__(x) and range(yTop - wide, yTop).__contains__(y)):
+    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide and y < yTop):
+        return True
+
+    # Right side
+    elif (x > xTop - wide and x < xTop) and (y > yBottom + 3 * wide and y < yTop):
+        return True
+
+    return False
+
+
+def isAcceptableCoordinatesC(x, y, xBottom, xTop, yBottom, yTop):
+    high = yTop - yBottom
+    wide = (yTop - yBottom) / 8.0
+
+    # Bigest rect
+    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
+        return False
+
+    # Vert
+    if (x > xBottom and x < xBottom + wide * 2.0) and (y > yBottom and y < yBottom + high):
+        return True
+    # Bottom
+    elif (x > xBottom and x < xBottom + high) and (y > yBottom and y < yBottom + wide * 2):
+        return True
+
+    # Top
+    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide * 2 and y < yTop):
         return True
 
     return False
@@ -93,20 +92,17 @@ def load_data(train_size=2000, show=False):
     x_test_for_plt = np.empty(0)
     x_test_missed_for_plt = np.empty(0)
 
-    min = 0
-    max = 10000
     for i in range(train_size + test_size):
 
-        x = rand.randint(min, max)
-        y = rand.randint(min, max)
+        x = np.random.random()
+        y = np.random.random()
 
         if i < train_size:
             x_train = np.append(x_train, (x, y))
         else:
             x_test = np.append(x_test, (x, y))
 
-        if isAcceptableCoordinatesE(x, y, xBottom=int(0.2 * max), xTop=int(0.8 * max), yBottom=int(0.1 * max),
-                                    yTop=int(1 * max)):
+        if isAcceptableCoordinatesE(x, y, xBottom=0.2, xTop=0.8, yBottom=0.1, yTop=1.0):
             if i < train_size:
                 x_train_for_plt = np.append(x_train_for_plt, (x, y))
                 y_train = np.append(y_train, 1)
@@ -120,19 +116,6 @@ def load_data(train_size=2000, show=False):
             else:
                 x_test_missed_for_plt = np.append(x_test_missed_for_plt, (x, y))
                 y_test = np.append(y_test, 0)
-
-    # Normalizing
-    x_train /= float(max)
-    y_train /= float(max)
-
-    x_test /= float(max)
-    y_test /= float(max)
-
-    x_train_for_plt /= float(max)
-    x_test_for_plt /= float(max)
-
-    x_train_missed_for_plt /= float(max)
-    x_test_missed_for_plt /= float(max)
 
     # Reshaping
     x_train.shape = (train_size, 2)
