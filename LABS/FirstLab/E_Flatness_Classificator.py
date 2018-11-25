@@ -1,8 +1,9 @@
-import E_Flatness_Classificator_Data as dataset5
 from keras import Sequential
 from keras.layers import Dense
 from keras.optimizers import SGD
 import ADDITIONAL.GUI_REPORTER as gr
+
+import E_Flatness_Classificator_Data as dataset5
 
 if __name__ == '__main__':
     train_size = 4000

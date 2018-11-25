@@ -3,7 +3,7 @@ from keras.layers import Dense
 from keras.optimizers import SGD
 import ADDITIONAL.GUI_REPORTER as gr
 
-import LABS.ZeroLab.Programms.D_DivIntoNClasses as dataset4
+import LABS.ZeroLab.D_DivIntoNClasses as dataset4
 
 if __name__ == '__main__':
     train_size = 16000

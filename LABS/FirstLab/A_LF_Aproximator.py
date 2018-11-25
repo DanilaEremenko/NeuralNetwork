@@ -1,11 +1,12 @@
 from __future__ import print_function
 
-import LABS.ZeroLab.Programms.A_CrossZero as dataset1
 from keras.layers import Dense
 from keras.models import Sequential
 from keras.optimizers import SGD
 import ADDITIONAL.GUI_REPORTER as gr
 import numpy as np
+
+import LABS.ZeroLab.A_CrossZero as dataset1
 
 if __name__ == '__main__':
     first_layer_nur = 10
