@@ -93,17 +93,20 @@ def load_data(train_size=2000, show=False):
     x_test_for_plt = np.empty(0)
     x_test_missed_for_plt = np.empty(0)
 
+    min = 0
+    max = 10000
     for i in range(train_size + test_size):
 
-        x = rand.randint(0, 100)
-        y = rand.randint(0, 100)
+        x = rand.randint(min, max)
+        y = rand.randint(min, max)
 
         if i < train_size:
             x_train = np.append(x_train, (x, y))
         else:
             x_test = np.append(x_test, (x, y))
 
-        if isAcceptableCoordinatesE(x, y, xBottom=20, xTop=80, yBottom=10, yTop=100):
+        if isAcceptableCoordinatesE(x, y, xBottom=int(0.2 * max), xTop=int(0.8 * max), yBottom=int(0.1 * max),
+                                    yTop=int(1 * max)):
             if i < train_size:
                 x_train_for_plt = np.append(x_train_for_plt, (x, y))
                 y_train = np.append(y_train, 1)
@@ -119,17 +122,17 @@ def load_data(train_size=2000, show=False):
                 y_test = np.append(y_test, 0)
 
     # Normalizing
-    x_train /= float(x_train.max())
-    y_train /= float(y_train.max())
+    x_train /= float(max)
+    y_train /= float(max)
 
-    x_test /= float(x_test.max())
-    y_test /= float(y_test.max())
+    x_test /= float(max)
+    y_test /= float(max)
 
-    x_train_for_plt /= float(x_train_for_plt.max())
-    x_test_for_plt /= float(x_test_for_plt.max())
+    x_train_for_plt /= float(max)
+    x_test_for_plt /= float(max)
 
-    x_train_missed_for_plt /= float(x_train_missed_for_plt.max())
-    x_test_missed_for_plt /= float(x_test_missed_for_plt.max())
+    x_train_missed_for_plt /= float(max)
+    x_test_missed_for_plt /= float(max)
 
     # Reshaping
     x_train.shape = (train_size, 2)
@@ -164,4 +167,3 @@ def load_data(train_size=2000, show=False):
         plt.show()
 
     return (x_train, y_train), (x_test, y_test)
-
