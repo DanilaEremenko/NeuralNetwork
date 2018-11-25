@@ -64,7 +64,7 @@ def load_data(train_size=4000, show=False):
         # FirstFigure
         if isRect(x, y, xMin=30, yMin=135, xMax=70, yMax=165):
 
-            if i <= train_size:
+            if i < train_size:
                 x_train = np.append(x_train, (x, y))
                 y_train = np.append(y_train, 1)
                 train_plt_points1 = np.append(train_plt_points1, (x, y))
@@ -76,7 +76,7 @@ def load_data(train_size=4000, show=False):
         # SecondFigure
         elif isElipse(x, y, xCenter=150, yCenter=150, radHor=30, radVert=30):
 
-            if i <= train_size:
+            if i < train_size:
                 x_train = np.append(x_train, (x, y))
                 y_train = np.append(y_train, 2)
                 train_plt_points2 = np.append(train_plt_points2, (x, y))
@@ -88,7 +88,7 @@ def load_data(train_size=4000, show=False):
         # ThirdFigure
         elif isTriangle(x, y, x1=30, y1=30, x2=60, y2=60, x3=100, y3=30):
 
-            if i <= train_size:
+            if i < train_size:
                 x_train = np.append(x_train, (x, y))
                 y_train = np.append(y_train, 3)
                 train_plt_points3 = np.append(train_plt_points3, (x, y))
@@ -100,7 +100,7 @@ def load_data(train_size=4000, show=False):
         # FourthFigure
         elif isRect(x, y, xMin=125, yMin=30, xMax=170, yMax=60):
 
-            if i <= train_size:
+            if i < train_size:
                 x_train = np.append(x_train, (x, y))
                 y_train = np.append(y_train, 4)
                 train_plt_points4 = np.append(train_plt_points4, (x, y))
@@ -111,7 +111,7 @@ def load_data(train_size=4000, show=False):
 
         else:
 
-            if i <= train_size:
+            if i < train_size:
                 x_train = np.append(x_train, (x, y))
                 y_train = np.append(y_train, 0)
                 train_plt_points0 = np.append(train_plt_points0, (x, y))
@@ -136,20 +136,20 @@ def load_data(train_size=4000, show=False):
     test_plt_points4 /= 200.0
 
     # reshaping
-    x_train.shape = (x_train.size / 2, 2)
-    train_plt_points0.shape = (train_plt_points0.size / 2, 2)
-    train_plt_points1.shape = (train_plt_points1.size / 2, 2)
-    train_plt_points2.shape = (train_plt_points2.size / 2, 2)
-    train_plt_points3.shape = (train_plt_points3.size / 2, 2)
-    train_plt_points4.shape = (train_plt_points4.size / 2, 2)
+    x_train.shape = (int(x_train.size / 2), 2)
+    train_plt_points0.shape = (int(train_plt_points0.size / 2), 2)
+    train_plt_points1.shape = (int(train_plt_points1.size / 2), 2)
+    train_plt_points2.shape = (int(train_plt_points2.size / 2), 2)
+    train_plt_points3.shape = (int(train_plt_points3.size / 2), 2)
+    train_plt_points4.shape = (int(train_plt_points4.size / 2), 2)
 
 
-    x_train.shape = (x_train.size / 2, 2)
-    test_plt_points0.shape = (test_plt_points0.size / 2, 2)
-    test_plt_points1.shape = (test_plt_points1.size / 2, 2)
-    test_plt_points2.shape = (test_plt_points2.size / 2, 2)
-    test_plt_points3.shape = (test_plt_points3.size / 2, 2)
-    test_plt_points4.shape = (test_plt_points4.size / 2, 2)
+    x_test.shape = (int(x_test.size / 2), 2)
+    test_plt_points0.shape = (int(test_plt_points0.size / 2), 2)
+    test_plt_points1.shape = (int(test_plt_points1.size / 2), 2)
+    test_plt_points2.shape = (int(test_plt_points2.size / 2), 2)
+    test_plt_points3.shape = (int(test_plt_points3.size / 2), 2)
+    test_plt_points4.shape = (int(test_plt_points4.size / 2), 2)
 
 
 
