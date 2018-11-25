@@ -6,17 +6,17 @@ import ADDITIONAL.GUI_REPORTER as gr
 import LABS.ZeroLab.Programms.D_DivIntoNClasses as dataset4
 
 if __name__ == '__main__':
-    train_size = 4000
+    train_size = 16000
 
     first_layer_nur = 40
     second_layer_nur = 20
     third_layer_nur = 5
     lr = 0.75
-    batch_size = 15
-    epochs = 30
+    batch_size = 20
+    epochs = 50
     verbose = 1
 
-    (x_train, y_train), (x_test, y_test) = dataset4.load_data(train_size=train_size, show=False)
+    (x_train, y_train), (x_test, y_test) = dataset4.load_data(train_size=train_size, show=True)
 
     model = Sequential()
 
