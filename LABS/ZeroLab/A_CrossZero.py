@@ -21,13 +21,33 @@ def load_data(y_train, show=False):
     train_size = int(y_train.shape[0] * y_train.shape[1])
     x_train = np.zeros(train_size * 2)
 
+    graph_pts_zero_x = np.zeros(8)
+    graph_pts_zero_y = np.zeros(8)
+    graph_pts_one_x = np.zeros(8)
+    graph_pts_one_y = np.zeros(8)
+
     i = 0
+    one_i = 0
+    zero_i = 0
     for y in np.arange(y_train.shape[0] - 1, -0.1, -1, dtype=int):
         for x in np.arange(y_train.shape[1] - 1, -0.1, -1, dtype=int):
-            add_el_on_graph(x, y_train.shape[0] - y - 1, y_train[y][x])
+            if y_train[y_train.shape[0] - y - 1][x] == 1:
+                graph_pts_one_x[one_i] = (x+1) / 4.0
+                graph_pts_one_y[one_i] = (y_train.shape[0] - y) / 4.0
+                one_i += 1
+            elif y_train[y_train.shape[0] - y - 1][x] == 0:
+                graph_pts_zero_x[zero_i] = (x+1) / 4.0
+                graph_pts_zero_y[zero_i] = (y_train.shape[0] - y) / 4.0
+                zero_i += 1
+
             x_train[i] = x / 4.0
             x_train[i + 1] = y / 4.0
             i += 2
+
+    plt.plot(graph_pts_zero_x, graph_pts_zero_y, '.')
+    plt.plot(graph_pts_one_x, graph_pts_one_y, '.')
+    plt.xlim(0, 1.1)
+    plt.ylim(0, 1.1)
 
     if show:
         plt.show()
