@@ -59,63 +59,89 @@ def load_data(train_size=4000, show=False):
         x = np.random.random()
         y = np.random.random()
 
-        # FirstFigure
-        if isRect(x, y, xMin=0.15, yMin=0.67, xMax=0.35, yMax=0.82):
+        # First class
+        if isRect(x, y, xMin=0.1, yMin=0.1, xMax=0.3, yMax=0.3) or \
+                isRect(x, y, xMin=0.5, yMin=0.1, xMax=0.7, yMax=0.3):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, 1)
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 1]))
                 train_plt_points1 = np.append(train_plt_points1, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_test = np.append(y_test, 1)
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 1]))
                 test_plt_points1 = np.append(test_plt_points1, (x, y))
 
-        # SecondFigure
-        elif isElipse(x, y, xCenter=0.75, yCenter=0.75, radHor=0.15, radVert=0.15):
+        # Second class
+        elif isRect(x, y, xMin=0.0, yMin=0.0, xMax=0.4, yMax=0.5):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, 2)
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 1, 0]))
                 train_plt_points2 = np.append(train_plt_points2, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_test = np.append(y_test, 2)
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 1, 0]))
                 test_plt_points2 = np.append(test_plt_points2, (x, y))
 
-        # ThirdFigure
-        elif isTriangle(x, y, x1=0.15, y1=0.15, x2=0.30, y2=0.30, x3=0.50, y3=0.15):
+        # Third class
+        elif isTriangle(x, y, x1=1.0, y1=1.0, x2=1.0, y2=0.70, x3=0.7, y3=1.0):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, 3)
+                y_train = np.append(y_train, np.array([0, 0, 0, 1, 0, 0]))
                 train_plt_points3 = np.append(train_plt_points3, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_test = np.append(y_test, 3)
+                y_train = np.append(y_train, np.array([0, 0, 0, 1, 0, 0]))
                 test_plt_points3 = np.append(test_plt_points3, (x, y))
 
-        # FourthFigure
-        elif isRect(x, y, xMin=0.62, yMin=0.15, xMax=0.85, yMax=0.30):
+        # Fourth class
+        elif isTriangle(x, y, x1=0.7, y1=0.4, x2=0.7, y2=0.7, x3=1.0, y3=0.4):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, 4)
+                y_train = np.append(y_train, np.array([0, 0, 1, 0, 0, 0]))
                 train_plt_points4 = np.append(train_plt_points4, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_test = np.append(y_test, 4)
+                y_train = np.append(y_train, np.array([0, 0, 1, 0, 0, 0]))
                 test_plt_points4 = np.append(test_plt_points4, (x, y))
 
+        # Fifth class
+        elif isRect(x, y, xMin=0.0, yMin=0.7, xMax=1.0, yMax=1.0):
+
+            if i < train_size:
+                x_train = np.append(x_train, (x, y))
+                y_train = np.append(y_train, np.array([0, 1, 0, 0, 0, 0]))
+                train_plt_points0 = np.append(train_plt_points0, (x, y))
+            else:
+                x_test = np.append(x_test, (x, y))
+                y_train = np.append(y_train, np.array([0, 1, 0, 0, 0, 0]))
+                test_plt_points0 = np.append(test_plt_points0, (x, y))
+
+        # Sixth class
+        elif isRect(x, y, xMin=0.8, yMin=0.1, xMax=1.0, yMax=0.2):
+
+            if i < train_size:
+                x_train = np.append(x_train, (x, y))
+                y_train = np.append(y_train, np.array([1, 0, 0, 0, 0, 0]))
+                train_plt_points0 = np.append(train_plt_points0, (x, y))
+            else:
+                x_test = np.append(x_test, (x, y))
+                y_train = np.append(y_train, np.array([1, 0, 0, 0, 0, 0]))
+                test_plt_points0 = np.append(test_plt_points0, (x, y))
+
+        # Seventh class
         else:
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, 0)
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 0]))
                 train_plt_points0 = np.append(train_plt_points0, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_test = np.append(y_test, 0)
+                y_test = np.append(y_test, np.array([0, 0, 0, 0, 0, 0]))
                 test_plt_points0 = np.append(test_plt_points0, (x, y))
 
     # reshaping
@@ -163,3 +189,6 @@ def load_data(train_size=4000, show=False):
 
     return (x_train, y_train), (x_test, y_test)
 
+
+if __name__ == '__main__':
+    load_data(show=True)

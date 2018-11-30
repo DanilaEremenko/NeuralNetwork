@@ -6,7 +6,7 @@ import numpy as np
 
 from keras.utils.vis_utils import plot_model
 
-from keras.layers import Activation, ThresholdedReLU
+from keras.layers import Activation
 
 from ADDITIONAL.CUSTOM_KERAS import hard_lim
 
@@ -23,18 +23,24 @@ if __name__ == '__main__':
 
     model = Sequential()
 
-    model.add(Dense(4, input_dim=x_train.shape[1], activation=Activation(hard_lim),
-                    name='1',
+    model.add(Dense(4, input_dim=x_train.shape[1], activation=Activation(hard_lim),name='1',
                     weights=list([np.array([[0.0, 0.0, 1.0, 1.0],
                                             [1.0, -1.0, 0.0, 0.0]], dtype=float),
                                   np.array([-0.25, 0.75, -0.25, -0.75], dtype=float)])))
-    model.add(Dense(2, activation=Activation(hard_lim),
-                    name='2',
+    model.add(Dense(2, activation=Activation(hard_lim),name='2',
                     weights=list([np.array([[1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [0.0, 1.0]], dtype=float),
                                   np.array([-2.5, -0.5], dtype=float)])))
-    model.add(Dense(1, activation=Activation(hard_lim),
-                    name='3',
+    model.add(Dense(1, activation=Activation(hard_lim),name='3',
                     weights=list([np.array([[1.0], [1.0]], dtype=float),
                                   np.array([-0.5], dtype=float)])))
 
     plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True)
+
+    equal=True
+
+    for pr,re in zip(np.transpose(model.predict(x_train).reshape(4,4)).reshape(16,1),y_train):
+        if pr!=re:
+            equal=False
+        print(pr,re)
+
+    print(equal)

@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+import LABS.ZeroLab.D_DivIntoNClasses as dataset4
+
 
 def isAcceptableCoordinatesE(x, y, xBottom, xTop, yBottom, yTop):
     high = yTop - yBottom
@@ -102,7 +104,8 @@ def load_data(train_size=2000, show=False):
         else:
             x_test = np.append(x_test, (x, y))
 
-        if isAcceptableCoordinatesE(x, y, xBottom=0.2, xTop=0.8, yBottom=0.1, yTop=1.0):
+        if dataset4.isRect(x, y, xMin=0.2, xMax=0.6, yMin=0.1, yMax=0.5) or \
+                dataset4.isTriangle(x, y, x1=0.5, x2=0.9, x3=0.9, y1=0.9, y2=0.5, y3=0.9):
             if i < train_size:
                 x_train_for_plt = np.append(x_train_for_plt, (x, y))
                 y_train = np.append(y_train, 1)
@@ -150,3 +153,7 @@ def load_data(train_size=2000, show=False):
         plt.show()
 
     return (x_train, y_train), (x_test, y_test)
+
+
+if __name__ == '__main__':
+    load_data(show=True)
