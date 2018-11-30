@@ -6,23 +6,10 @@ import numpy as np
 
 from keras.utils.vis_utils import plot_model
 
-from keras.layers import Activation
-import tensorflow as tf
+from keras.layers import Activation, ThresholdedReLU
 
+from ADDITIONAL.CUSTOM_KERAS import hard_lim
 
-def hard_lim(x):
-    zero = tf.convert_to_tensor(0., x.dtype.base_dtype)
-    one = tf.convert_to_tensor(1., x.dtype.base_dtype)
-
-    sess = tf.Session()
-
-    if sess.run(tf.greater_equal(x, zero)):
-        return one
-    else:
-        return zero
-
-
-# get_custom_objects().update({'hard_lim': Activation(hard_lim)})
 
 import LABS.ZeroLab.A_CrossZero as dataset1
 
