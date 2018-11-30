@@ -32,11 +32,11 @@ def load_data(y_train, show=False):
     for y in np.arange(y_train.shape[0] - 1, -0.1, -1, dtype=int):
         for x in np.arange(y_train.shape[1] - 1, -0.1, -1, dtype=int):
             if y_train[y_train.shape[0] - y - 1][x] == 1:
-                graph_pts_one_x[one_i] = (x+1) / 4.0+0.125
+                graph_pts_one_x[one_i] = x/ 4.0 + 0.125
                 graph_pts_one_y[one_i] = (y_train.shape[0] - y) / 4.0+0.125
                 one_i += 1
             elif y_train[y_train.shape[0] - y - 1][x] == 0:
-                graph_pts_zero_x[zero_i] = (x+1) / 4.0+0.125
+                graph_pts_zero_x[zero_i] =  x / 4.0 + 0.125
                 graph_pts_zero_y[zero_i] = (y_train.shape[0] - y) / 4.0+0.125
                 zero_i += 1
 
