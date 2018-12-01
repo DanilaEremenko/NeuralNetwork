@@ -20,16 +20,19 @@ def plot_history(history, save_path, save=False, show=True):
 
 def plot_history_separte(history, save_path_acc, save_path_loss, save=False, show=True):
 
-    plot_graphic(x=history.epoch, y=np.array(history.history['loss']), label='Train Loss', save_path=save_path_loss,
-                 save=save, show=show)
-    plot_graphic(x=history.epoch, y=np.array(history.history['acc']), label='Train Acc', save_path=save_path_acc,
-                 save=save, show=show)
+    plot_graphic(x=history.epoch, y=np.array(history.history['loss']),x_label='epochs',y_label='loss',
+                 title='losses history',save_path=save_path_loss,save=save, show=show)
+    plot_graphic(x=history.epoch, y=np.array(history.history['acc']),x_label='epochs',y_label='accuracy',
+                 title='accuracy history',save_path=save_path_acc,save=save, show=show)
 
 
-def plot_graphic(x, y, label, save_path, save, show):
-    plt.plot(x, y, label=label)
+def plot_graphic(x, y, x_label,y_label,title,save_path, save, show):
 
-    plt.legend()
+    plt.plot(x, y)
+    plt.ylabel(y_label)
+    plt.xlabel(x_label)
+    plt.title(title)
+    
 
     if show:
         plt.show()

@@ -2,79 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def isAcceptableCoordinatesE(x, y, xBottom, xTop, yBottom, yTop):
-    high = yTop - yBottom
-    wide = (yTop - yBottom) / 8.0
-
-    # Bigest rect
-    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
-        return False
-
-    # Vert
-    if (x > xBottom and x < xBottom + wide * 2.0) and (y > yBottom and y < yBottom + high):
-        return True
-    # Bottom
-    elif (x > xBottom and x < xBottom + high) and (y > yBottom and y < yBottom + wide * 2):
-        return True
-
-    # Top
-    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide * 2 and y < yTop):
-        return True
-
-    # Middle
-    elif (x > xBottom and x < xBottom + wide * 4) and (y > yBottom + 3 * wide and y < yBottom + 5 * wide):
-        return True
-
-    return False
-
-
-def isAcceptableCoordinatesP(x, y, xBottom, xTop, yBottom, yTop):
-    high = yTop - yBottom
-    wide = (yTop - yBottom) / 8.0
-
-    # Bigest rect
-    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
-        return False
-
-    # Vert
-    if (x > xBottom and x < xBottom + wide) and (y > yBottom and y < yBottom + high):
-        return True
-
-    # Bottom
-    elif (x > xBottom and x < xBottom + high) and (y > yBottom + wide * 3 and y < yBottom + wide * 4):
-        return True
-
-    # Top
-    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide and y < yTop):
-        return True
-
-    # Right side
-    elif (x > xTop - wide and x < xTop) and (y > yBottom + 3 * wide and y < yTop):
-        return True
-
-    return False
-
-
-def isAcceptableCoordinatesC(x, y, xBottom, xTop, yBottom, yTop):
-    high = yTop - yBottom
-    wide = (yTop - yBottom) / 8.0
-
-    # Bigest rect
-    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
-        return False
-
-    # Vert
-    if (x > xBottom and x < xBottom + wide * 2.0) and (y > yBottom and y < yBottom + high):
-        return True
-    # Bottom
-    elif (x > xBottom and x < xBottom + high) and (y > yBottom and y < yBottom + wide * 2):
-        return True
-
-    # Top
-    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide * 2 and y < yTop):
-        return True
-
-    return False
+import LABS.ZeroLab.D_DivIntoNClasses as dataset4
 
 
 def load_data(train_size=2000, show=False):
@@ -102,7 +30,8 @@ def load_data(train_size=2000, show=False):
         else:
             x_test = np.append(x_test, (x, y))
 
-        if isAcceptableCoordinatesE(x, y, xBottom=0.2, xTop=0.8, yBottom=0.1, yTop=1.0):
+        if dataset4.isRect(x, y, xMin=0.2, xMax=0.6, yMin=0.1, yMax=0.5) or \
+                dataset4.isTriangle(x, y, x1=0.5, x2=0.9, x3=0.9, y1=0.9, y2=0.5, y3=0.9):
             if i < train_size:
                 x_train_for_plt = np.append(x_train_for_plt, (x, y))
                 y_train = np.append(y_train, 1)
@@ -128,25 +57,31 @@ def load_data(train_size=2000, show=False):
     x_test_missed_for_plt.shape = (int(x_test_missed_for_plt.size / 2), 2)
 
     # Plotting train
-    plt.xlim(0, 1)
+    plt.xlim(0, 1.3)
     plt.ylim(0, 1)
     plt.title("train data")
     plt.plot(x_train_for_plt.transpose()[0], x_train_for_plt.transpose()[1], '.')
     plt.plot(x_train_missed_for_plt.transpose()[0], x_train_missed_for_plt.transpose()[1], '.')
-
+    
+    plt.legend(('0 class','1 class'),loc='upper right', shadow=True)
+    
+    
     if show:
         plt.show()
 
     plt.close()
 
     # Plotting test
-    plt.xlim(0, 1)
+    plt.xlim(0, 1.3)
     plt.ylim(0, 1)
     plt.title("test data")
     plt.plot(x_test_for_plt.transpose()[0], x_test_for_plt.transpose()[1], '.')
     plt.plot(x_test_missed_for_plt.transpose()[0], x_test_missed_for_plt.transpose()[1], '.')
 
+    plt.legend(('0 class','1 class'),loc='upper right', shadow=True)
+    
     if show:
         plt.show()
+    plt.close()
 
     return (x_train, y_train), (x_test, y_test)

@@ -70,24 +70,29 @@ def load_data(train_size, k, b, show=False, func_type='lin'):
     test_plt_points1.shape = (int(test_plt_points1.size / 2), 2)
 
     # plotting
-    plt.xlim(0, 1)
+    plt.xlim(0, 1.3)
     plt.ylim(0, 1)
     plt.title("train data")
     plt.plot(train_plt_points0.transpose()[0], train_plt_points0.transpose()[1], '.')
     plt.plot(train_plt_points1.transpose()[0], train_plt_points1.transpose()[1], '.')
 
+    plt.legend(('0 class', '1 class'),loc='upper right', shadow=True)
+    
     if show:
         plt.show()
-
+        
     plt.close()
 
     # plotting
-    plt.xlim(0, 1)
+    plt.xlim(0, 1.3)
     plt.ylim(0, 1)
     plt.title("test data")
     plt.plot(test_plt_points0.transpose()[0], test_plt_points0.transpose()[1], '.')
     plt.plot(test_plt_points1.transpose()[0], test_plt_points1.transpose()[1], '.')
 
+    plt.legend(('0 class', '1 class'),loc='upper right', shadow=True)
+    
+    
     if show:
         plt.show()
 

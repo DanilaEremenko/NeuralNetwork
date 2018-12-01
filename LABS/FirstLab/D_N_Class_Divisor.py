@@ -1,39 +1,67 @@
-from keras import Sequential
-from keras.layers import Dense
-from keras.optimizers import SGD
-import ADDITIONAL.GUI_REPORTER as gr
+from keras.layers import Dense, Activation
+from keras.models import Sequential
+
+from ADDITIONAL.CUSTOM_KERAS import hard_lim
+import numpy as np
 
 import LABS.ZeroLab.D_DivIntoNClasses as dataset4
 
 if __name__ == '__main__':
-    train_size = 16000
-
-    first_layer_nur = 40
-    second_layer_nur = 20
-    third_layer_nur = 5
-    lr = 0.75
-    batch_size = 20
-    epochs = 50
-    verbose = 1
+    train_size = 100
 
     (x_train, y_train), (x_test, y_test) = dataset4.load_data(train_size=train_size, show=True)
 
     model = Sequential()
 
-    model.add(Dense(first_layer_nur, input_dim=x_train.shape[1], init='glorot_normal', activation='relu'))
-    model.add(Dense(second_layer_nur, init='glorot_normal', activation='linear'))
-    model.add(Dense(third_layer_nur, init='glorot_normal', activation='linear'))
-    model.add(Dense(1, init='he_normal', activation='hard_sigmoid'))
+    model.add(Dense(17, input_dim=x_train.shape[1], activation=Activation(hard_lim), name='1',
+                    weights=list([np.array(
+                        [[1.0, -1.0, 0.0, 0.0, 1.0, -1.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0, 1.0, -1.0, 0.0, 1.0, 0.0],
+                         [0.0, 0.0, 1.0, -1.0, 0.0, 0.0, 1.0, -1.0, 0.0, -1.0, 1.0, 1.0, 0.0, -1.0, 1.0, 0.0, -1.0]],
+                        dtype=float),
+                        np.array(
+                            [-0.1, 0.3, -0.1, 0.3, -0.5, 0.7, -0.1, 0.3, 0.4, 0.5, -1.7, -0.4, -0.7, 1.4, -0.7, -0.8,
+                             0.2], dtype=float)])))
 
-    model.compile(loss='mean_squared_error', optimizer=SGD(lr=lr), metrics=['accuracy'])
+    model.add(Dense(7, activation=Activation(hard_lim), name='2',
+                    weights=list([np.array([[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
+                                            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]], dtype=float),
+                                  np.array([-3.5, -3.5, -1.5, -0.5, -2.5, -0.5, -1.5], dtype=float)])))
 
-    # batch_size define speed of studying
-    history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=verbose)
+    model.add(Dense(6, activation=Activation(hard_lim), name='3',
+                    weights=list([np.array([[1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+                                            [0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+                                            [0.0, 0.0, 0.0, 0.0, 0.0, 1.0], ], dtype=float),
+                                  np.array([-0.5, -0.5, -0.5, -0.5, -0.5, -0.5], dtype=float)])))
 
-    score = model.evaluate(x_test, y_test, verbose=1)
+    i = 0
+    right = 0
+    for pr in model.predict(x_train):
 
-    print("\naccuracy on train data\t %.f%%" % (history.history['acc'][epochs - 1] * 100))
-    print("\naccuracy on testing data %.f%%" % (score[1] * 100))
-    # print("loss on train data %.f%%" % (history.history['loss'][history.history] * 100))
-    gr.plot_history_separte(history, save_path_acc="ACC.png", save_path_loss="LOSS.png",
-                            save=True, show=True)
+        if np.array_equal(pr, y_train[i]):
+            right += 1
+        else:
+            print(pr)
+            print(x_train[i])
+            print(y_train[i])
+        i += 1
+
+    print(right / float(train_size) * 100, "%")
