@@ -31,10 +31,10 @@ def load_data(y_train, show=False):
                 graph_pts_zero_y[zero_i] = y / 4.0+0.125
                 zero_i += 1
 
-            x_train[i] = x / 4.0+0.125
-            x_train[i + 1] = y / 4.0+0.125
+            x_train[i] = y / 4.0+0.125
+            x_train[i + 1] = x / 4.0+0.125
             i += 2
-
+            
     plt.plot(graph_pts_zero_x, graph_pts_zero_y, '.')
     plt.plot(graph_pts_one_x, graph_pts_one_y, '.')
     plt.xlim(0, 1.2)
@@ -47,4 +47,4 @@ def load_data(y_train, show=False):
         plt.show()
     plt.close()
 
-    return (x_train.reshape(train_size, 2), y_train.reshape(train_size, 1))
+    return (x_train[::-1].reshape(train_size, 2), y_train.reshape(train_size, 1))
