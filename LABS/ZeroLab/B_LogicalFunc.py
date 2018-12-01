@@ -2,6 +2,14 @@ import numpy as np
 
 
 def func(x1, x2, x3, x4, x5):
+    """
+    ~x1 & ~x2 & x3 & ~x4 & x5  |
+    x1 & ~x2 & ~x3 & ~x4 & x5  |
+    x1 & ~x2 & ~x3 & x4 & x5   |
+    x1 & ~x2 & x3 & x4 & x5    |
+    x1 & x2 & ~x3 & ~x4 & ~x5
+    
+    """
     return (not x1) & (not x2) & x3 & (not x4) & x5 | x1 & (not x2) & (not x3) & (not x4) & x5 \
            | x1 & (not x2) & (not x3) & x4 & x5 \
            | x1 & (not x2) & x3 & x4 & x5 | x1 & x2 & (not x3) & (not x4) & (not x5)

@@ -170,7 +170,7 @@ def load_data(train_size=4000, show=False):
     test_plt_points6.shape = (int(test_plt_points6.size / 2), 2)
 
     # plotting
-    plt.xlim(0, 1)
+    plt.xlim(0, 1.5)
     plt.ylim(0, 1)
     plt.title("train data")
     plt.plot(train_plt_points0.transpose()[0], train_plt_points0.transpose()[1], '.')
@@ -180,6 +180,10 @@ def load_data(train_size=4000, show=False):
     plt.plot(train_plt_points4.transpose()[0], train_plt_points4.transpose()[1], '.')
     plt.plot(train_plt_points5.transpose()[0], train_plt_points5.transpose()[1], '.')
     plt.plot(train_plt_points6.transpose()[0], train_plt_points6.transpose()[1], '.')
+    
+    plt.legend(('000000 class', '100000 class', '010000 class','001000 class','000100 class','000010 class',
+                '000001 class'),loc='upper right', shadow=True)
+     
 
     if show:
         plt.show()
@@ -187,7 +191,7 @@ def load_data(train_size=4000, show=False):
     plt.close()
 
     # plotting
-    plt.xlim(0, 1)
+    plt.xlim(0, 1.5)
     plt.ylim(0, 1)
     plt.title("test data")
     plt.plot(test_plt_points0.transpose()[0], test_plt_points0.transpose()[1], '.')
@@ -198,6 +202,10 @@ def load_data(train_size=4000, show=False):
     plt.plot(test_plt_points5.transpose()[0], test_plt_points5.transpose()[1], '.')
     plt.plot(test_plt_points6.transpose()[0], test_plt_points6.transpose()[1], '.')
 
+    plt.legend(('000000 class', '100000 class', '010000 class','001000 class','000100 class','000010 class',
+                '000001 class'),loc='upper right', shadow=True)
+    
+    
     if show:
         plt.show()
 
