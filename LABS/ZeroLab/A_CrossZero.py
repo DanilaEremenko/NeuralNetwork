@@ -33,6 +33,7 @@ def load_data(y_train, show=False):
 
             x_train[i] = y / 4.0+0.125
             x_train[i + 1] = x / 4.0+0.125
+
             i += 2
             
     plt.plot(graph_pts_zero_x, graph_pts_zero_y, '.')
@@ -42,6 +43,11 @@ def load_data(y_train, show=False):
     
     plt.legend(('0 class', '1 class'),loc='upper right', shadow=True)
     
+
+    plt.plot(graph_pts_zero_x, graph_pts_zero_y, '.')
+    plt.plot(graph_pts_one_x, graph_pts_one_y, '.')
+    plt.xlim(0, 1.1)
+    plt.ylim(0, 1.1)
 
     if show:
         plt.show()
