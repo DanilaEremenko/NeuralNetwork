@@ -104,3 +104,14 @@ def deform_image(arr, shape, k, n, m):
 def show_image(input_path):
     image = Image.open(input_path)
     image.show()
+    
+    
+def show_image_by_pxs(pxs):
+    image = Image.fromarray(pxs).convert('L')
+    image.show()
+
+def save_image_by_pxs(pxs,output_path):
+    image = Image.fromarray(pxs).convert('L')
+    image.save(output_path)
+    
+    

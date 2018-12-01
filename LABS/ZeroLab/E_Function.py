@@ -1,24 +1,45 @@
+#dataset5
+
 import matplotlib.pyplot as plt
 import math as m
-
 import numpy as np
 
 
 def function(x):
     x = x * 100
-    return 0.25 + x / 200 + 0.25 * m.sin(2 / 3 * x * m.sin(x / 50 + 3 * m.pi / 2))
+    return 0.25 + x / 200.0 + 0.25 * m.sin(2.0 / 3.0 * x * m.sin(x / 50.0 + 3.0 * m.pi / 2.0))
 
 
-if __name__ == '__main__':
-    xArray = np.arange(0.0, 1.0, 0.001, dtype=float)
-    yArray = np.array([function(y) for y in xArray])
+def load_data(train_size=200,show=False):
+    
+    test_size = int(train_size*0.2)
+    
+    h = 1.0 / float(train_size+test_size)
+    
+    
+    x_train = np.empty(0)
+    y_train = np.empty(0)
+    
+    x_test = np.empty(0)
+    y_test = np.empty(0)
+    
+    i = 0
+    for x in np.arange(0.0,1.0,h,dtype = float):
+        if i % 5 == 0:
+            x_test = np.append(x_test, x)
+            y_test = np.append(y_test,function(x))
+        else:
+            x_train = np.append(x_train,x)
+            y_train = np.append(y_train,function(x))
 
-    plt.plot(xArray, yArray)
-    plt.plot(xArray, yArray, color='mediumvioletred')
-    plt.ylim(0, 1)
-
-
-    if input('SAVE?[Y/n]') == 'Y':
-        plt.savefig('../Pictures/5_Function.png', dpi=200)
-    if input('SHOW? [Y/n]') == 'Y':
+        i += 1
+        
+    
+    plt.plot(x_train,y_train,'.')
+    plt.plot(x_test,y_test,'.')
+    plt.legend(('train_data','test_data'),loc='upper left', shadow=True)
+    if show:
         plt.show()
+        
+    return (x_train,y_train),(x_test,y_test)
+
