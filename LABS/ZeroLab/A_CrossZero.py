@@ -54,5 +54,6 @@ def load_data(y_train, show=False):
 
     if show:
         plt.show()
+    plt.close()
 
     return (x_train.reshape(train_size, 2), y_train.reshape(train_size, 1))

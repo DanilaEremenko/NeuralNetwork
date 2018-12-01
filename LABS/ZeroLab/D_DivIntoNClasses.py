@@ -208,6 +208,7 @@ def load_data(train_size=4000, show=False):
     
     if show:
         plt.show()
+    plt.close()
 
     return (x_train, y_train), (x_test, y_test)
 
