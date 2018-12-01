@@ -1,17 +1,8 @@
+#dataset1
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as patch
 import numpy as np
-
-
-def add_el_on_graph(x, y, el):
-    if el == 1:
-        plt.gca().add_patch(
-            patch.Rectangle((x / 4.0, y / 4.0), 0.25, 0.25, color='#000000',
-                            fill=True))
-    else:
-        plt.gca().add_patch(
-            patch.Rectangle((x / 4.0, y / 4.0), 0.25, 0.25, color='#FFFFFF',
-                            fill=True))
 
 
 def load_data(y_train, show=False):

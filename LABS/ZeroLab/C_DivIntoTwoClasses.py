@@ -1,82 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 import LABS.ZeroLab.D_DivIntoNClasses as dataset4
-
-
-def isAcceptableCoordinatesE(x, y, xBottom, xTop, yBottom, yTop):
-    high = yTop - yBottom
-    wide = (yTop - yBottom) / 8.0
-
-    # Bigest rect
-    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
-        return False
-
-    # Vert
-    if (x > xBottom and x < xBottom + wide * 2.0) and (y > yBottom and y < yBottom + high):
-        return True
-    # Bottom
-    elif (x > xBottom and x < xBottom + high) and (y > yBottom and y < yBottom + wide * 2):
-        return True
-
-    # Top
-    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide * 2 and y < yTop):
-        return True
-
-    # Middle
-    elif (x > xBottom and x < xBottom + wide * 4) and (y > yBottom + 3 * wide and y < yBottom + 5 * wide):
-        return True
-
-    return False
-
-
-def isAcceptableCoordinatesP(x, y, xBottom, xTop, yBottom, yTop):
-    high = yTop - yBottom
-    wide = (yTop - yBottom) / 8.0
-
-    # Bigest rect
-    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
-        return False
-
-    # Vert
-    if (x > xBottom and x < xBottom + wide) and (y > yBottom and y < yBottom + high):
-        return True
-
-    # Bottom
-    elif (x > xBottom and x < xBottom + high) and (y > yBottom + wide * 3 and y < yBottom + wide * 4):
-        return True
-
-    # Top
-    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide and y < yTop):
-        return True
-
-    # Right side
-    elif (x > xTop - wide and x < xTop) and (y > yBottom + 3 * wide and y < yTop):
-        return True
-
-    return False
-
-
-def isAcceptableCoordinatesC(x, y, xBottom, xTop, yBottom, yTop):
-    high = yTop - yBottom
-    wide = (yTop - yBottom) / 8.0
-
-    # Bigest rect
-    if not (x > xBottom and x < xTop) and (y > yBottom and y < yTop):
-        return False
-
-    # Vert
-    if (x > xBottom and x < xBottom + wide * 2.0) and (y > yBottom and y < yBottom + high):
-        return True
-    # Bottom
-    elif (x > xBottom and x < xBottom + high) and (y > yBottom and y < yBottom + wide * 2):
-        return True
-
-    # Top
-    elif (x > xBottom and x < xBottom + high) and (y > yTop - wide * 2 and y < yTop):
-        return True
-
-    return False
 
 
 def load_data(train_size=2000, show=False):
