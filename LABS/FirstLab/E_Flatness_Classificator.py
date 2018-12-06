@@ -20,14 +20,14 @@ if __name__ == '__main__':
 
     model = Sequential()
 
-    model.add(Dense(1, init='glorot_normal', activation='hard_sigmoid'))
+    model.add(Dense(1, kernel_initializer='glorot_normal', activation='hard_sigmoid'))
 
     stopper = callbacks.EarlyStopping(monitor='acc', min_delta=0, patience=5, mode='max')
 
     model.compile(loss='mean_squared_error', optimizer=SGD(lr=lr), metrics=['accuracy'])
 
     # batch_size define speed of studying
-    history = model.fit(x_train, y_train, batch_size=batch_size, nb_epoch=epochs, callbacks=[stopper], verbose=verbose)
+    history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, callbacks=[stopper], verbose=verbose)
 
     score = model.evaluate(x_test, y_test, verbose=1)
 
