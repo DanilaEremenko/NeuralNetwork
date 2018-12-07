@@ -18,7 +18,7 @@ def plot_history(history, save_path, save=False, show=True):
         plt.savefig(save_path, dpi=200)
 
 
-def plot_history_separte(history, acc='acc', loss='loss', save_path_acc, save_path_loss, save=False, show=True):
+def plot_history_separte(save_path_acc, save_path_loss, history, acc='acc', loss='loss', save=False, show=True):
     plot_graphic(x=history.epoch, y=np.array(history.history[acc]), x_label='epochs', y_label='loss',
                  title='losses history', save_path=save_path_loss, save=save, show=show)
     plot_graphic(x=history.epoch, y=np.array(history.history[loss]), x_label='epochs', y_label='accuracy',
