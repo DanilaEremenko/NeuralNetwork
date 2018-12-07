@@ -34,11 +34,10 @@ if __name__ == '__main__':
                             save_path_acc="ACC.png", save_path_loss="LOSS.png",
                             save=True, show=True)
 
-    plt.plot(x_train, model.predict(x_train), '.')
-    # plt.plot(x_test, model.predict(x_test), '.')
-    plt.plot(x_train, y_train, '.')
-    # plt.plot(x_test, y_test, '.')
-    plt.legend(('function', 'approximation'), loc='upper left', shadow=True)
+    plt.plot(np.append(x_train,x_test), model.predict(np.append(x_train,x_test)), '.')
+    plt.plot(np.append(x_train,x_test), np.append(y_train,y_test), '.')
+
+    plt.legend(('approximation','function'), loc='upper left', shadow=True)
 
     plt.show()
     plt.close()
@@ -72,7 +71,7 @@ if __name__ == '__main__':
 
     step = 0.05
 
-    for j in np.arange(lr - (3 * step), lr + 4 * step, 3 * step, dtype=float):
+    for j in np.arange(lr - 3 * step, lr + 4 * step, 3 * step, dtype=float):
 
         model = Sequential()
 

@@ -130,6 +130,7 @@ def load_data_func(train_size, k, b, show=False, func_type='lin'):
 
     plt.plot(x_train, y_train, '.')
     plt.plot(x_test, y_test, '.')
+    plt.title("aproximated function")
     plt.legend(('train_data', 'test_data'), loc='upper left', shadow=True)
     if show:
         plt.show()
