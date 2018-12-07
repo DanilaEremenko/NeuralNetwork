@@ -16,6 +16,13 @@ def non_linear(x, y, k, b):
         return 0
 
 
+def func(x, k, b, func_type):
+    if func_type == 'lin':
+        return k * x + b
+    else:
+        return k * x * x + b
+
+
 def load_data(train_size, k, b, show=False, func_type='lin'):
     test_size = int(train_size * 0.2)
 
@@ -76,11 +83,11 @@ def load_data(train_size, k, b, show=False, func_type='lin'):
     plt.plot(train_plt_points0.transpose()[0], train_plt_points0.transpose()[1], '.')
     plt.plot(train_plt_points1.transpose()[0], train_plt_points1.transpose()[1], '.')
 
-    plt.legend(('0 class', '1 class'),loc='upper right', shadow=True)
-    
+    plt.legend(('0 class', '1 class'), loc='upper right', shadow=True)
+
     if show:
         plt.show()
-        
+
     plt.close()
 
     # plotting
@@ -90,10 +97,42 @@ def load_data(train_size, k, b, show=False, func_type='lin'):
     plt.plot(test_plt_points0.transpose()[0], test_plt_points0.transpose()[1], '.')
     plt.plot(test_plt_points1.transpose()[0], test_plt_points1.transpose()[1], '.')
 
-    plt.legend(('0 class', '1 class'),loc='upper right', shadow=True)
-    
-    
+    plt.legend(('0 class', '1 class'), loc='upper right', shadow=True)
+
     if show:
         plt.show()
+
+    return (x_train, y_train), (x_test, y_test)
+
+
+def load_data_func(train_size, k, b, show=False, func_type='lin'):
+    test_size = int(train_size * 0.2)
+
+    h = 1.0 / float(train_size + test_size)
+
+    x_train = np.empty(0)
+    y_train = np.empty(0)
+
+    x_test = np.empty(0)
+    y_test = np.empty(0)
+
+    i = 0
+    for x in np.arange(0.0, 1.0, h, dtype=float):
+        if i % 5 == 0:
+            x_test = np.append(x_test, x)
+            y_test = np.append(y_test, func(x=x, k=k, b=b, func_type=func_type))
+
+        else:
+            x_train = np.append(x_train, x)
+            y_train = np.append(y_train, func(x=x, k=k, b=b, func_type=func_type))
+
+        i += 1
+
+    plt.plot(x_train, y_train, '.')
+    plt.plot(x_test, y_test, '.')
+    plt.legend(('train_data', 'test_data'), loc='upper left', shadow=True)
+    if show:
+        plt.show()
+    plt.close()
 
     return (x_train, y_train), (x_test, y_test)
