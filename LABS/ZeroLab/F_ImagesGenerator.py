@@ -1,7 +1,10 @@
+#dataset8
+
 # dataset8
 
 import keras
 import numpy as np
+import matplotlib.image as mpimg
 
 
 def load_data():
@@ -17,4 +20,14 @@ def load_data():
     x_test = x_test / 255.0
 
     return (x_train, y_train), (x_test, y_test)
+
+
+(x_train, y_train), (x_test, y_test)=load_data()
+
+
+#i can be changed
+i=2
+
+print(y_train[i])
+imgplt=plt.imshow(x_train[i].reshape(28,28))
 
