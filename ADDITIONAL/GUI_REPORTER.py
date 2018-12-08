@@ -25,7 +25,7 @@ def plot_history_separte(history,save_path_acc, save_path_loss, acc='acc', loss=
                  title=acc+' history', save_path=save_path_acc, save=save, show=show)
 
 
-def plot_graphic(x, y, x_label, y_label, title, save_path, save, show):
+def plot_graphic(x, y, x_label, y_label, title, save_path, save, show,close_plt=True):
     plt.plot(x, y)
     plt.ylabel(y_label)
     plt.xlabel(x_label)
@@ -35,4 +35,6 @@ def plot_graphic(x, y, x_label, y_label, title, save_path, save, show):
         plt.show()
     if save:
         plt.savefig(save_path, dpi=200)
-    plt.close()
+
+    if close_plt:
+        plt.close()
