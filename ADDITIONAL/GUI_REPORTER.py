@@ -19,9 +19,9 @@ def plot_history(history, save_path, save=False, show=True):
 
 
 def plot_history_separte(history,save_path_acc, save_path_loss, acc='acc', loss='loss', save=False, show=True):
-    plot_graphic(x=history.epoch, y=np.array(history.history[acc]), x_label='epochs', y_label='loss',
+    plot_graphic(x=history.epoch, y=np.array(history.history[loss]), x_label='epochs', y_label='loss',
                  title=loss+' history', save_path=save_path_loss, save=save, show=show)
-    plot_graphic(x=history.epoch, y=np.array(history.history[loss]), x_label='epochs', y_label='accuracy',
+    plot_graphic(x=history.epoch, y=np.array(history.history[acc]), x_label='epochs', y_label='accuracy',
                  title=acc+' history', save_path=save_path_acc, save=save, show=show)
 
 

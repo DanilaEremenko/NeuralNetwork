@@ -30,12 +30,12 @@ if __name__ == '__main__':
     stopper = callbacks.EarlyStopping(monitor='acc', min_delta=0, patience=5, mode='max')
 
     # 4 model fitting
-    model.compile(optimizer=SGD(lr=lr), loss='mean_squared_error', metrics=['accuracy'])
+    model.compile(optimizer=SGD(lr=lr), loss='mean_squared_error', metrics=['mean_absolute_error'])
 
     history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=epochs, verbose=verbose)
 
     gr.plot_history_separte(history=history, save_path_acc="ACC.png", save_path_loss="LOSS.png",
-                            save=False, show=True)
+                            save=False, show=True,acc='mean_absolute_error')
 
     plt.plot(x_test, model.predict(x_test),'.-')
     plt.plot(x_test,y_test,'.-')
