@@ -7,7 +7,7 @@ import numpy as np
 def function(x, func_type='difficult'):
     x = x * 100
     if func_type == 'difficult':
-        return 0.25 + x / 200.0 + 0.25 * np.sin(2.0 / 3.0 * x * np.sin(x / 50.0 + 3.0 * np.pi / 2.0))
+        return 0.25 + x / 200.0 + 0.25 * np.sin(2.0 / 3.0 * x * np.sin(x / 50.0 + 3.0 * np.pi / 2.0))/2
     if func_type == 'sin':
         return np.sin(x/20.0)/4+0.5
 
