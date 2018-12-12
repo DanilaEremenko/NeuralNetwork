@@ -51,7 +51,7 @@ def bresenham_line(x0, y0, x1, y1):
 if __name__ == '__main__':
 
     # x0,y0,x1,y1
-    coord = np.array([1, 1, 1, 2])
+    coord = np.array([1, 1, 25, 15])
 
     if coord.size != 4:
         raise Exception("Illegal size of input data")
