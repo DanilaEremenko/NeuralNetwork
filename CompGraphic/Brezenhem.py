@@ -51,10 +51,12 @@ def bresenham_line(x0, y0, x1, y1):
 if __name__ == '__main__':
 
     # x0,y0,x1,y1
-    coord = np.array([1, 1, 25, 15])
+    coord = np.array([1, 1, 1, 2])
 
     if coord.size != 4:
         raise Exception("Illegal size of input data")
+    if coord.min() == coord.max():
+        raise Exception("You can do it yourself (c) Brezenhem")
 
     (x_pts, y_pts) = bresenham_line(x0=coord[0], y0=coord[1], x1=coord[2], y1=coord[3])
 
