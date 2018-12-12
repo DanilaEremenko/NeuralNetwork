@@ -1,0 +1,78 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patch
+
+
+def add_net(x_min, x_max, y_min, y_max):
+    for x in range(x_min, x_max):
+        plt.gca().add_patch(patch.Rectangle((x, y_min), 0.0000000001, y_max, color='#000000', fill=True))
+
+    for y in range(y_min, y_max):
+        plt.gca().add_patch(patch.Rectangle((x_min, y), x_max, 0.0000000001, color='#000000', fill=True))
+
+
+def bresenham_line(x0, y0, x1, y1):
+    x_points = np.empty(0)
+    y_points = np.empty(0)
+
+    steep = abs(x1 - x0) > abs(y1 - y0)
+    if steep:
+        y0, x0 = x0, y0
+        y1, x1 = x1, y1
+
+    if y0 > y1:
+        y0, y1 = y1, y0
+        x0, x1 = x1, x0
+
+    if x0 < x1:
+        ystep = 1
+    else:
+        ystep = -1
+
+    deltax = y1 - y0
+    deltay = abs(x1 - x0)
+    error = -deltax / 2
+    y = x0
+
+    for x in range(y0, y1 + 1):
+        if steep:
+            x_points = np.append(x_points, x)
+            y_points = np.append(y_points, y)
+        else:
+            x_points = np.append(x_points, y)
+            y_points = np.append(y_points, x)
+
+        error = error + deltay
+        if error > 0:
+            y = y + ystep
+            error = error - deltax
+    return x_points, y_points
+
+
+if __name__ == '__main__':
+    x0, y0, x1, y1 = 1, 1, 25, 36
+
+    x_max = x0 if x0 > x1 else x1
+    x_min = x0 if x0 < x1 else x1
+    y_max = y0 if y0 > y1 else y1
+    y_min = y0 if y0 < y1 else y1
+
+    (x_pts, y_pts) = bresenham_line(x0, y0, x1, y1)
+
+    mode = "danger_sweet_mode"
+
+    if mode == "danger_sweet_mode":
+
+        add_net(x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max)
+
+        for x, y in zip(x_pts, y_pts):
+            if x != y:
+                plt.gca().add_patch(patch.Rectangle((x, y), 1.0, 1.0, color='#000000', fill=True))
+
+        plt.xlim(x_min, x_max)
+        plt.ylim(y_min, y_max)
+
+    else:
+        plt.plot(x_pts, y_pts, '.')
+
+    plt.show()
