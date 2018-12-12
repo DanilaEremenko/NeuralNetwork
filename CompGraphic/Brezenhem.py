@@ -3,12 +3,11 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patch
 
 
-def add_net(x_min, x_max, y_min, y_max):
-    for x in range(x_min, x_max):
-        plt.gca().add_patch(patch.Rectangle((x, y_min), 0.0000000001, y_max, color='#000000', fill=True))
-
-    for y in range(y_min, y_max):
-        plt.gca().add_patch(patch.Rectangle((x_min, y), x_max, 0.0000000001, color='#000000', fill=True))
+def add_net(max, min):
+    for x in range(min, max):
+        plt.gca().add_patch(patch.Rectangle((x, min), 0.0000000001, max, color='#000000', fill=True))
+    for y in range(min, max):
+        plt.gca().add_patch(patch.Rectangle((min, y), max, 0.0000000001, color='#000000', fill=True))
 
 
 def bresenham_line(x0, y0, x1, y1):
@@ -50,29 +49,21 @@ def bresenham_line(x0, y0, x1, y1):
 
 
 if __name__ == '__main__':
-    x0, y0, x1, y1 = 1, 1, 25, 36
 
-    x_max = x0 if x0 > x1 else x1
-    x_min = x0 if x0 < x1 else x1
-    y_max = y0 if y0 > y1 else y1
-    y_min = y0 if y0 < y1 else y1
+    # x0,y0,x1,y1
+    coord = np.array([1, 1, 25, 15])
 
-    (x_pts, y_pts) = bresenham_line(x0, y0, x1, y1)
+    if coord.size != 4:
+        raise Exception("Illegal size of input data")
 
-    mode = "danger_sweet_mode"
+    (x_pts, y_pts) = bresenham_line(x0=coord[0], y0=coord[1], x1=coord[2], y1=coord[3])
 
-    if mode == "danger_sweet_mode":
+    add_net(min=coord.min(), max=coord.max())
 
-        add_net(x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max)
+    for x, y in zip(x_pts, y_pts):
+        plt.gca().add_patch(patch.Rectangle((x, y), 1.0, 1.0, color='#000000', fill=True))
 
-        for x, y in zip(x_pts, y_pts):
-            if x != y:
-                plt.gca().add_patch(patch.Rectangle((x, y), 1.0, 1.0, color='#000000', fill=True))
-
-        plt.xlim(x_min, x_max)
-        plt.ylim(y_min, y_max)
-
-    else:
-        plt.plot(x_pts, y_pts, '.')
+    plt.xlim(coord.min(), coord.max())
+    plt.ylim(coord.min(), coord.max())
 
     plt.show()
