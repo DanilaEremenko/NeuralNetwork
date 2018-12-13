@@ -24,7 +24,7 @@ if __name__ == '__main__':
     opt_name = "None"
     optimizer = SGD(lr=lr)
 
-    goal_loss = 0.01
+    goal_loss = 0.1
 
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
@@ -70,13 +70,13 @@ if __name__ == '__main__':
 
     os.mkdir(dir_name)
 
-    gr.plot_graphic(x=history.epoch, y=np.array(history.history["loss"]), x_label='epochs', y_label='loss',
-                    title="loss" + ' history', save_path=dir_name + "/" + "loss.png", save=True, show=True)
+    gr.plot_graphic(x=history.epoch, y=np.array(history.history["val_loss"]), x_label='epochs', y_label='val_loss',
+                    title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=True, show=True)
 
     plt.plot(np.transpose(x_test)[0], y_test, '.-')
     plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
     plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-    plt.title('aproximation comparison\nlr = %.3f\nloss = %.4f' % (lr, history.history["loss"][history.epoch - 1]))
+    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f' % (lr, history.history["val_loss"][history.epoch.__len__()-1]))
 
     plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
