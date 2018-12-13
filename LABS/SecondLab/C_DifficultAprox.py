@@ -19,6 +19,8 @@ if __name__ == '__main__':
     epochs = 10000
     lr = 0.01
     verbose = 1
+    first_layer = 40
+    second_layer = 20
 
     opt_type = 3  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam, 3 - Adadelta
     opt_name = "None"
@@ -31,10 +33,11 @@ if __name__ == '__main__':
     model = Sequential()
 
     model.add(
-        Dense(40, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
+        Dense(first_layer, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
+              activation='sigmoid'))
 
     model.add(
-        Dense(20, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
+        Dense(second_layer, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 
     model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 
@@ -76,7 +79,8 @@ if __name__ == '__main__':
     plt.plot(np.transpose(x_test)[0], y_test, '.-')
     plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
     plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f' % (lr, history.history["val_loss"][history.epoch.__len__()-1]))
+    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d' % (
+        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer, second_layer))
 
     plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
