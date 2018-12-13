@@ -16,11 +16,15 @@ if __name__ == '__main__':
     # 1,2 initializing
     train_size = 2000
     batch_size = 20
-    epochs = 100
+    epochs = 10000
     lr = 0.01
     verbose = 1
-    opt_type = 0  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam, 3 - Adadelta
+
+    opt_type = 3  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam, 3 - Adadelta
     opt_name = "None"
+    optimizer = SGD(lr=lr)
+
+    goal_loss = 0.01
 
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
@@ -38,7 +42,7 @@ if __name__ == '__main__':
 
     # 3 setting stopper
     # callbacks.EarlyStopping(monitor='acc', min_delta=0, patience=5, mode='max')
-    callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=0.1, verbose=1)]
+    callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
 
     if opt_type == 0:
         optimizer = SGD(lr)
@@ -49,23 +53,20 @@ if __name__ == '__main__':
     elif opt_type == 2:
         optimizer = Adam(lr, nesterov=True)
         opt_name = "Adam"
-    elif opt_type == 2:
+    elif opt_type == 3:
         optimizer = Adadelta()
         opt_name = "Adadelta"
     else:
         Exception("Unexpected opt_type value")
 
     # 4 model fitting
-    model.compile(optimizer=Adam(lr=lr), loss='mae', metrics=['mae'])
+    model.compile(optimizer=optimizer, loss='mae', metrics=['mae'])
 
     history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=epochs,
                         verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test))
 
-    print("last loss = %.f3" % history.history["loss"][history.epoch.__len__() - 1])
-
-    score = model.evaluate(x_test, y_test, verbose=verbose)
-
-    dir_name = "C_"+opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)
+    # Save information about learning and save NN
+    dir_name = "C_" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)
 
     os.mkdir(dir_name)
 
