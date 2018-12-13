@@ -8,6 +8,7 @@ def add_net(max, min):
         plt.gca().add_patch(patch.Rectangle((x, min), 0.0000000001, max, color='#000000', fill=True))
     for y in range(min, max):
         plt.gca().add_patch(patch.Rectangle((min, y), max, 0.0000000001, color='#000000', fill=True))
+    pass
 
 
 def bresenham_line(x0, y0, x1, y1):
@@ -51,7 +52,7 @@ def bresenham_line(x0, y0, x1, y1):
 if __name__ == '__main__':
 
     # x0,y0,x1,y1
-    coord = np.array([1, 1, 25, 15])
+    coord = np.array([6, 19, 12, 16])
 
     if coord.size != 4:
         raise Exception("Illegal size of input data")
@@ -60,12 +61,15 @@ if __name__ == '__main__':
 
     (x_pts, y_pts) = bresenham_line(x0=coord[0], y0=coord[1], x1=coord[2], y1=coord[3])
 
-    add_net(min=coord.min(), max=coord.max())
+    add_net(min=coord.min()-1, max=coord.max()+1)
 
     for x, y in zip(x_pts, y_pts):
         plt.gca().add_patch(patch.Rectangle((x, y), 1.0, 1.0, color='#000000', fill=True))
 
-    plt.xlim(coord.min(), coord.max())
-    plt.ylim(coord.min(), coord.max())
+    plt.xlim(coord.min()-1, coord.max()+1)
+    plt.ylim(coord.min()-1, coord.max()+1)
+    plt.title("(x0,y0)=(%.1f,%.1f)\n(x1,y1)=(%.1f,%.1f) " % (coord[0], coord[1], coord[2], coord[3]))
 
+    # name = "(%.1f,%.1f)_(%.1f,%.1f) " % (coord[0], coord[1], coord[2], coord[3]) + ".jpg"
+    # plt.savefig(name, dpi=200)
     plt.show()
