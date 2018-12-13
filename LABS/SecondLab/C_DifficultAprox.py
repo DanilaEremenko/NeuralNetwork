@@ -51,7 +51,7 @@ if __name__ == '__main__':
         optimizer = SGD(lr, nesterov=True)
         opt_name = "SGD+Nesterov"
     elif opt_type == 2:
-        optimizer = Adam(lr, nesterov=True)
+        optimizer = Adam(lr)
         opt_name = "Adam"
     elif opt_type == 3:
         optimizer = Adadelta()
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     plt.plot(np.transpose(x_test)[0], y_test, '.-')
     plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
     plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-    plt.title('aproximation comparison\nlr = %.3f\nloss = %.4f' % (lr, score[0]))
+    plt.title('aproximation comparison\nlr = %.3f\nloss = %.4f' % (lr, history.history["loss"][history.epoch - 1]))
 
     plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
