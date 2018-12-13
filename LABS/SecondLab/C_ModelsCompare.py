@@ -8,10 +8,10 @@ import numpy as np
 
 if __name__ == '__main__':
     models = [
-        keras.models.load_model('C_3Adadelta_10000_0.01_80_40_20_linear/C_3Adadelta_10000_0.01.h5'),
-        keras.models.load_model('C_Adadelta_10000_0.01_40_22_linear/C_Adadelta_10000_0.01.h5'),
-        keras.models.load_model('C_Adadelta_10000_0.01_40_20_sigmoid/C_Adadelta_10000_0.01_40_20_1.h5'),
-        keras.models.load_model('C_Adadelta_10000_0.01_60_30_linear/C_Adadelta_10000_0.01.h5')
+        keras.models.load_model('C_3Adadelta_10000_0.01_80_40_20/C_3Adadelta_10000_0.01.h5'),
+        keras.models.load_model('C_Adadelta_10000_0.01_40_22/C_Adadelta_10000_0.01.h5'),
+        keras.models.load_model('C_Adadelta_10000_0.01_40_20/C_Adadelta_10000_0.01_40_20_1.h5'),
+        keras.models.load_model('C_Adadelta_10000_0.01_60_30/C_Adadelta_10000_0.01.h5')
     ]
 
     models_names = ["Adadelta_10000_0.01_80_40_20_linear",
