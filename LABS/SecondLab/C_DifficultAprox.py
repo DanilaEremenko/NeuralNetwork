@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     train_size = 2000
     batch_size = 20
-    epochs = 100
+    epochs = 1000
     lr = 0.23
     verbose = 1
 
@@ -24,10 +24,10 @@ if __name__ == '__main__':
     model = Sequential()
 
     model.add(
-        Dense(20, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
+        Dense(40, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 
     model.add(
-        Dense(10, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
+        Dense(20, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 
     model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 

@@ -48,19 +48,18 @@ if __name__ == '__main__':
     plt.close()
 
     # 2.2-------------------------------------------------------
-    h = 0.05
-    count = 0
-
     # max learning rate
-    for rate in np.arange(lr, 1.0, h, dtype=float):
-        print("\nrate = ", rate)
+
+    h = 0.05
+    max_lr = 0
+    for max_lr in np.arange(max_lr, 1.0, h, dtype=float):
+        print("\nrate = ", max_lr)
         loc_loss = history.history['loss'][epochs - 1]
-        lr = rate
         model = Sequential()
 
         model.add(Dense(first_layer_nur, input_dim=1, kernel_initializer='glorot_normal', activation='linear'))
 
-        model.compile(loss='mean_squared_error', optimizer=SGD(lr=lr), metrics=['mae'])
+        model.compile(loss='mean_squared_error', optimizer=SGD(lr=max_lr), metrics=['mae'])
 
         history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=0)
 
@@ -70,15 +69,15 @@ if __name__ == '__main__':
 
         if history.history['loss'][epochs - 1] - loc_loss >= 0.01:
             break
-    lr -= h
+    max_lr -= h
 
-    # learning rate:
+    # compare of different lr rate:
     titles = np.array(['lower than max', 'max', 'higher than max'])
     title_i = 0
 
     step = 0.05
 
-    for lr in np.arange(lr - 3 * step, lr + 4 * step, 3 * step, dtype=float):
+    for max_lr in np.arange(max_lr - 3 * step, max_lr + 4 * step, 3 * step, dtype=float):
 
         model = Sequential()
 
@@ -88,7 +87,7 @@ if __name__ == '__main__':
 
         model.add(Dense(first_layer_nur, input_dim=1, weights=list([weights_arr, bias_arr]), activation='linear'))
 
-        model.compile(loss='mean_squared_error', optimizer=SGD(lr=lr), metrics=['mae'])
+        model.compile(loss='mean_squared_error', optimizer=SGD(lr=max_lr), metrics=['mae'])
 
         for i in np.arange(1, epochs, 1, dtype=float):
             model.fit(x_train, y_train, batch_size=batch_size, epochs=1, verbose=0)
@@ -98,7 +97,7 @@ if __name__ == '__main__':
 
         plt.plot(x_range, weights_arr, '.')
         plt.plot(x_range, bias_arr, '.')
-        plt.title('learning rate = %-0.2f %s' % (lr, titles[title_i]))
+        plt.title('learning rate = %-0.2f %s' % (max_lr, titles[title_i]))
         plt.legend(('weights', 'biases'), loc='upper left', shadow=True)
 
         plt.show()
