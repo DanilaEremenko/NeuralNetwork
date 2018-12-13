@@ -87,8 +87,8 @@ if __name__ == '__main__':
     plt.plot(np.transpose(x_test)[0], y_test, '.-')
     plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
     plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d' % (
-        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer, second_layer))
+    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d %.d' % (
+        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer, second_layer, third_layer))
 
     plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
