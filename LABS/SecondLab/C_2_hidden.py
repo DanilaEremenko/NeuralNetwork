@@ -21,12 +21,13 @@ if __name__ == '__main__':
     verbose = 1
     first_layer = 60
     second_layer = 30
+    third_layer = 10
 
     opt_type = 3  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam, 3 - Adadelta
     opt_name = "None"
     optimizer = SGD(lr=lr)
 
-    goal_loss = 0.01
+    goal_loss = 0.005
 
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
@@ -39,7 +40,12 @@ if __name__ == '__main__':
     model.add(
         Dense(second_layer, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 
+    model.add(
+        Dense(third_layer, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
+
     model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
+
+
 
     # plot_model(model, to_file="C_Model.png", show_shapes=True, show_layer_names=True)
 
@@ -69,7 +75,7 @@ if __name__ == '__main__':
                         verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test))
 
     # Save information about learning and save NN
-    dir_name = "C_" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)
+    dir_name = "C_2" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)
 
     os.mkdir(dir_name)
 
