@@ -16,7 +16,7 @@ if __name__ == '__main__':
     # 1,2 initializing
     train_size = 2000
     batch_size = 20
-    epochs = 10000
+    epochs = 50000
     lr = 0.01
     verbose = 1
     first_layer = 60

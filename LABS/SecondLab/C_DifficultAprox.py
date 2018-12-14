@@ -16,7 +16,7 @@ if __name__ == '__main__':
     # 1,2 initializing
     train_size = 2000
     batch_size = 20
-    epochs = 10000
+    epochs = 50000
     lr = 0.01
     verbose = 1
     first_layer = 60
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     opt_name = "None"
     optimizer = SGD(lr=lr)
 
-    goal_loss = 0.01
+    goal_loss = 0.005
 
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
