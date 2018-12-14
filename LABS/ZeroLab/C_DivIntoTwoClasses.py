@@ -1,6 +1,6 @@
+# dataset3
 import matplotlib.pyplot as plt
 import numpy as np
-
 
 import LABS.ZeroLab.D_DivIntoNClasses as dataset4
 
@@ -60,12 +60,11 @@ def load_data(train_size=2000, show=False):
     plt.xlim(0, 1.3)
     plt.ylim(0, 1)
     plt.title("train data")
-    plt.plot(x_train_for_plt.transpose()[0], x_train_for_plt.transpose()[1], '.')
     plt.plot(x_train_missed_for_plt.transpose()[0], x_train_missed_for_plt.transpose()[1], '.')
-    
-    plt.legend(('0 class','1 class'),loc='upper right', shadow=True)
-    
-    
+    plt.plot(x_train_for_plt.transpose()[0], x_train_for_plt.transpose()[1], '.')
+
+    plt.legend(('0 class', '1 class'), loc='upper right', shadow=True)
+
     if show:
         plt.show()
 
@@ -75,11 +74,11 @@ def load_data(train_size=2000, show=False):
     plt.xlim(0, 1.3)
     plt.ylim(0, 1)
     plt.title("test data")
-    plt.plot(x_test_for_plt.transpose()[0], x_test_for_plt.transpose()[1], '.')
     plt.plot(x_test_missed_for_plt.transpose()[0], x_test_missed_for_plt.transpose()[1], '.')
+    plt.plot(x_test_for_plt.transpose()[0], x_test_for_plt.transpose()[1], '.')
 
-    plt.legend(('0 class','1 class'),loc='upper right', shadow=True)
-    
+    plt.legend(('0 class', '1 class'), loc='upper right', shadow=True)
+
     if show:
         plt.show()
     plt.close()
