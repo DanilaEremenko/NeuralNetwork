@@ -16,47 +16,46 @@ if __name__ == '__main__':
     # 1,2 initializing
     train_size = 2000
     batch_size = 20
-    epochs = 50000
-    lr = 0.01
+    epochs = 10000
+    lr = 0.001
     verbose = 1
-    first_layer = 60
-    second_layer = 30
+    first_layer = 50
 
-    opt_type = 3  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam, 3 - Adadelta
+    opt_type = 2  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam,3-Adam+Amsgard, 4 - Adadelta
     opt_name = "None"
     optimizer = SGD(lr=lr)
 
-    goal_loss = 0.005
+    goal_loss = 0.0005
 
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
+
+    k_init='he_uniform'
 
     model = Sequential()
 
     model.add(
-        Dense(first_layer, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
+        Dense(first_layer, input_dim=2, kernel_initializer=k_init, bias_initializer=k_init,
               activation='sigmoid'))
 
-    model.add(
-        Dense(second_layer, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
-
     model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
-
-    # plot_model(model, to_file="C_Model.png", show_shapes=True, show_layer_names=True)
 
     # 3 setting stopper
     # callbacks.EarlyStopping(monitor='acc', min_delta=0, patience=5, mode='max')
     callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
 
     if opt_type == 0:
-        optimizer = SGD(lr)
+        optimizer = SGD(lr=lr)
         opt_name = "SGD"
     elif opt_type == 1:
-        optimizer = SGD(lr, nesterov=True)
+        optimizer = SGD(lr=lr, nesterov=True)
         opt_name = "SGD+Nesterov"
     elif opt_type == 2:
-        optimizer = Adam(lr)
+        optimizer = Adam(lr=lr)
         opt_name = "Adam"
     elif opt_type == 3:
+        optimizer = Adam(lr=lr, amsgrad=True)
+        opt_name = "Adam+Amsgard"
+    elif opt_type == 4:
         optimizer = Adadelta()
         opt_name = "Adadelta"
     else:
@@ -69,7 +68,7 @@ if __name__ == '__main__':
                         verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test))
 
     # Save information about learning and save NN
-    dir_name = "C_" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)
+    dir_name = "C_" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)+"_"+str(k_init)
 
     os.mkdir(dir_name)
 
@@ -79,8 +78,8 @@ if __name__ == '__main__':
     plt.plot(np.transpose(x_test)[0], y_test, '.-')
     plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
     plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d' % (
-        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer, second_layer))
+    plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f\n neurons = %.d' % (
+        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer))
 
     plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
