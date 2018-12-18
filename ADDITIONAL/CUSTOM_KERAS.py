@@ -1,5 +1,9 @@
 import keras.backend as K
 from keras.callbacks import Callback
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import ADDITIONAL.GUI_REPORTER as gr
 
 
 def hard_lim(x):
@@ -22,3 +26,33 @@ class EarlyStoppingByLossVal(Callback):
             if self.verbose > 0:
                 print("Epoch %05d: early stopping THR" % epoch)
             self.model.stop_training = True
+
+
+def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch_size,
+               dir_name, compare_title, draw_step=10, verbose=1):
+    np.random.seed(42)
+
+    epochs_step = int(epochs / draw_step)
+
+    os.mkdir(dir_name)
+
+    for init_epoch in np.arange(0, epochs, step=epochs_step):
+        history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=init_epoch + epochs_step,
+                            verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test),
+                            initial_epoch=init_epoch)
+
+        # gr.plot_graphic(x=history.epoch, y=np.array(history.history["val_loss"]), x_label='epochs', y_label='val_loss',
+        #                 title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=True, show=True)
+
+        plt.plot(np.transpose(x_test)[0], y_test, '.-')
+        plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
+        plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
+        plt.title(compare_title + "\nval_loss = %.4f" % history.history["val_loss"][history.epoch.__len__() - 1])
+
+        plt.savefig(dir_name + "/" + "%.d_compare_%.4f.png" %
+                    (init_epoch + epochs_step, history.history["val_loss"][history.epoch.__len__() - 1])
+                    , dpi=200)
+        plt.show()
+        plt.close()
+
+    return model

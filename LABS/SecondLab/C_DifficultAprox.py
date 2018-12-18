@@ -19,7 +19,7 @@ if __name__ == '__main__':
     epochs = 10000
     lr = 0.001
     verbose = 1
-    first_layer = 50
+    first_layer = 88
 
     opt_type = 2  # 0-SGD, 1 - SGD + Nesterov, 2 - Adam,3-Adam+Amsgard, 4 - Adadelta
     opt_name = "None"
