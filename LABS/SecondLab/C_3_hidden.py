@@ -3,26 +3,20 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import SGD, Adam, Adadelta, RMSprop
 
-import numpy as np
-
 from LABS.ZeroLab import E_Function as dataset5
 from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal, custom_fit
 
 if __name__ == '__main__':
     # 1 parameters initializing---------------------------------------------------------
-    np.random.seed(42)
-
-    train_size = 2000
+    train_size = 4000
     batch_size = 20
-    epochs = 100
-    lr = 0.1
-    goal_loss = 0.0005
+    epochs = 10000
+    lr = 0.001
+    goal_loss = 0.005
 
-    neurons_number = [40, 20, 10]
+    neurons_number = [60, 30, 10]
 
-    opt_type = 2
     opt_name = "None"
-    optimizer = SGD(lr=lr)
 
     draw_step = 10
     verbose = 1
@@ -30,55 +24,55 @@ if __name__ == '__main__':
     # 2 model and data initializing---------------------------------------------------------
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
-    model = Sequential()
+    for opt_type in range(0, 5):
 
-    model.add(
-        Dense(neurons_number[0], input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
-              activation='sigmoid'))
-    model.add(
-        Dense(neurons_number[1], input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
-              activation='sigmoid'))
+        model = Sequential()
 
-    model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
+        model.add(
+            Dense(neurons_number[0], input_dim=2, activation='sigmoid'))
+        model.add(
+            Dense(neurons_number[1], activation='sigmoid'))
+        model.add(
+            Dense(neurons_number[2], activation='sigmoid'))
 
-    # 3 setting stopper---------------------------------------------------------
-    callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
+        model.add(Dense(1, activation='linear'))
 
-    if opt_type == 0:
-        optimizer = SGD(lr=lr)
-        opt_name = "SGD"
-    elif opt_type == 1:
-        optimizer = SGD(lr=lr, nesterov=True)
-        opt_name = "SGD+Nesterov"
-    elif opt_type == 2:
-        optimizer = Adam(lr=lr)
-        opt_name = "Adam"
-    elif opt_type == 3:
-        optimizer = Adam(lr=lr, amsgrad=True)
-        opt_name = "Adam+Amsgard"
-    elif opt_type == 4:
-        optimizer = RMSprop(lr=lr)
-        opt_name = "RMSprop"
-    elif opt_type == 5:
-        optimizer = Adadelta()
-        opt_name = "Adadelta"
-    else:
-        Exception("Unexpected opt_type value")
+        # 3 setting stopper---------------------------------------------------------
+        callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
 
-    model.compile(optimizer=optimizer, loss='mae', metrics=['mae'])
+        if opt_type == 0:
+            optimizer = SGD(lr=lr)
+            opt_name = "SGD"
+        elif opt_type == 1:
+            optimizer = SGD(lr=lr, nesterov=True)
+            opt_name = "SGD+Nesterov"
+        elif opt_type == 2:
+            optimizer = Adam(lr=lr)
+            opt_name = "Adam"
+        elif opt_type == 3:
+            optimizer = RMSprop(lr=lr)
+            opt_name = "RMSprop"
+        elif opt_type == 4:
+            optimizer = Adadelta()
+            opt_name = "Adadelta"
+        else:
+            Exception("Unexpected opt_type value")
 
-    # 4 model fitting---------------------------------------------------------
+        model.compile(optimizer=optimizer, loss='mae')
 
-    dir_name = "C_3_History_" + opt_name + "_%.d_%.d_%.d_%.d" \
-               % (lr, neurons_number[0], neurons_number[1], neurons_number[2])
+        # 4 model fitting---------------------------------------------------------
 
-    compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d %.d %.d' % \
-                    (lr, neurons_number[0], neurons_number[1], neurons_number[2])
+        dir_name = "C_3/" + opt_name + "_%.3f_%.d_%.d_%.d" \
+                   % (lr, neurons_number[0], neurons_number[1], neurons_number[2])
 
-    model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test,
-                       epochs=epochs, batch_size=batch_size,
-                       dir_name=dir_name, compare_title=compare_title,
-                       draw_step=draw_step, verbose=verbose)
+        compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d %.d %.d' % \
+                        (lr, neurons_number[0], neurons_number[1], neurons_number[2])
 
-    # 5 model saving---------------------------------------------------------
-    model.save(dir_name + "/" + dir_name + '.h5')
+        model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test,
+                           y_test=y_test,
+                           epochs=epochs, batch_size=batch_size,
+                           dir_name=dir_name, compare_title=compare_title,
+                           draw_step=draw_step, verbose=verbose)
+
+        # 5 model saving---------------------------------------------------------
+        model.save(dir_name + "/" + dir_name + '.h5')

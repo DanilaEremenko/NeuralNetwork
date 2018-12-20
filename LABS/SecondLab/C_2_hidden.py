@@ -10,15 +10,14 @@ from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal, custom_fit
 
 if __name__ == '__main__':
     # 1 parameters initializing---------------------------------------------------------
-    np.random.seed(42)
 
     train_size = 2000
     batch_size = 20
-    epochs = 100
+    epochs = 1000
     lr = 0.1
     goal_loss = 0.0005
 
-    neurons_number = [40, 20]
+    neurons_number = [46, 20]
 
     opt_type = 2
     opt_name = "None"
@@ -33,13 +32,14 @@ if __name__ == '__main__':
     model = Sequential()
 
     model.add(
-        Dense(neurons_number[0], input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
-              activation='sigmoid'))
+        Dense(neurons_number[0], input_dim=2,
+              activation='relu'))
     model.add(
-        Dense(neurons_number[1], input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
-              activation='sigmoid'))
+        Dense(neurons_number[1], input_dim=2,
+              activation='relu'))
 
-    model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
+    model.add(Dense(1))
+
 
     # 3 setting stopper---------------------------------------------------------
     callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
@@ -65,12 +65,12 @@ if __name__ == '__main__':
     else:
         Exception("Unexpected opt_type value")
 
-    model.compile(optimizer=optimizer, loss='mae', metrics=['mae'])
+    model.compile(optimizer='adam', loss='mse')
 
     # 4 model fitting---------------------------------------------------------
 
-    dir_name = "C_2_History_" + opt_name + "_%.d_%.d_%.d" \
-               % (lr, neurons_number[0], neurons_number[1])
+    dir_name = "C_2_History_relu" + opt_name + "_%.d_%.4f_%.d_%.d" \
+               % (epochs, lr, neurons_number[0], neurons_number[1])
 
     compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d %.d' % \
                     (lr, neurons_number[0], neurons_number[1])

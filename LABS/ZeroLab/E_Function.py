@@ -57,4 +57,4 @@ def load_data(train_size=200, show=False, func_type='difficult'):
 
 
 if __name__ == '__main__':
-    (x_train, y_train), (x_test, y_test) = load_data(train_size=2000, show=True)
+    (x_train, y_train), (x_test, y_test) = load_data(train_size=500, show=True)

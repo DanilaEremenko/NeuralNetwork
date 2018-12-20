@@ -1,15 +1,22 @@
 from __future__ import print_function
-from keras.models import Model
-from keras.layers import Dense, Input
+from keras.models import Model, Sequential
+from keras.layers import Dense, Input, Conv2D, MaxPool2D, Flatten
 from keras.utils.vis_utils import plot_model
 
 if __name__ == '__main__':
-    input_layer = Input(shape=(100, 1))
+    model = Sequential()
 
-    hidden = Dense(1, input_dim=1, name='custom')(input_layer)
+    input_layer = Dense(1, name='input')
 
-    output = Dense(1, input_dim=2, activation='relu', name='out')([hidden, input_layer])
+    hidden = Dense(1, name='hidden')
 
-    model = Model(inputs=input_layer, outputs=[output])
+    output_layer=Dense(1,name='output')(input_layer)
+
+
+    model.add(input_layer)
+
+    model.add(hidden)
+
+    model.add(Dense(1)(input_layer))
 
     plot_model(model, to_file="CNN.png")
