@@ -36,23 +36,30 @@ def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch
 
     os.mkdir(dir_name)
 
+    full_loss_history = np.empty(0)
+
     for init_epoch in np.arange(0, epochs, step=epochs_step):
         history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=init_epoch + epochs_step,
                             verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test),
                             initial_epoch=init_epoch)
 
-        # gr.plot_graphic(x=history.epoch, y=np.array(history.history["val_loss"]), x_label='epochs', y_label='val_loss',
-        #                 title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=True, show=True)
+        full_loss_history = np.append(full_loss_history, history.history['val_loss'])
 
         plt.plot(np.transpose(x_test)[0], y_test, '.-')
         plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
         plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-        plt.title(compare_title + "\nval_loss = %.4f" % history.history["val_loss"][history.epoch.__len__() - 1])
+        plt.title(
+            compare_title + "\nval_loss = %.4f\nepoch = %d" % (history.history["val_loss"][history.epoch.__len__() - 1],
+                                                               init_epoch + epochs_step))
 
         plt.savefig(dir_name + "/" + "%.d_compare_%.4f.png" %
                     (init_epoch + epochs_step, history.history["val_loss"][history.epoch.__len__() - 1])
                     , dpi=200)
         plt.show()
         plt.close()
+
+    gr.plot_graphic(x=np.arange(1, epochs + 1), y=full_loss_history,
+                    x_label='epochs', y_label='val_loss',
+                    title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=True, show=True)
 
     return model

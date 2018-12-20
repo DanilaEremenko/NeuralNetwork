@@ -4,8 +4,6 @@ from keras import Sequential
 from keras.layers import Dense
 import keras.initializers as wi
 
-
-# TODO
 def plot_weights(weights, x, title):
     plt.plot(x, weights[0].reshape(x.shape), '.')
     plt.plot(x, weights[1].reshape(x.shape), '.')

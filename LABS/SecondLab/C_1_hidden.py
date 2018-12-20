@@ -18,7 +18,7 @@ if __name__ == '__main__':
     lr = 0.1
     goal_loss = 0.0005
 
-    neurons_number = [40, 20]
+    neurons_number = [300]
 
     opt_type = 2
     opt_name = "None"
@@ -34,9 +34,6 @@ if __name__ == '__main__':
 
     model.add(
         Dense(neurons_number[0], input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
-              activation='sigmoid'))
-    model.add(
-        Dense(neurons_number[1], input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
               activation='sigmoid'))
 
     model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
@@ -69,11 +66,9 @@ if __name__ == '__main__':
 
     # 4 model fitting---------------------------------------------------------
 
-    dir_name = "C_2_History_" + opt_name + "_%.d_%.d_%.d" \
-               % (lr, neurons_number[0], neurons_number[1])
+    dir_name = "C_1_History" + opt_name + "_%.d_%.d" % (lr, neurons_number[0])
 
-    compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d %.d' % \
-                    (lr, neurons_number[0], neurons_number[1])
+    compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d' % (lr, neurons_number[0])
 
     model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test,
                        epochs=epochs, batch_size=batch_size,
