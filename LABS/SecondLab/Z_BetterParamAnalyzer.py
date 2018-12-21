@@ -1,76 +1,53 @@
 from __future__ import print_function
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.optimizers import SGD, Adam, Adadelta
-import matplotlib.pyplot as plt
+from keras.optimizers import SGD, Adam, Adadelta, RMSprop
+
 import numpy as np
 
 from LABS.ZeroLab import E_Function as dataset5
-import ADDITIONAL.GUI_REPORTER as gr
-from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal
-
-import os
+from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal, custom_fit
 
 if __name__ == '__main__':
+    # 1 parameters initializing---------------------------------------------------------
     np.random.seed(42)
-    # 1,2 initializing
-    train_size = 2000
-    batch_size = 10
-    epochs = 3000
+
+    train_size = 8000
+    batch_size = 64
+    epochs = 500
+    lr = 0.1
+    goal_loss = 0.01
+    optimizer = Adam(lr=lr)
+    opt_name = "Adam"
+
+    draw_part = 1
     verbose = 0
 
-    lrs = [0.001, 0.0001, 0.00001, 0.000001]
-    first_layers = np.array([40, 45, 50, 55, 60, 65, 70, 75, 80])
+    # 2 model and data initializing---------------------------------------------------------
 
-    dir_name = "Adams"
-    os.mkdir(dir_name)
+    for lr in np.array([0.0001]):
+        for neurons_number in np.array([40, 60, 80, 100]):
+            (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
-    i = 1
-    for first_layer in first_layers:
-        for lr in lrs:
-            for amsgard in np.array([True, False]):
-                optimizer = Adam(lr=lr, amsgrad=amsgard)
+            model = Sequential()
 
-                goal_loss = 0.015
+            model.add(Dense(neurons_number, input_dim=2, activation='sigmoid'))
 
-                (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
+            model.add(Dense(1, activation='linear'))
 
-                model = Sequential()
+            # 3 setting stopper---------------------------------------------------------
+            callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
 
-                model.add(
-                    Dense(first_layer, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
-                          activation='sigmoid'))
+            model.compile(optimizer=optimizer, loss='mae')
 
-                model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
+            # 4 model fitting---------------------------------------------------------
 
-                # 3 setting stopper
-                callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
+            dir_name = None
 
-                # 4 model fitting
-                model.compile(optimizer=optimizer, loss='mae', metrics=['mae'])
+            compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d' % (lr, neurons_number)
 
-                history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=epochs,
-                                    verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test))
-
-                val_loss = history.history["val_loss"][history.epoch.__len__() - 1]
-
-                gr.plot_graphic(x=history.epoch, y=np.array(history.history["val_loss"]), x_label='epochs',
-                                y_label='val_loss',
-                                title="val_loss" + ' history',
-                                save_path=dir_name + "/" + "%.4f_val_loss_" % val_loss + "_" + str(
-                                    first_layer) + "_" + str(
-                                    lr) + "_" + str(amsgard) + ".png"
-                                , save=True, show=False)
-
-                plt.plot(np.transpose(x_test)[0], y_test, '.-')
-                plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.-')
-                plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
-                plt.title('aproximation comparison\nlr = %.3f\nval_loss = %.4f\n neurons = %.d' % (
-                    lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer))
-
-                plt.savefig(dir_name + "/" + "%.4f_compare_" % val_loss + str(first_layer) + "_" + str(lr) + "_" + str(
-                    amsgard) + ".jpg", dpi=200)
-                plt.close()
-
-                print("i = ", i)
-                i += 1
+            model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test,
+                               y_test=y_test,
+                               epochs=epochs, batch_size=batch_size,
+                               dir_name=dir_name, compare_title=compare_title,
+                               draw_step=draw_part, verbose=verbose)

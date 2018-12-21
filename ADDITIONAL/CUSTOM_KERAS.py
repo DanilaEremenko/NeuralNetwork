@@ -34,7 +34,8 @@ def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch
 
     epochs_step = int(epochs / draw_step)
 
-    #os.mkdir(dir_name)
+    if dir_name != None:
+        os.mkdir(dir_name)
 
     full_loss_history = np.empty(0)
 
@@ -52,14 +53,23 @@ def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch
             compare_title + "\nval_loss = %.4f\nepoch = %d" % (history.history["val_loss"][history.epoch.__len__() - 1],
                                                                init_epoch + epochs_step))
 
-        #plt.savefig(dir_name + "/" + "%.d_compare_%.4f.png" %
-        #            (init_epoch + epochs_step, history.history["val_loss"][history.epoch.__len__() - 1])
-        #            , dpi=200)
+        if dir_name != None:
+            plt.savefig(dir_name + "/" + "%.d_compare_%.4f.png" %
+                        (init_epoch + epochs_step, history.history["val_loss"][history.epoch.__len__() - 1])
+                        , dpi=200)
+
+        save = False if dir_name == None else True
+
+        if save:
+            save_path = dir_name + "/" + "val_loss.png"
+        else:
+            save_path = None
+
         plt.show()
         plt.close()
 
     gr.plot_graphic(x=np.arange(1, epochs + 1), y=full_loss_history,
                     x_label='epochs', y_label='val_loss',
-                    title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=False, show=True)
+                    title="val_loss" + ' history', save_path=save_path, save=save, show=True)
 
     return model

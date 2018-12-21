@@ -25,7 +25,10 @@ if __name__ == '__main__':
     optimizer = SGD(lr=lr)
 
     draw_step = 10
-    verbose = 1
+    verbose = 0
+
+    graphic_save = False
+    graphic_show = True
 
     # 2 model and data initializing---------------------------------------------------------
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
@@ -73,7 +76,7 @@ if __name__ == '__main__':
     model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test,
                        epochs=epochs, batch_size=batch_size,
                        dir_name=dir_name, compare_title=compare_title,
-                       draw_step=draw_step, verbose=verbose)
+                       draw_step=draw_step, verbose=verbose,save=graphic_save,show=graphic_show)
 
     # 5 model saving---------------------------------------------------------
     model.save(dir_name + "/" + dir_name + '.h5')
