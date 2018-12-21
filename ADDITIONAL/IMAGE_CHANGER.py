@@ -38,7 +38,7 @@ def plot_examples_field(data, data_size, x_pictures, y_types, images_sizes, img_
 
     y_train = np.zeros(train_size)
 
-    y_test = np.zeros(test_size,dtype=int)
+    y_test = np.zeros(test_size, dtype=int)
 
     i = 0
     tr_i = 0
@@ -101,17 +101,29 @@ def deform_image(arr, shape, k, n, m):
         arr[:, i] = np.roll(arr[:, i], int(shift(i) * k))
     return arr.reshape(shape)
 
+
 def show_image(input_path):
     image = Image.open(input_path)
     image.show()
-    
-    
+
+
 def show_image_by_pxs(pxs):
     image = Image.fromarray(pxs).convert('L')
     image.show()
 
-def save_image_by_pxs(pxs,output_path):
+
+def save_image_by_pxs(pxs, output_path):
     image = Image.fromarray(pxs).convert('L')
     image.save(output_path)
-    
-    
+
+
+def noise(arr, intensity):
+    for i in range(1, arr.size):
+        i += r.randint(0, intensity)
+        if i > 780:
+            i = 780
+        if arr[i] > 0.5:
+            arr[i] = 0.0
+        else:
+            arr[i] = 1.0
+    return arr
