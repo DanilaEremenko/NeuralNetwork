@@ -2,21 +2,24 @@ from __future__ import print_function
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import SGD, Adam, Adadelta, RMSprop
+import numpy as np
 
 from LABS.ZeroLab import E_Function as dataset5
 from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal, custom_fit
 
 if __name__ == '__main__':
     # 1 parameters initializing---------------------------------------------------------
-    train_size = 4000
-    batch_size = 20
-    epochs = 10000
-    lr = 0.001
-    goal_loss = 0.005
+    train_size = 48000
+    batch_size = 480
+    epochs = 1000
+    lr = 0.05
+    goal_loss = 0.01
 
-    neurons_number = [60, 30, 10]
+    neurons_number = [40, 16, 8]
 
-    opt_name = "None"
+    opt_name = "Adam"
+
+    optimizer = Adam(lr=lr)
 
     draw_step = 10
     verbose = 1
@@ -24,55 +27,35 @@ if __name__ == '__main__':
     # 2 model and data initializing---------------------------------------------------------
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
 
-    for opt_type in range(0, 5):
+    x_train = np.transpose(np.append(x_train, np.ones(x_train.size)).reshape(2, x_train.size))
+    x_test = np.transpose(np.append(x_test, np.ones(x_test.size)).reshape(2, x_test.size))
 
-        model = Sequential()
+    model = Sequential()
 
-        model.add(
-            Dense(neurons_number[0], input_dim=2, activation='sigmoid'))
-        model.add(
-            Dense(neurons_number[1], activation='sigmoid'))
-        model.add(
-            Dense(neurons_number[2], activation='sigmoid'))
+    model.add(
+        Dense(neurons_number[0], input_dim=2, activation='sigmoid'))
+    model.add(
+        Dense(neurons_number[1], activation='sigmoid'))
 
-        model.add(Dense(1, activation='linear'))
+    model.add(
+        Dense(neurons_number[2], activation='sigmoid'))
 
-        # 3 setting stopper---------------------------------------------------------
-        callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
+    model.add(Dense(1, activation='linear'))
 
-        if opt_type == 0:
-            optimizer = SGD(lr=lr)
-            opt_name = "SGD"
-        elif opt_type == 1:
-            optimizer = SGD(lr=lr, nesterov=True)
-            opt_name = "SGD+Nesterov"
-        elif opt_type == 2:
-            optimizer = Adam(lr=lr)
-            opt_name = "Adam"
-        elif opt_type == 3:
-            optimizer = RMSprop(lr=lr)
-            opt_name = "RMSprop"
-        elif opt_type == 4:
-            optimizer = Adadelta()
-            opt_name = "Adadelta"
-        else:
-            Exception("Unexpected opt_type value")
+    # 3 setting stopper---------------------------------------------------------
+    callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=0)]
 
-        model.compile(optimizer=optimizer, loss='mae')
+    model.compile(optimizer=optimizer, loss='mae')
 
-        # 4 model fitting---------------------------------------------------------
+    # 4 model fitting---------------------------------------------------------
 
-        dir_name = "C_3/" + opt_name + "_%.3f_%.d_%.d_%.d" \
-                   % (lr, neurons_number[0], neurons_number[1], neurons_number[2])
+    dir_name = None
 
-        compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d %.d %.d' % \
-                        (lr, neurons_number[0], neurons_number[1], neurons_number[2])
+    compare_title = 'aproximation comparison\nlr = %.3f\n neurons = %.d %.d %.d' % \
+                    (lr, neurons_number[0], neurons_number[1], neurons_number[2])
 
-        model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test,
-                           y_test=y_test,
-                           epochs=epochs, batch_size=batch_size,
-                           dir_name=dir_name, compare_title=compare_title,
-                           draw_step=draw_step, verbose=verbose)
-
-        # 5 model saving---------------------------------------------------------
-        model.save(dir_name + "/" + dir_name + '.h5')
+    model = custom_fit(model=model, callbacks=callbacks, x_train=x_train, y_train=y_train, x_test=x_test,
+                       y_test=y_test,
+                       epochs=epochs, batch_size=batch_size,
+                       dir_name=dir_name, compare_title=compare_title,
+                       draw_step=draw_step, verbose=verbose)

@@ -48,7 +48,7 @@ def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch
 
         plt.plot(np.transpose(x_test)[0], y_test, '.')
         plt.plot(np.transpose(x_test)[0], model.predict(x_test), '.')
-        plt.legend(('function', 'approximation'), loc='lower left', shadow=True)
+        plt.legend(('function', 'approximation'), loc='upper left', shadow=True)
         plt.title(
             compare_title + "\nval_loss = %.4f\nepoch = %d" % (history.history["val_loss"][history.epoch.__len__() - 1],
                                                                init_epoch + epochs_step))

@@ -33,7 +33,7 @@ def load_data(train_size=200, show=False, func_type='difficult'):
     y_test = np.empty(0)
 
     i = 0
-    for x in np.random.rand((train_size)):
+    for x in np.random.rand((train_size+test_size)):
         if i % 5 == 0:
             x_test = np.append(x_test, x)
             y_test = np.append(y_test, function(x, func_type=func_type))
@@ -50,8 +50,6 @@ def load_data(train_size=200, show=False, func_type='difficult'):
         plt.show()
     plt.close()
 
-    x_train = np.transpose(np.append(x_train, np.ones(x_train.size)).reshape(2, x_train.size))
-    x_test = np.transpose(np.append(x_test, np.ones(x_test.size)).reshape(2, x_test.size))
 
     return (x_train, y_train), (x_test, y_test)
 

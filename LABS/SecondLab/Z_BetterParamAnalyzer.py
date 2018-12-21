@@ -12,26 +12,34 @@ if __name__ == '__main__':
     # 1 parameters initializing---------------------------------------------------------
     np.random.seed(42)
 
-    train_size = 8000
+    train_size = 6000
     batch_size = 64
-    epochs = 500
+    epochs = 1000
     lr = 0.1
     goal_loss = 0.01
     optimizer = Adam(lr=lr)
     opt_name = "Adam"
 
-    draw_part = 1
+    draw_part = 10
     verbose = 0
 
     # 2 model and data initializing---------------------------------------------------------
 
-    for lr in np.array([0.0001]):
-        for neurons_number in np.array([40, 60, 80, 100]):
+    for lr in np.array([0.1]):
+        for neurons_number in np.array([48]):
             (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=train_size, show=False)
+
+            x_train = np.transpose(np.append(x_train, np.ones(x_train.size)))
+            x_train = np.transpose(np.append(x_train, np.ones(x_train.size)))
+            x_train = np.transpose(np.append(x_train, np.ones(x_train.size)).reshape(8, x_train.size/4))
+
+            x_test = np.transpose(np.append(x_test, np.ones(x_test.size)))
+            x_test = np.transpose(np.append(x_test, np.ones(x_test.size)))
+            x_test = np.transpose(np.append(x_test, np.ones(x_test.size)).reshape(8, x_test.size/4))
 
             model = Sequential()
 
-            model.add(Dense(neurons_number, input_dim=2, activation='sigmoid'))
+            model.add(Dense(neurons_number, input_dim=8, activation='sigmoid'))
 
             model.add(Dense(1, activation='linear'))
 
