@@ -1,33 +1,29 @@
-import keras.initializers as wi
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import Dense, Activation
+from keras.layers import Dense
 from keras.models import Sequential
-from keras.optimizers import Adam, SGD, Adadelta, Nadam
+from keras.optimizers import Adam
 
-from LABS.ZeroLab import C_DivIntoTwoClasses as dataset3
 import ADDITIONAL.GUI_REPORTER as gr
 from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal
-
-from ADDITIONAL.CUSTOM_KERAS import custom_fit
-
-import os
+from LABS.ZeroLab import C_DivIntoTwoClasses as dataset3
 
 if __name__ == '__main__':
     np.random.seed(42)
     # 1,2 initializing
     train_size = 16000
-    batch_size = 160
-    epochs = 500
+    batch_size = 200
+    epochs = 1000
     lr = 0.005
     verbose = 1
-    first_layer = 10
-    second_layer = 5
+    first_layer = 30
 
-    opt_name = "Nadam"
-    optimizer = Nadam(lr=lr)
+    opt_name = "Adam"
+    optimizer = Adam(lr=lr)
 
-    goal_loss = 0.05
+    goal_loss = 0.01
 
     (x_train, y_train), (x_test, y_test) = dataset3.load_data(train_size=train_size, show=True)
 
@@ -37,30 +33,19 @@ if __name__ == '__main__':
         Dense(first_layer, input_dim=2, kernel_initializer='he_uniform', bias_initializer='he_uniform',
               activation='relu'))
 
-    model.add(
-        Dense(second_layer, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='linear'))
-
     model.add(Dense(1, kernel_initializer='he_uniform', bias_initializer='he_uniform', activation='sigmoid'))
 
-    # plot_model(model, to_file="C_Model.png", show_shapes=True, show_layer_names=True)
-
     # 3 setting stopper
-    # callbacks.EarlyStopping(monitor='acc', min_delta=0, patience=5, mode='max')
     callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
 
     # 4 model fitting
-    model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['binary_crossentropy'])
+    model.compile(optimizer=optimizer, loss='mse', metrics=['mse'])
 
     history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=epochs,
                         verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test))
 
-    # Save information about learning and save NN
-    dir_name = "D_" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr)
-
-    os.mkdir(dir_name)
-
     gr.plot_graphic(x=history.epoch, y=np.array(history.history["val_loss"]), x_label='epochs', y_label='val_loss',
-                    title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=True, show=True)
+                    title="val_loss" + ' history', save=False, show=True)
 
     plt_x_zero = np.empty(0)
     plt_y_zero = np.empty(0)
@@ -78,14 +63,15 @@ if __name__ == '__main__':
 
     plt.plot(plt_x_zero, plt_y_zero, '.')
     plt.plot(plt_x_one, plt_y_one, '.')
+
+    plt.title('classification\nlr = %.3f\nval_loss = %.4f\n neurons = %.d' % (
+        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer))
+
     plt.xlim(0, 1.3)
     plt.ylim(0, 1)
 
-    plt.title('aproximation\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d' % (
-        lr, history.history["val_loss"][history.epoch.__len__() - 1], first_layer, second_layer))
+    plt.legend(('0 class', '1 class'), loc='upper right', shadow=True)
 
-    plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
     plt.close()
 
-    model.save(dir_name + "/" + dir_name + '.h5')
