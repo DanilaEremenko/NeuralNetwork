@@ -1,4 +1,4 @@
-#dataset4
+# dataset4
 
 
 import matplotlib.pyplot as plt
@@ -72,11 +72,11 @@ def load_data(train_size=4000, show=False):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([1, 0, 0, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([1, 0, 0, 0, 0, 0, 0]))
                 train_plt_points1 = np.append(train_plt_points1, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_train = np.append(y_train, np.array([1, 0, 0, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([1, 0, 0, 0, 0, 0, 0]))
                 test_plt_points1 = np.append(test_plt_points1, (x, y))
 
         # Second class
@@ -84,11 +84,11 @@ def load_data(train_size=4000, show=False):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([0, 1, 0, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 1, 0, 0, 0, 0, 0]))
                 train_plt_points2 = np.append(train_plt_points2, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_train = np.append(y_train, np.array([0, 1, 0, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 1, 0, 0, 0, 0, 0]))
                 test_plt_points2 = np.append(test_plt_points2, (x, y))
 
         # Third class
@@ -96,11 +96,11 @@ def load_data(train_size=4000, show=False):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 1, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 1, 0, 0, 0, 0]))
                 train_plt_points3 = np.append(train_plt_points3, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 1, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 1, 0, 0, 0, 0]))
                 test_plt_points3 = np.append(test_plt_points3, (x, y))
 
         # Fourth class
@@ -108,11 +108,11 @@ def load_data(train_size=4000, show=False):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 1, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 1, 0, 0, 0]))
                 train_plt_points4 = np.append(train_plt_points4, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 1, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 1, 0, 0, 0]))
                 test_plt_points4 = np.append(test_plt_points4, (x, y))
 
         # Fifth class
@@ -120,11 +120,11 @@ def load_data(train_size=4000, show=False):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 0, 1, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 1, 0, 0]))
                 train_plt_points5 = np.append(train_plt_points5, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 0, 1, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 1, 0, 0]))
                 test_plt_points5 = np.append(test_plt_points5, (x, y))
 
         # Sixth class
@@ -132,28 +132,28 @@ def load_data(train_size=4000, show=False):
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 1]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 1, 0]))
                 train_plt_points6 = np.append(train_plt_points6, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 1]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 1, 0]))
                 test_plt_points6 = np.append(test_plt_points6, (x, y))
 
-        # Seventh class
+        # Zeros class
         else:
 
             if i < train_size:
                 x_train = np.append(x_train, (x, y))
-                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 0]))
+                y_train = np.append(y_train, np.array([0, 0, 0, 0, 0, 0, 1]))
                 train_plt_points0 = np.append(train_plt_points0, (x, y))
             else:
                 x_test = np.append(x_test, (x, y))
-                y_test = np.append(y_test, np.array([0, 0, 0, 0, 0, 0]))
+                y_test = np.append(y_test, np.array([0, 0, 0, 0, 0, 0, 0]))
                 test_plt_points0 = np.append(test_plt_points0, (x, y))
 
     # reshaping
     x_train.shape = (int(x_train.size / 2), 2)
-    y_train.shape = (int(y_train.size / 6), 6)
+    y_train.shape = (int(y_train.size / 7), 7)
     train_plt_points0.shape = (int(train_plt_points0.size / 2), 2)
     train_plt_points1.shape = (int(train_plt_points1.size / 2), 2)
     train_plt_points2.shape = (int(train_plt_points2.size / 2), 2)
@@ -163,7 +163,7 @@ def load_data(train_size=4000, show=False):
     train_plt_points6.shape = (int(train_plt_points6.size / 2), 2)
 
     x_test.shape = (int(x_test.size / 2), 2)
-    y_test.shape = (int(y_test.size / 6), 6)
+    y_test.shape = (int(y_test.size / 7), 7)
     test_plt_points0.shape = (int(test_plt_points0.size / 2), 2)
     test_plt_points1.shape = (int(test_plt_points1.size / 2), 2)
     test_plt_points2.shape = (int(test_plt_points2.size / 2), 2)
@@ -183,10 +183,9 @@ def load_data(train_size=4000, show=False):
     plt.plot(train_plt_points4.transpose()[0], train_plt_points4.transpose()[1], '.')
     plt.plot(train_plt_points5.transpose()[0], train_plt_points5.transpose()[1], '.')
     plt.plot(train_plt_points6.transpose()[0], train_plt_points6.transpose()[1], '.')
-    
-    plt.legend(('000000 class', '100000 class', '010000 class','001000 class','000100 class','000010 class',
-                '000001 class'),loc='upper right', shadow=True)
-     
+
+    plt.legend(('0000001 class', '1000000 class', '0100000 class', '0010000 class', '0001000 class', '0000100 class',
+                '0000010 class'), loc='upper right', shadow=True)
 
     if show:
         plt.show()
@@ -205,13 +204,15 @@ def load_data(train_size=4000, show=False):
     plt.plot(test_plt_points5.transpose()[0], test_plt_points5.transpose()[1], '.')
     plt.plot(test_plt_points6.transpose()[0], test_plt_points6.transpose()[1], '.')
 
-    plt.legend(('000000 class', '100000 class', '010000 class','001000 class','000100 class','000010 class',
-                '000001 class'),loc='upper right', shadow=True)
-    
-    
+    plt.legend(('0000001 class', '1000000 class', '0100000 class', '0010000 class', '0001000 class', '0000100 class',
+                '0000010 class'), loc='upper right', shadow=True)
+
     if show:
         plt.show()
     plt.close()
 
     return (x_train, y_train), (x_test, y_test)
 
+
+if __name__ == '__main__':
+    (x_train, y_train), (x_test, y_test) = load_data(100, show=True)
