@@ -13,16 +13,16 @@ if __name__ == '__main__':
     np.random.seed(42)
     # 1,2 initializing
     train_size = 16000
-    batch_size = 160
+    batch_size = 100
     epochs = 1000
     lr = 0.007
     verbose = 1
-    neurons_number = [25, 15, 7]
+    neurons_number = [25, 7]
 
     opt_name = "Adam"
     optimizer = Adam(lr=lr)
 
-    goal_loss = 0.01
+    goal_loss = 0.013
 
     (x_train, y_train), (x_test, y_test) = dataset4.load_data(train_size=train_size, show=True)
 
@@ -30,14 +30,9 @@ if __name__ == '__main__':
 
     model.add(Dense(neurons_number[0], input_dim=2, activation='relu'))
 
-    model.add(Dense(neurons_number[1], activation='linear'))
-
-    model.add(Dense(neurons_number[2], activation='sigmoid'))
-
-    # plot_model(model, to_file="C_Model.png", show_shapes=True, show_layer_names=True)
+    model.add(Dense(neurons_number[1], activation='sigmoid'))
 
     # 3 setting stopper
-    # callbacks.EarlyStopping(monitor='acc', min_delta=0, patience=5, mode='max')
     callbacks = [EarlyStoppingByLossVal(monitor='val_loss', value=goal_loss, verbose=1)]
 
     # 4 model fitting
@@ -46,13 +41,8 @@ if __name__ == '__main__':
     history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=epochs,
                         verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test))
 
-    # Save information about learning and save NN
-    dir_name = "E_" + opt_name + "_" + str(history.epoch.__len__()) + "_" + str(lr) + str()
-
-    # os.mkdir(dir_name)
-
     gr.plot_graphic(x=history.epoch, y=np.array(history.history["val_loss"]), x_label='epochs', y_label='val_loss',
-                    title="val_loss" + ' history', save_path=dir_name + "/" + "val_loss.png", save=False, show=True)
+                    title="val_loss" + ' history', save=False, show=True)
 
     plt_x_zero = np.empty(0)
     plt_y_zero = np.empty(0)
@@ -124,4 +114,3 @@ if __name__ == '__main__':
     plt.show()
     plt.close()
 
-    # model.save(dir_name + "/" + dir_name + '.h5')

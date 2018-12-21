@@ -13,16 +13,16 @@ if __name__ == '__main__':
     np.random.seed(42)
     # 1,2 initializing
     train_size = 16000
-    batch_size = 160
+    batch_size = 200
     epochs = 1000
-    lr = 0.007
+    lr = 0.005
     verbose = 1
-    neurons_number = [25, 15, 7]
+    neurons_number = [25, 20, 10, 7]
 
     opt_name = "Adam"
     optimizer = Adam(lr=lr)
 
-    goal_loss = 0.01
+    goal_loss = 0.013
 
     (x_train, y_train), (x_test, y_test) = dataset4.load_data(train_size=train_size, show=True)
 
@@ -32,7 +32,9 @@ if __name__ == '__main__':
 
     model.add(Dense(neurons_number[1], activation='linear'))
 
-    model.add(Dense(neurons_number[2], activation='sigmoid'))
+    model.add(Dense(neurons_number[2], activation='linear'))
+
+    model.add(Dense(neurons_number[3], activation='sigmoid'))
 
     # plot_model(model, to_file="C_Model.png", show_shapes=True, show_layer_names=True)
 
@@ -118,8 +120,9 @@ if __name__ == '__main__':
     plt.legend(('0000001 class', '1000000 class', '0100000 class', '0010000 class', '0001000 class', '0000100 class',
                 '0000010 class'), loc='upper right', shadow=True)
 
-    plt.title('classification\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d' % (
-        lr, history.history["val_loss"][history.epoch.__len__() - 1], neurons_number[0], neurons_number[1]))
+    plt.title('classification\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d %.d' % (
+        lr, history.history["val_loss"][history.epoch.__len__() - 1], neurons_number[0], neurons_number[1],
+        neurons_number[2]))
 
     plt.show()
     plt.close()
