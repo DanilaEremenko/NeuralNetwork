@@ -5,18 +5,12 @@ from keras.utils.vis_utils import plot_model
 
 if __name__ == '__main__':
     model = Sequential()
+    model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1),
+                     activation='relu',
+                     input_shape=(1,2)))
+    model.add(Conv2D(64, (5, 5), activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(1000, activation='relu'))
+    model.add(Dense(1, activation='softmax'))
 
-    input_layer = Dense(1, name='input')
-
-    hidden = Dense(1, name='hidden')
-
-    output_layer=Dense(1,name='output')(input_layer)
-
-
-    model.add(input_layer)
-
-    model.add(hidden)
-
-    model.add(Dense(1)(input_layer))
-
-    plot_model(model, to_file="CNN.png")
+    plot_model(model, to_file='CNN.png')

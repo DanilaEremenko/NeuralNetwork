@@ -1,25 +1,13 @@
-from keras.layers import Dense, Activation
-from keras.models import Sequential
-
-from ADDITIONAL.CUSTOM_KERAS import hard_lim
-import numpy as np
-
 import LABS.ZeroLab.D_DivIntoNClasses as dataset4
 
-import keras.initializers as wi
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.layers import Dense, Activation
 from keras.models import Sequential
 from keras.optimizers import Adam, SGD, Adadelta
 
-from LABS.ZeroLab import C_DivIntoTwoClasses as dataset3
 import ADDITIONAL.GUI_REPORTER as gr
 from ADDITIONAL.CUSTOM_KERAS import EarlyStoppingByLossVal
-
-from ADDITIONAL.CUSTOM_KERAS import custom_fit
-
-import os
 
 if __name__ == '__main__':
     np.random.seed(42)
@@ -116,13 +104,13 @@ if __name__ == '__main__':
             plt_x_six = np.append(plt_x_six, i[0])
             plt_y_six = np.append(plt_y_six, i[1])
 
-    # plt.plot(plt_x_zero, plt_y_zero, '.', color="blue")
-    # plt.plot(plt_x_one, plt_y_one, '.', color="orange")
-    # plt.plot(plt_x_two, plt_y_two, '.', color="green")
-    plt.plot(plt_x_three, plt_y_three, '.', color="red")
-    # plt.plot(plt_x_four, plt_y_four, '.', color="violet")
-    # plt.plot(plt_x_five, plt_y_five, '.', color="brown")
-    # plt.plot(plt_x_six, plt_y_six, '.', color="magenta")
+    plt.plot(plt_x_zero, plt_y_zero, '.')
+    plt.plot(plt_x_one, plt_y_one, '.')
+    plt.plot(plt_x_two, plt_y_two, '.')
+    plt.plot(plt_x_three, plt_y_three, '.')
+    plt.plot(plt_x_four, plt_y_four, '.')
+    plt.plot(plt_x_five, plt_y_five, '.')
+    plt.plot(plt_x_six, plt_y_six, '.')
 
     plt.xlim(0, 1.5)
     plt.ylim(0, 1)
@@ -133,7 +121,6 @@ if __name__ == '__main__':
     plt.title('classification\nlr = %.3f\nval_loss = %.4f\n neurons = %.d %.d' % (
         lr, history.history["val_loss"][history.epoch.__len__() - 1], neurons_number[0], neurons_number[1]))
 
-    # plt.savefig(dir_name + "/" + "compare.png", dpi=200)
     plt.show()
     plt.close()
 
