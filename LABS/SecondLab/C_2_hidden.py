@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     opt_name = "Adam"
 
-    optimizer = Adam(lr=lr)
+    optimizer = Adam(lr=lr,decay=0.0001)
 
     draw_step = 10
     verbose = 1

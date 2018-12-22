@@ -14,12 +14,13 @@ if __name__ == '__main__':
     epochs = 1000
     lr = 0.05
     goal_loss = 0.01
+    Adam()
 
     neurons_number = [40, 16, 8]
 
     opt_name = "Adam"
 
-    optimizer = Adam(lr=lr)
+    optimizer = Adam(lr=lr,decay=0.0001)
 
     draw_step = 10
     verbose = 1
