@@ -16,14 +16,14 @@ if __name__ == '__main__':
     train_size = 16000
     batch_size = 200
     epochs = 1000
-    lr = 0.005
+    lr = 0.05
     verbose = 1
     first_layer = 30
 
     opt_name = "Adam"
-    optimizer = Adam(lr=lr)
+    optimizer = Adam(lr=lr, decay=0.0001)
 
-    goal_loss = 0.01
+    goal_loss = 0.009
 
     (x_train, y_train), (x_test, y_test) = dataset3.load_data(train_size=train_size, show=True)
 

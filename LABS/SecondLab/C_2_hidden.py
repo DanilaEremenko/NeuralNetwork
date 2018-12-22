@@ -12,14 +12,14 @@ if __name__ == '__main__':
     train_size = 48000
     batch_size = 480
     epochs = 1000
-    lr = 0.05
+    lr = 0.1
     goal_loss = 0.01
 
     neurons_number = [35, 10]
 
     opt_name = "Adam"
 
-    optimizer = Adam(lr=lr,decay=0.0001)
+    optimizer = Adam(lr=lr, decay=0.0001)
 
     draw_step = 10
     verbose = 1

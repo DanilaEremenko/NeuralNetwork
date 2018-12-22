@@ -12,11 +12,11 @@ if __name__ == '__main__':
     train_size = 48000
     batch_size = 480
     epochs = 1000
-    lr = 0.05
+    lr = 0.1
     goal_loss = 0.01
     Adam()
 
-    neurons_number = [40, 16, 8]
+    neurons_number = [40, 15, 10]
 
     opt_name = "Adam"
 
