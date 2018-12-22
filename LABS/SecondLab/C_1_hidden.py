@@ -12,18 +12,18 @@ if __name__ == '__main__':
     # 1 parameters initializing---------------------------------------------------------
     np.random.seed(42)
 
-    train_size = 6000
-    batch_size = 64
+    train_size = 16000
+    batch_size = 128
     epochs = 1000
-    lr = 0.1
+    lr = 0.05
     goal_loss = 0.01
-    optimizer = Adam(lr=lr)
+    optimizer = Adam(lr=lr, decay=0.0001)
     opt_name = "Adam"
 
     draw_part = 10
-    verbose = 0
+    verbose = 1
 
-    neurons_number = 48
+    neurons_number = 120
 
     # 2 model and data initializing---------------------------------------------------------
 
@@ -31,11 +31,11 @@ if __name__ == '__main__':
 
     x_train = np.transpose(np.append(x_train, np.ones(x_train.size)))
     x_train = np.transpose(np.append(x_train, np.ones(x_train.size)))
-    x_train = np.transpose(np.append(x_train, np.ones(x_train.size)).reshape(8, x_train.size / 4))
+    x_train = np.transpose(np.append(x_train, np.ones(x_train.size)).reshape(8, int(x_train.size / 4)))
 
     x_test = np.transpose(np.append(x_test, np.ones(x_test.size)))
     x_test = np.transpose(np.append(x_test, np.ones(x_test.size)))
-    x_test = np.transpose(np.append(x_test, np.ones(x_test.size)).reshape(8, x_test.size / 4))
+    x_test = np.transpose(np.append(x_test, np.ones(x_test.size)).reshape(8, int(x_test.size / 4)))
 
     model = Sequential()
 
