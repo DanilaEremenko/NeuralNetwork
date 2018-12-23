@@ -17,7 +17,7 @@ if __name__ == '__main__':
     epochs = 1000
     lr = 0.005
     verbose = 1
-    neurons_number = [25, 20, 10, 7]
+    neurons_number = [40, 35, 15, 7]
 
     opt_name = "Adam"
     optimizer = Adam(lr=lr)

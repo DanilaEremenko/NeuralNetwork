@@ -17,12 +17,12 @@ if __name__ == '__main__':
     epochs = 1000
     lr = 0.007
     verbose = 1
-    neurons_number = [25, 15, 7]
+    neurons_number = [40, 35, 7]
 
     opt_name = "Adam"
     optimizer = Adam(lr=lr)
 
-    goal_loss = 0.01
+    goal_loss = 0.013
 
     (x_train, y_train), (x_test, y_test) = dataset4.load_data(train_size=train_size, show=True)
 

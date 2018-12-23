@@ -16,14 +16,14 @@ if __name__ == '__main__':
     train_size = 16000
     batch_size = 200
     epochs = 1000
-    lr = 0.05
+    lr = 0.005
     verbose = 1
-    first_layer = 20
+    first_layer = 25
     second_layer = 10
     third_layer = 5
 
     opt_name = "Adam"
-    optimizer = Adam(lr=lr, decay=0.0001)
+    optimizer = Adam(lr=lr)
 
     goal_loss = 0.009
 

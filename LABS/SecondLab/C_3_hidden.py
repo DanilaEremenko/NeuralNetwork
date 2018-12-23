@@ -13,7 +13,7 @@ if __name__ == '__main__':
     batch_size = 480
     epochs = 1000
     lr = 0.1
-    goal_loss = 0.01
+    goal_loss = 0.05
     Adam()
 
     neurons_number = [40, 15, 10]

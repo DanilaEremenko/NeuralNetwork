@@ -40,6 +40,13 @@ def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch
     full_loss_history = np.empty(0)
 
     for init_epoch in np.arange(0, epochs, step=epochs_step):
+        save = False if dir_name == None else True
+
+        if save:
+            save_path = dir_name + "/" + "val_loss.png"
+        else:
+            save_path = None
+
         history = model.fit(x=x_train, y=y_train, batch_size=batch_size, epochs=init_epoch + epochs_step,
                             verbose=verbose, callbacks=callbacks, validation_data=(x_test, y_test),
                             initial_epoch=init_epoch)
@@ -58,15 +65,16 @@ def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch
                         (init_epoch + epochs_step, history.history["val_loss"][history.epoch.__len__() - 1])
                         , dpi=200)
 
-        save = False if dir_name == None else True
 
-        if save:
-            save_path = dir_name + "/" + "val_loss.png"
-        else:
-            save_path = None
 
         plt.show()
         plt.close()
+
+        if (history.epoch.__len__() - 1 != epochs_step):
+            epochs=init_epoch+history.epoch.__len__()
+            break
+
+
 
     gr.plot_graphic(x=np.arange(1, epochs + 1), y=full_loss_history,
                     x_label='epochs', y_label='val_loss',
