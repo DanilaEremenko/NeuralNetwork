@@ -24,12 +24,7 @@ if __name__ == '__main__':
 
     goal_loss = 0.013
 
-    (x_train, y_train), (x_test, y_test) = dataset8.load_data()
-
-    for i in range(0, 60000):
-        x_train[i] = noise(x_train[i], 5000)
-    for i in range(0, 10000):
-        x_test[i] = noise(x_test[i], 5000)
+    (x_train, y_train), (x_test, y_test) = dataset8.load_data(mode=1)
 
     model = Sequential()
 

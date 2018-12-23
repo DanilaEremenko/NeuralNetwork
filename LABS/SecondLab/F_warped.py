@@ -24,13 +24,7 @@ if __name__ == '__main__':
 
     goal_loss = 0.013
 
-    (x_train, y_train), (x_test, y_test) = dataset8.load_data()
-
-    for i in range(0, 60000):
-        x_train[i] = deform_image(x_train[i].reshape(28, 28), (28, 28), 0.2, 0, 28).reshape(784, )
-    for i in range(0, 10000):
-        x_test[i] = deform_image(x_test[i].reshape(28, 28), (28, 28), 0.2, 0, 28).reshape(784, )
-
+    (x_train, y_train), (x_test, y_test) = dataset8.load_data(mode=2)
 
     model = Sequential()
 

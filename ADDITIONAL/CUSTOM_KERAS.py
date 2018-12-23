@@ -27,6 +27,12 @@ class EarlyStoppingByLossVal(Callback):
                 print("Epoch %05d: early stopping THR" % epoch)
             self.model.stop_training = True
 
+def lr_scheduler(epoch, lr):
+    decay_rate = 0.1
+    decay_step = 10
+    if epoch % decay_step == 0 and epoch:
+        return lr * decay_rate
+    return lr
 
 def custom_fit(model, callbacks, x_train, y_train, x_test, y_test, epochs, batch_size,
                dir_name, compare_title, draw_step=10, verbose=1):
