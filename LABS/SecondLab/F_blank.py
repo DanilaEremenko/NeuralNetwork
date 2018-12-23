@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     goal_loss = 0.013
 
-    (x_train, y_train), (x_test, y_test) = dataset8.load_data()
+    (x_train, y_train), (x_test, y_test) = dataset8.load_data(mode=0)
 
     model = Sequential()
 
