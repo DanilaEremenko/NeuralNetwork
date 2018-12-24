@@ -101,6 +101,7 @@ def load_data(train_size, k, b, show=False, func_type='lin'):
 
     if show:
         plt.show()
+    plt.close()
 
     return (x_train, y_train), (x_test, y_test)
 
