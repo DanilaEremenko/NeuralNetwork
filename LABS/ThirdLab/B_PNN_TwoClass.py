@@ -10,9 +10,11 @@ import LABS.ZeroLab.C_DivIntoTwoClasses as dataset3
 
 def diff_std():
     (x_train, y_train), (x_test, y_test) = dataset3.load_data(train_size=12000, show=True)
+    titles = ["\n\nspread greater than necessary", "\n\nspread optimal", "\n\nspread less than necessary"]
+    spreads = [0.1, 0.001, 0.0001]
 
-    for std in [0.1, 0.001, 0.0001]:
-        pnn = algorithms.PNN(std=std, verbose=True)
+    for spread, title in zip(spreads, titles):
+        pnn = algorithms.PNN(std=spread, verbose=True)
 
         pnn.train(x_train, y_train)
 
@@ -26,7 +28,6 @@ def diff_std():
         plt_x_one = np.empty(0)
         plt_y_one = np.empty(0)
 
-        acc = 0.0
         i = 0
         for coord in x_test:
             if y_predicted[i] < 0.5:
@@ -40,7 +41,7 @@ def diff_std():
         plt.plot(plt_x_zero, plt_y_zero, '.')
         plt.plot(plt_x_one, plt_y_one, '.')
 
-        plt.title('2 class classification\nstd = %.4f\nmae =%.4f' % (std, mae))
+        plt.title(title+'\n2 class classification\nstd = %.4f\nmae =%.4f' % (spread, mae))
 
         plt.xlim(0, 1.3)
         plt.ylim(0, 1)
@@ -102,15 +103,15 @@ def diff_train():
 
 
 if __name__ == '__main__':
-    # diff_std()
-    train_size, std, maes = diff_train()
-
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    ax.set_xlabel('train size')
-    ax.set_ylabel('std')
-    ax.set_zlabel('error rate')
-    df = pd.DataFrame({'x': train_size, 'y': std, 'z': maes})
-    surf = ax.plot_trisurf(df.x, df.y, df.z, cmap=cm.jet, linewidth=0.1)
-    fig.colorbar(surf, shrink=0.5, aspect=5)
-    plt.show()
+    diff_std()
+    # train_size, std, maes = diff_train()
+    #
+    # fig = plt.figure()
+    # ax = fig.gca(projection='3d')
+    # ax.set_xlabel('train size')
+    # ax.set_ylabel('std')
+    # ax.set_zlabel('error rate')
+    # df = pd.DataFrame({'x': train_size, 'y': std, 'z': maes})
+    # surf = ax.plot_trisurf(df.x, df.y, df.z, cmap=cm.jet, linewidth=0.1)
+    # fig.colorbar(surf, shrink=0.5, aspect=5)
+    # plt.show()

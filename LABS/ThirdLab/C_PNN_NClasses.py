@@ -10,8 +10,10 @@ from mpl_toolkits.mplot3d import Axes3D
 def diff_std():
     (x_train, y_train), (x_test, y_test) = dataset4.load_data_neupy(train_size=12000, show=True)
 
-    for std in [0.01, 0.001, 0.0001]:
-        pnn = algorithms.PNN(std=std, verbose=True)
+    titles = ["\n\nspread greater than necessary", "\n\nspread optimal", "\n\nspread less than necessary"]
+    spreads = [0.01, 0.001, 0.0001]
+    for spread,title in zip(spreads,titles):
+        pnn = algorithms.PNN(std=spread, verbose=True)
 
         pnn.train(x_train, y_train)
 
@@ -80,7 +82,7 @@ def diff_std():
         plt.legend(('0.0 class', '0.1 class', '0.2 class', '0.3 class', '0.4 class', '0.5 class',
                     '0.6 class'), loc='upper right', shadow=True)
 
-        plt.title('7 classification\nstd =%.4f\nmae = %.4f' % (std, mae))
+        plt.title(title+'\n7 classification\nspread =%.4f\nmae = %.4f' % (spread, mae))
 
         plt.show()
         plt.close()

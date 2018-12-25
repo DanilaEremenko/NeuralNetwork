@@ -9,7 +9,8 @@ import numpy as np
 if __name__ == '__main__':
     (x_train, y_train), (x_test, y_test) = dataset5.load_data(train_size=6000, show=False)
 
-    goal_loss=0.007
+    goal_loss=0.005
+
     for neu_num in np.arange(10, 60, step=5):
         model = RBFN(hidden_shape=neu_num, sigma=0.5)
         model.fit(x_train, y_train)
@@ -20,7 +21,7 @@ if __name__ == '__main__':
         plt.plot(x_test, y_test, 'b.', label='real')
         plt.plot(x_test, y_pred, 'r.', label='fit')
         plt.legend(loc='upper right')
-        plt.title('RBFN from git\nneu_num = %.d\nmae = %.4f' %
+        plt.title('RBFN\nneu_num = %.d\nmae = %.4f' %
                   (neu_num, mae))
         plt.show()
 

@@ -18,5 +18,5 @@ if __name__ == '__main__':
         plt.plot(x_test, y_test, 'b.', label='real')
         plt.plot(x_test, y_pred, 'r.', label='fit')
         plt.legend(loc='upper right')
-        plt.title('GRNN aprox with neupy\nstd = %.4f' % (std))
+        plt.title('GRNN aprox with neupy\nstd = %.4f\nmae = %.3f' % (std,mae))
         plt.show()
