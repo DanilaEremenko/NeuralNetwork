@@ -9,21 +9,6 @@ from ADDITIONAL.IMAGE_CHANGER import show_image_by_pxs, get_pxs, noise
 def test_with_noise():
     (x_train, y_train), (x_test, y_test) = dataset8.load_data(mode=0)
 
-    for i in (0, 9999):
-        x_test[i] = noise(x_test[i], 300)
-
-
-    pnn = algorithms.PNN(std=0.1, batch_size=128, verbose=True)
-
-    pnn.train(x_train[0:10000], y_train[0:10000])
-
-    y_predicted = pnn.predict(x_test)
-
-    print("accuracy = %.2f" % (metrics.accuracy_score(y_predicted, y_test)))
-
-def simple_train():
-    (x_train, y_train), (x_test, y_test) = dataset8.load_data(mode=0)
-
     pnn = algorithms.PNN(std=1, batch_size=128, verbose=True)
 
     pnn.train(x_train[0:10000], y_train[0:10000])
@@ -48,6 +33,14 @@ def simple_train():
 
     print("accuracy = %.2f" % (metrics.accuracy_score(y_predicted, y_test)))
 
+
+    for i in (0, 9999):
+        x_test[i] = noise(x_test[i], 500)
+
+    y_predicted = pnn.predict(x_test)
+
+    print("accuracy on noise data = %.2f" % (metrics.accuracy_score(y_predicted, y_test)))
+
 def diff_train_size():
     maes = [0, 0, 0, 0]
     train_size = [15000, 10000, 5000, 2000]
@@ -62,9 +55,10 @@ def diff_train_size():
 
         y_predicted = pnn.predict(x_test)
 
-        print("accuracy = %.2f" % (metrics.accuracy_score(y_predicted, y_test)))
+        maes[j] = metrics.accuracy_score(y_predicted, y_test)
+
+        print("accuracy = %.2f" % (maes[j]))
 
 if __name__ == '__main__':
-    # simple_train()
-    # test_with_noise()
-    diff_train_size()
+    test_with_noise()
+    # diff_train_size()
