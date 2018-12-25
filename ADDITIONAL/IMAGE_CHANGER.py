@@ -4,6 +4,7 @@ import numpy as np
 import numpy.random as r
 
 
+
 def resize_image(input_path, output_path, size):
     original_image = Image.open(input_path)
 
@@ -119,7 +120,7 @@ def save_image_by_pxs(pxs, output_path):
 
 def noise(arr, intensity):
     for i in range(1, arr.size):
-        i += r.randint(0, intensity)
+        i += intensity * r.randint(0, 3)
         if i > 780:
             i = 780
         if arr[i] > 0.5:

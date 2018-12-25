@@ -21,7 +21,7 @@ class RBFN(object):
             also, number of centers.
         """
         self.hidden_shape = hidden_shape
-        self.sigma = sigma
+        self.sigma = sigma*100
         self.centers = None
         self.weights = None
 

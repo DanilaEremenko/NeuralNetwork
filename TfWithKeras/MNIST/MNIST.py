@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     score = model.evaluate(x_test, y_test, verbose=1)
 
-    print "accuracy on testin data %.f%%" % (score[1] * 100)
+    print("accuracy on testin data %.f%%" % (score[1] * 100))
 
     plot_history(history, 'HISTORY_200.png', save=False, show=True)
 

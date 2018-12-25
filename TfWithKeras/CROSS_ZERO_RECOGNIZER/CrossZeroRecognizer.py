@@ -3,7 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import SGD
 import ADDITIONAL.GUI_REPORTER as gr
-import CrossZeroDataGen as dataset
+import TfWithKeras.CROSS_ZERO_RECOGNIZER.CrossZeroDataGen as dataset
 
 if __name__ == '__main__':
     np.random.seed(42)
